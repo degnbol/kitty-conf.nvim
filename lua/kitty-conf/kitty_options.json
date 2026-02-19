@@ -1,0 +1,3357 @@
+{
+  "options": [
+    {
+      "name": "font_family",
+      "default": "monospace",
+      "group": "Fonts",
+      "doc": "You can specify different fonts for the bold/italic/bold-italic variants.\nThe easiest way to select fonts is to run the kitten choose-fonts command\nwhich will present a nice UI for you to select the fonts you want with previews\nand support for selecting variable fonts and font features. If you want to learn\nto select fonts manually, read the font specification syntax <font_spec_syntax>."
+    },
+    {
+      "name": "bold_font",
+      "default": "auto",
+      "group": "Fonts",
+      "doc": ""
+    },
+    {
+      "name": "italic_font",
+      "default": "auto",
+      "group": "Fonts",
+      "doc": ""
+    },
+    {
+      "name": "bold_italic_font",
+      "default": "auto",
+      "group": "Fonts",
+      "doc": ""
+    },
+    {
+      "name": "font_size",
+      "default": "11.0",
+      "group": "Fonts",
+      "doc": "Font size (in pts)."
+    },
+    {
+      "name": "force_ltr",
+      "default": "no",
+      "group": "Fonts",
+      "doc": "kitty does not support BIDI (bidirectional text), however, for RTL scripts,\nwords are automatically displayed in RTL. That is to say, in an RTL script, the\nwords \"HELLO WORLD\" display in kitty as \"WORLD HELLO\", and if you try to select\na substring of an RTL-shaped string, you will get the character that would be\nthere had the string been LTR. For example, assuming the Hebrew word\n\u05d9\u05e8\u05d5\u05e9\u05dc\u05d9\u05dd, selecting the character that on the screen appears to be \u05dd actually\nwrites into the selection buffer the character \u05d9. kitty's default behavior is\nuseful in conjunction with a filter to reverse the word order, however, if you\nwish to manipulate RTL glyphs, it can be very challenging to work with, so this\noption is provided to turn it off. Furthermore, this option can be used with the\ncommand line program :link:`GNU FriBidi\n<https://github.com/fribidi/fribidi#executable>` to get BIDI support, because it\nwill force kitty to always treat the text as LTR, which FriBidi expects for\nterminals."
+    },
+    {
+      "name": "disable_ligatures",
+      "default": "never",
+      "group": "Fonts",
+      "doc": "Choose how you want to handle multi-character ligatures. The default is to\nalways render them. You can tell kitty to not render them when the cursor is\nover them by using cursor to make editing easier, or have kitty never\nrender them at all by using always, if you don't like them. The ligature\nstrategy can be set per-window either using the kitty remote control facility\nor by defining shortcuts for it in kitty.conf, for example::\n\n    map alt+1 disable_ligatures_in active always\n    map alt+2 disable_ligatures_in all never\n    map alt+3 disable_ligatures_in tab cursor\n\nNote that this refers to programming ligatures, typically implemented using the\ncalt OpenType feature. For disabling general ligatures, use the\nfont_features option."
+    },
+    {
+      "name": "box_drawing_scale",
+      "default": "0.001, 1, 1.5, 2",
+      "group": "Fonts",
+      "doc": "The sizes of the lines used for the box drawing Unicode characters. These values\nare in pts. They will be scaled by the monitor DPI to arrive at a pixel value.\nThere must be four values corresponding to thin, normal, thick, and very thick\nlines."
+    },
+    {
+      "name": "undercurl_style",
+      "default": "thin-sparse",
+      "group": "Fonts",
+      "doc": "The style with which undercurls are rendered. This option takes the form\n(thin|thick)-(sparse|dense). Thin and thick control the thickness of the\nundercurl. Sparse and dense control how often the curl oscillates. With sparse\nthe curl will peak once per character, with dense twice. Changing this\noption dynamically via reloading the config or remote control is undefined.",
+      "choices": [
+        "thin-sparse",
+        "thin-dense",
+        "thick-sparse",
+        "thick-dense"
+      ]
+    },
+    {
+      "name": "underline_exclusion",
+      "default": "1",
+      "group": "Fonts",
+      "doc": "By default kitty renders gaps in underlines when they overlap with descenders\n(the parts of letters below the baseline, such as for y, q, p etc.). This option\ncontrols the thickness of the gaps. It can be either a unitless number in which\ncase it is a fraction of the underline thickness as specified in the font or\nit can have a suffix of px for pixels or pt for points. Set to zero\nto disable the gaps. Changing this option dynamically via reloading the config or remote\ncontrol is undefined.",
+      "choices": [
+        "px",
+        "pt"
+      ]
+    },
+    {
+      "name": "text_composition_strategy",
+      "default": "platform",
+      "group": "Fonts",
+      "doc": "Control how kitty composites text glyphs onto the background color. The default\nvalue of platform tries for text rendering as close to \"native\" for\nthe platform kitty is running on as possible.\n\nA value of legacy uses the old (pre kitty 0.28) strategy for how glyphs\nare composited. This will make dark text on light backgrounds look thicker and\nlight text on dark backgrounds thinner. It might also make some text appear like\nthe strokes are uneven.\n\nYou can fine tune the actual contrast curve used for glyph composition by\nspecifying up to two space-separated numbers for this setting.\n\nThe first number is the gamma adjustment, which controls the thickness of dark\ntext on light backgrounds. Increasing the value will make text appear thicker.\nThe default value for this is 1.0 on Linux and 1.7 on macOS.\nValid values are 0.01 and above. The result is scaled based on the\nluminance difference between the background and the foreground. Dark text on\nlight backgrounds receives the full impact of the curve while light text on dark\nbackgrounds is affected very little.\n\nThe second number is an additional multiplicative contrast. It is percentage\nranging from 0 to 100. The default value is 0 on Linux\nand 30 on macOS.\n\nIf you wish to achieve similar looking thickness in light and dark themes, a good way\nto experiment is start by setting the value to 1.0 0 and use a dark theme.\nThen adjust the second parameter until it looks good. Then switch to a light theme\nand adjust the first parameter until the perceived thickness matches the dark theme."
+    },
+    {
+      "name": "text_fg_override_threshold",
+      "default": "0",
+      "group": "Fonts",
+      "doc": "A setting to prevent low contrast between foreground and background colors.\nUseful when working with applications that use colors that do not contrast\nwell with your preferred color scheme. The default value is 0, which means no color overriding is performed.\nThere are two modes of operation:\n\nA value with the suffix ratio represents the minimum accepted contrast ratio between the foreground and background color.\nPossible values range from 0.0 ratio to 21.0 ratio.\nFor example, to meet :link:`WCAG level AA <https://en.wikipedia.org/wiki/Web_Content_Accessibility_Guidelines>`\na value of 4.5 ratio can be provided.\nThe algorithm is implemented using :link:`HSLuv <https://www.hsluv.org/>` which enables it to change\nthe perceived lightness of a color just as much as needed without really changing its hue and saturation.\n\nA value with the suffix % represents the minimum accepted difference in luminance\nbetween the foreground and background color, below which kitty will override the foreground color.\nIt is percentage ranging from 0 % to 100 %. If the difference in luminance of the\nforeground and background is below this threshold, the foreground color will be set\nto white if the background is dark or black if the background is light.\n\nWARNING: Some programs use characters (such as block characters) for graphics\ndisplay and may expect to be able to set the foreground and background to the\nsame color (or similar colors). If you see unexpected stripes, dots, lines,\nincorrect color, no color where you expect color, or any kind of graphic\ndisplay problem try setting text_fg_override_threshold to 0 to\nsee if this is the cause of the problem or consider using the ratio mode of operation\ndescribed above instead of the % mode of operation."
+    },
+    {
+      "name": "cursor",
+      "default": "#cccccc",
+      "group": "Text cursor customization",
+      "doc": "Default text cursor color. If set to the special value none the cursor will\nbe rendered with a \"reverse video\" effect. Its color will be the color of the\ntext in the cell it is over and the text will be rendered with the background\ncolor of the cell. Note that if the program running in the terminal sets a\ncursor color, this takes precedence. Also, the cursor colors are modified if\nthe cell background and foreground colors have very low contrast. Note that some\nthemes set this value, so if you want to override it, place your value after\nthe lines where the theme file is included."
+    },
+    {
+      "name": "cursor_text_color",
+      "default": "#111111",
+      "group": "Text cursor customization",
+      "doc": "The color of text under the cursor. If you want it rendered with the\nbackground color of the cell underneath instead, use the special keyword:\n`background`. Note that if cursor is set to none then this option\nis ignored. Note that some themes set this value, so if you want to override it,\nplace your value after the lines where the theme file is included."
+    },
+    {
+      "name": "cursor_shape",
+      "default": "block",
+      "group": "Text cursor customization",
+      "doc": "The cursor shape can be one of block, beam, underline.\nNote that when reloading the config this will be changed only if the cursor\nshape has not been set by the program running in the terminal. This sets the\ndefault cursor shape, applications running in the terminal can override it. In\nparticular, shell integration <shell_integration> in kitty sets the\ncursor shape to beam at shell prompts. You can avoid this by setting\nshell_integration to no-cursor.",
+      "choices": [
+        "block",
+        "beam",
+        "underline"
+      ]
+    },
+    {
+      "name": "cursor_shape_unfocused",
+      "default": "hollow",
+      "group": "Text cursor customization",
+      "doc": "Defines the text cursor shape when the OS window is not focused. The unfocused\ncursor shape can be one of block, beam, underline,\nhollow and unchanged (leave the cursor shape as it is).",
+      "choices": [
+        "block",
+        "beam",
+        "underline",
+        "hollow",
+        "unchanged"
+      ]
+    },
+    {
+      "name": "cursor_beam_thickness",
+      "default": "1.5",
+      "group": "Text cursor customization",
+      "doc": "The thickness of the beam cursor (in pts)."
+    },
+    {
+      "name": "cursor_underline_thickness",
+      "default": "2.0",
+      "group": "Text cursor customization",
+      "doc": "The thickness of the underline cursor (in pts)."
+    },
+    {
+      "name": "cursor_blink_interval",
+      "default": "-1",
+      "group": "Text cursor customization",
+      "doc": "The interval to blink the cursor (in seconds). Set to zero to disable blinking.\nNegative values mean use system default. Note that the minimum interval will be\nlimited to repaint_delay. You can also animate the cursor blink by specifying\nan easing function. For example, setting this to option to 0.5 ease-in-out\nwill cause the cursor blink to be animated over a second, in the first half of the second\nit will go from opaque to transparent and then back again over the next half. You can specify\ndifferent easing functions for the two halves, for example: -1 linear ease-out. kitty\nsupports all the :link:`CSS easing functions <https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function>`.\nNote that turning on animations uses extra power as it means the screen is redrawn multiple times\nper blink interval. See also, cursor_stop_blinking_after. This setting also controls blinking\ntext, which blinks in exact rhythm with the cursor."
+    },
+    {
+      "name": "cursor_stop_blinking_after",
+      "default": "15.0",
+      "group": "Text cursor customization",
+      "doc": "Stop blinking cursor after the specified number of seconds of keyboard\ninactivity. Set to zero to never stop blinking. This setting also controls\nblinking text, which blinks in exact rhythm with the cursor."
+    },
+    {
+      "name": "cursor_trail",
+      "default": "0",
+      "group": "Text cursor customization",
+      "doc": "Set this to a value larger than zero to enable a \"cursor trail\" animation.\nThis is an animation that shows a \"trail\" following the movement of the text cursor.\nIt makes it easy to follow large cursor jumps and makes for a cool visual effect\nof the cursor zooming around the screen. The actual value of this option\ncontrols when the animation is triggered. It is a number of milliseconds. The\ntrail animation only follows cursors that have stayed in their position for longer\nthan the specified number of milliseconds. This prevents trails from appearing\nfor cursors that rapidly change their positions during UI updates in complex applications.\nSee cursor_trail_decay to control the animation speed and cursor_trail_start_threshold\nto control when a cursor trail is started."
+    },
+    {
+      "name": "cursor_trail_decay",
+      "default": "0.1 0.4",
+      "group": "Text cursor customization",
+      "doc": "Controls the decay times for the cursor trail effect when the cursor_trail\nis enabled. This option accepts two positive float values specifying the\nfastest and slowest decay times in seconds. The first value corresponds to the\nfastest decay time (minimum), and the second value corresponds to the slowest\ndecay time (maximum). The second value must be equal to or greater than the\nfirst value. Smaller values result in a faster decay of the cursor trail.\nAdjust these values to control how quickly the cursor trail fades away."
+    },
+    {
+      "name": "cursor_trail_start_threshold",
+      "default": "2",
+      "group": "Text cursor customization",
+      "doc": "Set the distance threshold for starting the cursor trail. This option accepts a\npositive integer value that represents the minimum number of cells the\ncursor must move before the trail is started. When the cursor moves less than\nthis threshold, the trail is skipped, reducing unnecessary cursor trail\nanimation."
+    },
+    {
+      "name": "cursor_trail_color",
+      "default": "none",
+      "group": "Text cursor customization",
+      "doc": "Set the color of the cursor trail when cursor_trail is enabled.\nIf set to 'none' (the default), the cursor trail will use the cursor's\nbackground color. Otherwise, specify a color value (e.g., #ff0000 for red,\nor a named color like 'red'). This allows you to customize the appearance\nof the cursor trail independently of the cursor color."
+    },
+    {
+      "name": "scrollback_lines",
+      "default": "2000",
+      "group": "Scrollback",
+      "doc": "Number of lines of history to keep in memory for scrolling back. Memory is\nallocated on demand. Negative numbers are (effectively) infinite scrollback.\nNote that using very large scrollback is not recommended as it can slow down\nperformance of the terminal and also use large amounts of RAM. Instead, consider\nusing scrollback_pager_history_size. Note that on config reload if this\nis changed it will only affect newly created windows, not existing ones."
+    },
+    {
+      "name": "scrollbar",
+      "default": "scrolled",
+      "group": "Scrollback",
+      "doc": "Control when the scrollbar is displayed.\n\nscrolled\n    means when the scrolling backwards has started.\nhovered\n    means when the mouse is hovering on the right edge of the window.\nscrolled-and-hovered\n    means when the mouse is over the scrollbar region *and* scrolling backwards has started.\nalways\n    means whenever any scrollback is present\nnever\n    means disable the scrollbar.",
+      "choices": [
+        "scrolled",
+        "always",
+        "never",
+        "hovered",
+        "scrolled-and-hovered"
+      ]
+    },
+    {
+      "name": "scrollbar_interactive",
+      "default": "yes",
+      "group": "Scrollback",
+      "doc": "If disabled, the scrollbar will not be controllable via th emouse and all mouse events\nwill pass through the scrollbar."
+    },
+    {
+      "name": "scrollbar_jump_on_click",
+      "default": "yes",
+      "group": "Scrollback",
+      "doc": "When enabled clicking in the scrollbar track will cause the scroll position to\njump to the clicked location, otherwise the scroll position will only move\ntowards the position by a single screenful, which is how traditional scrollbars behave."
+    },
+    {
+      "name": "scrollbar_width",
+      "default": "0.5",
+      "group": "Scrollback",
+      "doc": "The width of the scroll bar in units of cell width."
+    },
+    {
+      "name": "scrollbar_hover_width",
+      "default": "1",
+      "group": "Scrollback",
+      "doc": "The width of the scroll bar when the mouse is hovering over it, in units of cell width."
+    },
+    {
+      "name": "scrollbar_handle_opacity",
+      "default": "0.5",
+      "group": "Scrollback",
+      "doc": "The opacity of the scrollbar handle, 0 being fully transparent and 1 being full opaque."
+    },
+    {
+      "name": "scrollbar_radius",
+      "default": "0.3",
+      "group": "Scrollback",
+      "doc": "The radius (curvature) of the scrollbar handle in units of cell width. Should be less than\nscrollbar_width."
+    },
+    {
+      "name": "scrollbar_gap",
+      "default": "0.1",
+      "group": "Scrollback",
+      "doc": "The gap between the scrollbar and the window edge in units of cell width."
+    },
+    {
+      "name": "scrollbar_min_handle_height",
+      "default": "1",
+      "group": "Scrollback",
+      "doc": "The minimum height of the scrollbar handle in units of cell height. Prevents the handle\nfrom becoming too small when there is a lot of scrollback."
+    },
+    {
+      "name": "scrollbar_hitbox_expansion",
+      "default": "0.25",
+      "group": "Scrollback",
+      "doc": "The extra area around the handle to allow easier grabbing of the scollbar in units of cell width."
+    },
+    {
+      "name": "scrollbar_track_opacity",
+      "default": "0",
+      "group": "Scrollback",
+      "doc": "The opacity of the scrollbar track, 0 being fully transparent and 1 being full opaque."
+    },
+    {
+      "name": "scrollbar_track_hover_opacity",
+      "default": "0.1",
+      "group": "Scrollback",
+      "doc": "The opacity of the scrollbar track when the mouse is over the scrollbar,\n0 being fully transparent and 1 being full opaque."
+    },
+    {
+      "name": "scrollbar_handle_color",
+      "default": "foreground",
+      "group": "Scrollback",
+      "doc": "The color of the scrollbar handle. A value of foreground means to use\nthe current foreground text color, a value of selection_background means to\nuse the current selection background color. Also, you can use an\narbitrary color, such as #12af59 or red."
+    },
+    {
+      "name": "scrollbar_track_color",
+      "default": "foreground",
+      "group": "Scrollback",
+      "doc": "The color of the scrollbar track. A value of foreground means to use\nthe current foreground text color, a value of selection_background means to\nuse the current selection background color. Also, you can use an\narbitrary color, such as #12af59 or red."
+    },
+    {
+      "name": "scrollback_pager",
+      "default": "less --chop-long-lines --RAW-CONTROL-CHARS +INPUT_LINE_NUMBER",
+      "group": "Scrollback",
+      "doc": "Program with which to view scrollback in a new window. The scrollback buffer is\npassed as STDIN to this program. If you change it, make sure the program you use\ncan handle ANSI escape sequences for colors and text formatting.\nINPUT_LINE_NUMBER in the command line above will be replaced by an integer\nrepresenting which line should be at the top of the screen. Similarly\nCURSOR_LINE and CURSOR_COLUMN will be replaced by the current cursor position or\nset to 0 if there is no cursor, for example, when showing the last command\noutput.\n\nIf you would rather use neovim to view the scrollback, use something like this::\n\n    scrollback_pager nvim --cmd 'set eventignore=FileType' +'nnoremap q ZQ' +'call nvim_open_term(0, {})' +'set nomodified nolist' +'$' -\n\nThe above works for neovim 0.12 and newer. There is also a dedicated plugin\n:link:`kitty-scrollback.nvim <https://github.com/mikesmithgh/kitty-scrollback.nvim>`\nyou can use with more features that works with older neovim as well."
+    },
+    {
+      "name": "scrollback_pager_history_size",
+      "default": "0",
+      "group": "Scrollback",
+      "doc": "Separate scrollback history size (in MB), used only for browsing the scrollback\nbuffer with pager. This separate buffer is not available for interactive\nscrolling but will be piped to the pager program when viewing scrollback buffer\nin a separate window. The current implementation stores the data in UTF-8, so\napproximately 10000 lines per megabyte at 100 chars per line, for pure ASCII,\nunformatted text. A value of zero or less disables this feature. The maximum\nallowed size is 4GB. Note that on config reload if this is changed it will only\naffect newly created windows, not existing ones."
+    },
+    {
+      "name": "scrollback_fill_enlarged_window",
+      "default": "no",
+      "group": "Scrollback",
+      "doc": "Fill new space with lines from the scrollback buffer after enlarging a window."
+    },
+    {
+      "name": "wheel_scroll_multiplier",
+      "default": "5.0",
+      "group": "Scrollback",
+      "doc": "Multiplier for the number of lines scrolled by the mouse wheel. Note that this\nis only used for low precision scrolling devices, not for high precision\nscrolling devices on platforms such as macOS and Wayland. Use negative numbers\nto change scroll direction. See also wheel_scroll_min_lines."
+    },
+    {
+      "name": "wheel_scroll_min_lines",
+      "default": "1",
+      "group": "Scrollback",
+      "doc": "The minimum number of lines scrolled by the mouse wheel. The scroll\nmultiplier <wheel_scroll_multiplier> only takes effect after it reaches this\nnumber. Note that this is only used for low precision scrolling devices like\nwheel mice that scroll by very small amounts when using the wheel. With a\nnegative number, the minimum number of lines will always be added."
+    },
+    {
+      "name": "touch_scroll_multiplier",
+      "default": "1.0",
+      "group": "Scrollback",
+      "doc": "Multiplier for the number of lines scrolled by a touchpad. Note that this is\nonly used for high precision scrolling devices on platforms such as macOS and\nWayland. Use negative numbers to change scroll direction."
+    },
+    {
+      "name": "mouse_hide_wait",
+      "default": "3.0",
+      "group": "Mouse",
+      "doc": "Hide mouse cursor after the specified number of seconds of the mouse not being\nused. Set to zero to disable mouse cursor hiding. Set to a negative value to\nhide the mouse cursor immediately when typing text. Disabled by default on macOS\nas getting it to work robustly with the ever-changing sea of bugs that is Cocoa\nis too much effort.\n\nBy default, once the cursor is hidden, it is immediately unhidden on any\nfurther mouse events.\n\nTwo formats are supported:\n - <hide-wait>\n - <hide-wait> <unhide-wait> <unhide-threshold> <scroll-unhide>\n\nTo change the unhide behavior, the optional parameters <unhide-wait>,\n<unhide-threshold>, and <scroll-unhide> may be set.\n\n<unhide-wait>\n    Waits for the specified number of seconds after mouse events before unhiding the\n    mouse cursor. Set to zero to unhide mouse cursor immediately on mouse activity.\n    This is useful to prevent the mouse cursor from unhiding on accidental swipes on\n    the trackpad.\n\n<unhide-threshold>\n    Sets the threshold of mouse activity required to unhide the mouse cursor, when\n    the <unhide-wait> option is non-zero. When <unhide-wait> is zero, this has no\n    effect.\n\n    For example, if <unhide-threshold> is 40 and <unhide-wait> is 2.5, when kitty\n    detects a mouse event, it records the number of mouse events in the next 2.5\n    seconds, and checks if that exceeds 40 * 2.5 = 100. If it does, then the mouse\n    cursor is unhidden, otherwise nothing happens.\n\n<scroll-unhide>\n    Controls what mouse events may unhide the mouse cursor. If enabled, both scroll\n    and movement events may unhide the cursor. If disabled, only mouse movements can\n    unhide the cursor.\n\nExamples of valid values:\n - 0.0\n - 1.0\n - -1.0\n - 0.1 3.0 40 yes"
+    },
+    {
+      "name": "url_color",
+      "default": "#0087bd",
+      "group": "Mouse",
+      "doc": "The color and style for highlighting URLs on mouse-over. url_style can\nbe one of: none, straight, double, curly,\ndotted, dashed.",
+      "choices": [
+        "none",
+        "straight",
+        "double",
+        "curly",
+        "dotted",
+        "dashed"
+      ]
+    },
+    {
+      "name": "url_style",
+      "default": "curly",
+      "group": "Mouse",
+      "doc": ""
+    },
+    {
+      "name": "open_url_with",
+      "default": "default",
+      "group": "Mouse",
+      "doc": "The program to open clicked URLs. The special value default will first\nlook for any URL handlers defined via the open_actions facility and if\nnon are found, it will use the Operating System's default URL handler\n(:program:`open` on macOS and :program:`xdg-open` on Linux)."
+    },
+    {
+      "name": "url_prefixes",
+      "default": "file ftp ftps gemini git gopher http https irc ircs kitty mailto news sftp ssh",
+      "group": "Mouse",
+      "doc": "The set of URL prefixes to look for when detecting a URL under the mouse cursor."
+    },
+    {
+      "name": "detect_urls",
+      "default": "yes",
+      "group": "Mouse",
+      "doc": "Detect URLs under the mouse. Detected URLs are highlighted with an underline and\nthe mouse cursor becomes a hand over them. Even if this option is disabled, URLs\nare still clickable. See also the underline_hyperlinks option to control\nhow hyperlinks (as opposed to plain text URLs) are displayed."
+    },
+    {
+      "name": "url_excluded_characters",
+      "default": "",
+      "group": "Mouse",
+      "doc": "Additional characters to be disallowed from URLs, when detecting URLs under the\nmouse cursor. By default, all characters that are legal in URLs are allowed.\nAdditionally, newlines are allowed (but stripped). This is to accommodate\nprograms such as mutt that add hard line breaks even for continued lines.\n\\\\n can be added to this option to disable this behavior. Special\ncharacters can be specified using backslash escapes, to specify a backslash use\na double backslash."
+    },
+    {
+      "name": "show_hyperlink_targets",
+      "default": "no",
+      "group": "Mouse",
+      "doc": "When the mouse hovers over a terminal hyperlink, show the actual URL that will\nbe activated when the hyperlink is clicked."
+    },
+    {
+      "name": "underline_hyperlinks",
+      "default": "hover",
+      "group": "Mouse",
+      "doc": "Control how hyperlinks are underlined. They can either be underlined on mouse\nhover, always (i.e. permanently underlined) or never which means\nthat kitty will not apply any underline styling to hyperlinks. Note that the value of always\nonly applies to real (OSC 8) hyperlinks not text that is detected to be a URL on mouse hover.\nUses the url_style and url_color settings for the underline style. Note\nthat reloading the config and changing this value to/from always will only\naffect text subsequently received by kitty.",
+      "choices": [
+        "hover",
+        "always",
+        "never"
+      ]
+    },
+    {
+      "name": "copy_on_select",
+      "default": "no",
+      "group": "Mouse",
+      "doc": "Copy to clipboard or a private buffer on select. With this set to\nclipboard, selecting text with the mouse will cause the text to be\ncopied to clipboard. Useful on platforms such as macOS that do not have the\nconcept of primary selection. You can instead specify a name such as a1\nto copy to a private kitty buffer. Map a shortcut with the\npaste_from_buffer action to paste from this private buffer.\nFor example::\n\n    copy_on_select a1\n    map shift+cmd+v paste_from_buffer a1\n\nNote that copying to the clipboard is a security risk, as all programs,\nincluding websites open in your browser can read the contents of the system\nclipboard."
+    },
+    {
+      "name": "clear_selection_on_clipboard_loss",
+      "default": "no",
+      "group": "Mouse",
+      "doc": "When the contents of the clipboard no longer reflect the current selection, clear it.\nThis is primarily useful on platforms such as Linux where selecting text automatically\ncopies it to a special \"primary selection\" clipboard or if you have copy_on_select\nset to clipboard.\n\nNote that on macOS the system does not provide notifications when the clipboard owner\nis changed, so there, copying to clipboard in a non-kitty application will not clear\nselections even if copy_on_select is enabled."
+    },
+    {
+      "name": "paste_actions",
+      "default": "quote-urls-at-prompt,confirm",
+      "group": "Mouse",
+      "doc": "A comma separated list of actions to take when pasting text into the terminal.\nThe supported paste actions are:\n\nquote-urls-at-prompt:\n    If the text being pasted is a URL and the cursor is at a shell prompt,\n    automatically quote the URL (needs shell_integration).\nreplace-dangerous-control-codes\n    Replace dangerous control codes from pasted text, without confirmation.\nreplace-newline\n    Replace the newline character from pasted text, without confirmation.\nconfirm:\n    Confirm the paste if the text to be pasted contains any terminal control codes\n    as this can be dangerous, leading to code execution if the shell/program running\n    in the terminal does not properly handle these.\nconfirm-if-large\n    Confirm the paste if it is very large (larger than 16KB) as pasting\n    large amounts of text into shells can be very slow.\nfilter:\n    Run the filter_paste() function from the file paste-actions.py in\n    the kitty config directory on the pasted text. The text returned by the\n    function will be actually pasted.\nno-op:\n    Has no effect."
+    },
+    {
+      "name": "strip_trailing_spaces",
+      "default": "never",
+      "group": "Mouse",
+      "doc": "Remove spaces at the end of lines when copying to clipboard. A value of\nsmart will do it when using normal selections, but not rectangle\nselections. A value of always will always do it.",
+      "choices": [
+        "always",
+        "never",
+        "smart"
+      ]
+    },
+    {
+      "name": "select_by_word_characters",
+      "default": "@-./_~?&=%+#",
+      "group": "Mouse",
+      "doc": "Characters considered part of a word when double clicking. In addition to these\ncharacters any character that is marked as an alphanumeric character in the\nUnicode database will be matched."
+    },
+    {
+      "name": "select_by_word_characters_forward",
+      "default": "",
+      "group": "Mouse",
+      "doc": "Characters considered part of a word when extending the selection forward on\ndouble clicking. In addition to these characters any character that is marked\nas an alphanumeric character in the Unicode database will be matched.\n\nIf empty (default) select_by_word_characters will be used for both\ndirections."
+    },
+    {
+      "name": "click_interval",
+      "default": "-1.0",
+      "group": "Mouse",
+      "doc": "The interval between successive clicks to detect double/triple clicks (in\nseconds). Negative numbers will use the system default instead, if available, or\nfallback to 0.5."
+    },
+    {
+      "name": "focus_follows_mouse",
+      "default": "no",
+      "group": "Mouse",
+      "doc": "Set the active window to the window under the mouse when moving the mouse around.\nOn macOS, this will also cause the OS Window under the mouse to be focused automatically when the\nmouse enters it."
+    },
+    {
+      "name": "pointer_shape_when_grabbed",
+      "default": "arrow",
+      "group": "Mouse",
+      "doc": "The shape of the mouse pointer when the program running in the terminal grabs\nthe mouse.",
+      "choices": [
+        "arrow",
+        "beam",
+        "text",
+        "pointer",
+        "hand",
+        "help",
+        "wait",
+        "progress",
+        "crosshair",
+        "cell",
+        "vertical-text",
+        "move",
+        "e-resize",
+        "ne-resize",
+        "nw-resize",
+        "n-resize",
+        "se-resize",
+        "sw-resize",
+        "s-resize",
+        "w-resize",
+        "ew-resize",
+        "ns-resize",
+        "nesw-resize",
+        "nwse-resize",
+        "zoom-in",
+        "zoom-out",
+        "alias",
+        "copy",
+        "not-allowed",
+        "no-drop",
+        "grab",
+        "grabbing"
+      ]
+    },
+    {
+      "name": "default_pointer_shape",
+      "default": "beam",
+      "group": "Mouse",
+      "doc": "The default shape of the mouse pointer.",
+      "choices": [
+        "arrow",
+        "beam",
+        "text",
+        "pointer",
+        "hand",
+        "help",
+        "wait",
+        "progress",
+        "crosshair",
+        "cell",
+        "vertical-text",
+        "move",
+        "e-resize",
+        "ne-resize",
+        "nw-resize",
+        "n-resize",
+        "se-resize",
+        "sw-resize",
+        "s-resize",
+        "w-resize",
+        "ew-resize",
+        "ns-resize",
+        "nesw-resize",
+        "nwse-resize",
+        "zoom-in",
+        "zoom-out",
+        "alias",
+        "copy",
+        "not-allowed",
+        "no-drop",
+        "grab",
+        "grabbing"
+      ]
+    },
+    {
+      "name": "pointer_shape_when_dragging",
+      "default": "beam crosshair",
+      "group": "Mouse",
+      "doc": "The default shape of the mouse pointer when dragging across text. The optional second value\nsets the shape when dragging in rectangular selection mode."
+    },
+    {
+      "name": "clear_all_mouse_actions",
+      "default": "no",
+      "group": "Mouse actions",
+      "doc": "Remove all mouse action definitions up to this point. Useful, for instance, to\nremove the default mouse actions."
+    },
+    {
+      "name": "repaint_delay",
+      "default": "10",
+      "group": "Performance tuning",
+      "doc": "Delay between screen updates (in milliseconds). Decreasing it, increases\nframes-per-second (FPS) at the cost of more CPU usage. The default value yields\n~100 FPS which is more than sufficient for most uses. Note that to actually\nachieve 100 FPS, you have to either set sync_to_monitor to no or\nuse a monitor with a high refresh rate. Also, to minimize latency when there is\npending input to be processed, this option is ignored."
+    },
+    {
+      "name": "input_delay",
+      "default": "3",
+      "group": "Performance tuning",
+      "doc": "Delay before input from the program running in the terminal is processed (in\nmilliseconds). Note that decreasing it will increase responsiveness, but also\nincrease CPU usage and might cause flicker in full screen programs that redraw\nthe entire screen on each loop, because kitty is so fast that partial screen\nupdates will be drawn. This setting is ignored when the input buffer is almost full."
+    },
+    {
+      "name": "sync_to_monitor",
+      "default": "yes",
+      "group": "Performance tuning",
+      "doc": "Sync screen updates to the refresh rate of the monitor. This prevents\n:link:`screen tearing <https://en.wikipedia.org/wiki/Screen_tearing>` when\nscrolling. However, it limits the rendering speed to the refresh rate of your\nmonitor. With a very high speed mouse/high keyboard repeat rate, you may notice\nsome slight input latency. If so, set this to no."
+    },
+    {
+      "name": "enable_audio_bell",
+      "default": "yes",
+      "group": "Terminal bell",
+      "doc": "The audio bell. Useful to disable it in environments that require silence."
+    },
+    {
+      "name": "visual_bell_duration",
+      "default": "0.0",
+      "group": "Terminal bell",
+      "doc": "The visual bell duration (in seconds). Flash the screen when a bell occurs for\nthe specified number of seconds. Set to zero to disable. The flash is animated, fading\nin and out over the specified duration. The easing function used for the fading can be controlled.\nFor example, 2.0 linear will casuse the flash to fade in and out linearly. The default\nif unspecified is to use ease-in-out which fades slowly at the start, middle and end.\nYou can specify different easing functions for the fade-in and fade-out parts, like this:\n2.0 ease-in linear. kitty\nsupports all the :link:`CSS easing functions <https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function>`."
+    },
+    {
+      "name": "visual_bell_color",
+      "default": "none",
+      "group": "Terminal bell",
+      "doc": "The color used by visual bell. Set to none will fall back to selection\nbackground color. If you feel that the visual bell is too bright, you can\nset it to a darker color."
+    },
+    {
+      "name": "window_alert_on_bell",
+      "default": "yes",
+      "group": "Terminal bell",
+      "doc": "Request window attention on bell. Makes the dock icon bounce on macOS or the\ntaskbar flash on Linux."
+    },
+    {
+      "name": "bell_on_tab",
+      "default": "\"\ud83d\udd14 \"",
+      "group": "Terminal bell",
+      "doc": "Some text or a Unicode symbol to show on the tab if a window in the tab that\ndoes not have focus has a bell. If you want to use leading or trailing\nspaces, surround the text with quotes. See tab_title_template for how\nthis is rendered.\n\nFor backwards compatibility, values of yes, y and true\nare converted to the default bell symbol and no, n,\nfalse and none are converted to the empty string."
+    },
+    {
+      "name": "command_on_bell",
+      "default": "none",
+      "group": "Terminal bell",
+      "doc": "Program to run when a bell occurs. The environment variable\nKITTY_CHILD_CMDLINE can be used to get the program running in the\nwindow in which the bell occurred."
+    },
+    {
+      "name": "bell_path",
+      "default": "none",
+      "group": "Terminal bell",
+      "doc": "Path to a sound file to play as the bell sound. If set to none, the\nsystem default bell sound is used. Must be in a format supported by the\noperating systems sound API, such as WAV or OGA on Linux (libcanberra) or AIFF,\nMP3 or WAV on macOS (NSSound). Relative paths are resolved\nwith respect to the kitty config directory."
+    },
+    {
+      "name": "linux_bell_theme",
+      "default": "__custom",
+      "group": "Terminal bell",
+      "doc": "The XDG Sound Theme kitty will use to play the bell sound.\nOn Wayland, when the compositor supports it, it is asked to play the system default\nbell sound, and this setting has no effect. Note that Hyprland claims to support this\nprotocol, but :link:`does not actually play a sound <https://github.com/hyprwm/Hyprland/issues/10488>`.\nThis setting defaults to the custom theme name specified in the\n:link:`XDG Sound theme specification <https://specifications.freedesktop.org/sound-theme-spec/latest/sound_lookup.html>,\nfalling back to the default freedesktop theme if it does not exist.\nTo change your sound theme desktop wide, create /.local/share/sounds/__custom/index.theme with the contents:\n\n    [Sound Theme]\n\n    Inherits=name-of-the-sound-theme-you-want-to-use\n\nReplace name-of-the-sound-theme-you-want-to-use with the actual theme name. Now all compliant applications\nshould use sounds from this theme."
+    },
+    {
+      "name": "remember_window_size",
+      "default": "yes",
+      "group": "Window layout",
+      "doc": "If enabled, the OS Window <os_window> size will be remembered so that\nnew instances of kitty will have the same size as the previous instance.\nIf disabled, the OS Window <os_window> will initially have size\nconfigured by initial_window_width/height, in pixels. You can use a suffix of\n\"c\" on the width/height values to have them interpreted as number of cells\ninstead of pixels."
+    },
+    {
+      "name": "initial_window_width",
+      "default": "640",
+      "group": "Window layout",
+      "doc": ""
+    },
+    {
+      "name": "initial_window_height",
+      "default": "400",
+      "group": "Window layout",
+      "doc": ""
+    },
+    {
+      "name": "remember_window_position",
+      "default": "no",
+      "group": "Window layout",
+      "doc": "If enabled, the OS Window <os_window> position will be remembered so that\nnew instances of kitty will have the same position as the previous instance.\nIf disabled, the OS Window <os_window> will be placed by the window manager.\nNote that remembering of position only works if the underlying desktop environment/window\nmanager supports it. It never works on Wayland. See also kitty --position to\nspecify the position when launching kitty."
+    },
+    {
+      "name": "enabled_layouts",
+      "default": "*",
+      "group": "Window layout",
+      "doc": "The enabled window layouts. A comma separated list of layout names. The special\nvalue all means all layouts. The first listed layout will be used as the\nstartup layout. Default configuration is all layouts in alphabetical order. For\na list of available layouts, see the layouts."
+    },
+    {
+      "name": "window_resize_step_cells",
+      "default": "2",
+      "group": "Window layout",
+      "doc": "The step size (in units of cell width/cell height) to use when resizing kitty\nwindows in a layout with the shortcut :sc:`start_resizing_window`. The cells\nvalue is used for horizontal resizing, and the lines value is used for vertical\nresizing."
+    },
+    {
+      "name": "window_resize_step_lines",
+      "default": "2",
+      "group": "Window layout",
+      "doc": ""
+    },
+    {
+      "name": "window_border_width",
+      "default": "0.5pt",
+      "group": "Window layout",
+      "doc": "The width of window borders. Can be either in pixels (px) or pts (pt). Values in\npts will be rounded to the nearest number of pixels based on screen resolution.\nIf not specified, the unit is assumed to be pts. Note that borders are displayed\nonly when more than one window is visible. They are meant to separate multiple\nwindows."
+    },
+    {
+      "name": "draw_minimal_borders",
+      "default": "yes",
+      "group": "Window layout",
+      "doc": "Draw only the minimum borders needed. This means that only the borders that\nseparate the window from a neighbor are drawn. Note that setting a\nnon-zero window_margin_width overrides this and causes all borders to be\ndrawn."
+    },
+    {
+      "name": "draw_window_borders_for_single_window",
+      "default": "no",
+      "group": "Window layout",
+      "doc": "Draw borders around a window even when there is only a single window visible. When\nenabled and there is only a single window, full borders are drawn around it (as if\ndraw_minimal_borders is false). The border will show in the active color when\nthe window is focused and the OS window has focus, and in the inactive color when the\nOS window loses focus. This provides a clear visual indicator of whether the kitty\nwindow is focused. When there are multiple windows visible, this option has no effect\nand normal border drawing rules apply."
+    },
+    {
+      "name": "window_margin_width",
+      "default": "0",
+      "group": "Window layout",
+      "doc": "The window margin (in pts) (blank area outside the border). A single value sets\nall four sides. Two values set the vertical and horizontal sides. Three values\nset top, horizontal and bottom. Four values set top, right, bottom and left."
+    },
+    {
+      "name": "single_window_margin_width",
+      "default": "-1",
+      "group": "Window layout",
+      "doc": "The window margin to use when only a single window is visible (in pts). Negative\nvalues will cause the value of window_margin_width to be used instead. A\nsingle value sets all four sides. Two values set the vertical and horizontal\nsides. Three values set top, horizontal and bottom. Four values set top, right,\nbottom and left."
+    },
+    {
+      "name": "window_padding_width",
+      "default": "0",
+      "group": "Window layout",
+      "doc": "The window padding (in pts) (blank area between the text and the window border).\nA single value sets all four sides. Two values set the vertical and horizontal\nsides. Three values set top, horizontal and bottom. Four values set top, right,\nbottom and left."
+    },
+    {
+      "name": "single_window_padding_width",
+      "default": "-1",
+      "group": "Window layout",
+      "doc": "The window padding to use when only a single window is visible (in pts). Negative\nvalues will cause the value of window_padding_width to be used instead. A\nsingle value sets all four sides. Two values set the vertical and horizontal\nsides. Three values set top, horizontal and bottom. Four values set top, right,\nbottom and left."
+    },
+    {
+      "name": "placement_strategy",
+      "default": "center",
+      "group": "Window layout",
+      "doc": "When the window size is not an exact multiple of the cell size, the cell area of\nthe terminal window will have some extra padding on the sides. You can control\nhow that padding is distributed with this option. Using a value of\ncenter means the cell area will be placed centrally. A value of\ntop-left means the padding will be only at the bottom and right edges.\nThe value can be one of: top-left, top, top-right,\nleft, center, right, bottom-left,\nbottom, bottom-right.",
+      "choices": [
+        "top-left",
+        "top",
+        "top-right",
+        "left",
+        "center",
+        "right",
+        "bottom-left",
+        "bottom",
+        "bottom-right"
+      ]
+    },
+    {
+      "name": "active_border_color",
+      "default": "#00ff00",
+      "group": "Window layout",
+      "doc": "The color for the border of the active window. Set this to none to not\ndraw borders around the active window."
+    },
+    {
+      "name": "inactive_border_color",
+      "default": "#cccccc",
+      "group": "Window layout",
+      "doc": "The color for the border of inactive windows."
+    },
+    {
+      "name": "bell_border_color",
+      "default": "#ff5a00",
+      "group": "Window layout",
+      "doc": "The color for the border of inactive windows in which a bell has occurred."
+    },
+    {
+      "name": "inactive_text_alpha",
+      "default": "1.0",
+      "group": "Window layout",
+      "doc": "Fade the text in inactive windows by the specified amount (a number between zero\nand one, with zero being fully faded)."
+    },
+    {
+      "name": "hide_window_decorations",
+      "default": "no",
+      "group": "Window layout",
+      "doc": "Hide the window decorations (title-bar and window borders) with yes. On\nmacOS, titlebar-only and titlebar-and-corners can be used to only hide the titlebar and the rounded corners.\nWhether this works and exactly what effect it has depends on the window manager/operating\nsystem. Note that the effects of changing this option when reloading config\nare undefined. When using titlebar-only, it is useful to also set\nwindow_margin_width and placement_strategy to prevent the rounded\ncorners from clipping text. Or use titlebar-and-corners.",
+      "choices": [
+        "titlebar-only",
+        "titlebar-and-corners"
+      ]
+    },
+    {
+      "name": "window_logo_path",
+      "default": "none",
+      "group": "Window layout",
+      "doc": "Path to a logo image. Must be in PNG/JPEG/WEBP/GIF/TIFF/BMP format. Relative paths are interpreted\nrelative to the kitty config directory. The logo is displayed in a corner of\nevery kitty window. The position is controlled by window_logo_position.\nIndividual windows can be configured to have different logos either using the\nlaunch action or the remote control <remote-control> facility."
+    },
+    {
+      "name": "window_logo_position",
+      "default": "bottom-right",
+      "group": "Window layout",
+      "doc": "Where to position the window logo in the window. The value can be one of:\ntop-left, top, top-right, left, center,\nright, bottom-left, bottom, bottom-right.",
+      "choices": [
+        "top-left",
+        "top",
+        "top-right",
+        "left",
+        "center",
+        "right",
+        "bottom-left",
+        "bottom",
+        "bottom-right"
+      ]
+    },
+    {
+      "name": "window_logo_alpha",
+      "default": "0.5",
+      "group": "Window layout",
+      "doc": "The amount the logo should be faded into the background. With zero being fully\nfaded and one being fully opaque."
+    },
+    {
+      "name": "window_logo_scale",
+      "default": "0",
+      "group": "Window layout",
+      "doc": "The percentage (0-100] of the window size to which the logo should scale. Using a single\nnumber means the logo is scaled to that percentage of the shortest window dimension, while preserving\naspect ratio of the logo image.\n\nUsing two numbers means the width and height of the logo are scaled to the respective\npercentage of the window's width and height.\n\nUsing zero as the percentage disables scaling in that dimension. A single zero (the default)\ndisables all scaling of the window logo."
+    },
+    {
+      "name": "resize_debounce_time",
+      "default": "0.1 0.5",
+      "group": "Window layout",
+      "doc": "The time to wait (in seconds) before asking the program running in kitty to resize and\nredraw the screen during a live resize of the OS window, when no new resize\nevents have been received, i.e. when resizing is either paused or finished.\nOn platforms such as macOS, where the operating system sends events corresponding\nto the start and end of a live resize, the second number is used for\nredraw-after-pause since kitty can distinguish between a pause and end of\nresizing. On such systems the first number is ignored and redraw is immediate\nafter end of resize. On other systems only the first number is used so that kitty\nis \"ready\" quickly after the end of resizing, while not also continuously\nredrawing, to save energy."
+    },
+    {
+      "name": "resize_in_steps",
+      "default": "no",
+      "group": "Window layout",
+      "doc": "Resize the OS window in steps as large as the cells, instead of with the usual\npixel accuracy. Combined with initial_window_width and\ninitial_window_height in number of cells, this option can be used to keep\nthe margins as small as possible when resizing the OS window. Note that this\ndoes not currently work on Wayland."
+    },
+    {
+      "name": "visual_window_select_characters",
+      "default": "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "group": "Window layout",
+      "doc": "The list of characters for visual window selection. For example, for selecting a\nwindow to focus on with :sc:`focus_visible_window`. The value should be a series\nof unique numbers or alphabets, case insensitive, from the set 0-9A-Z\\-=[];',./\\\\`.\nSpecify your preference as a string of characters."
+    },
+    {
+      "name": "confirm_os_window_close",
+      "default": "-1",
+      "group": "Window layout",
+      "doc": "Ask for confirmation when closing an OS window or a tab with at least this\nnumber of kitty windows in it by window manager (e.g. clicking the window close\nbutton or pressing the operating system shortcut to close windows) or by the\nclose_tab action. A value of zero disables confirmation. This confirmation\nalso applies to requests to quit the entire application (all OS windows, via the\nquit action). Negative values are converted to positive ones, however,\nwith shell_integration enabled, using negative values means windows\nsitting at a shell prompt are not counted, only windows where some command is\ncurrently running. You can also have backgrounded jobs prevent closing,\nby adding count-background to the setting, for example: -1 count-background.\nNote that if you want confirmation when closing individual windows,\nyou can map the close_window_with_confirmation action."
+    },
+    {
+      "name": "tab_bar_edge",
+      "default": "bottom",
+      "group": "Tab bar",
+      "doc": "The edge to show the tab bar on, top or bottom."
+    },
+    {
+      "name": "tab_bar_margin_width",
+      "default": "0.0",
+      "group": "Tab bar",
+      "doc": "The margin to the left and right of the tab bar (in pts)."
+    },
+    {
+      "name": "tab_bar_margin_height",
+      "default": "0.0 0.0",
+      "group": "Tab bar",
+      "doc": "The margin above and below the tab bar (in pts). The first number is the margin\nbetween the edge of the OS Window and the tab bar. The second number is the\nmargin between the tab bar and the contents of the current tab."
+    },
+    {
+      "name": "tab_bar_style",
+      "default": "fade",
+      "group": "Tab bar",
+      "doc": "The tab bar style, can be one of:\n\nfade\n    Each tab's edges fade into the background color. (See also tab_fade)\nslant\n    Tabs look like the tabs in a physical file.\nseparator\n    Tabs are separated by a configurable separator. (See also\n    tab_separator)\npowerline\n    Tabs are shown as a continuous line with \"fancy\" separators.\n    (See also tab_powerline_style)\ncustom\n    A user-supplied Python function called draw_tab is loaded from the file\n    tab_bar.py in the kitty config directory. For examples of how to\n    write such a function, see the functions named draw_tab_with_* in\n    kitty's source code: kitty/tab_bar.py. See also\n    :disc:`this discussion <4447>`\n    for examples from kitty users.\nhidden\n    The tab bar is hidden. If you use this, you might want to create\n    a mapping for the select_tab action which presents you with a list of\n    tabs and allows for easy switching to a tab.",
+      "choices": [
+        "fade",
+        "hidden",
+        "powerline",
+        "separator",
+        "slant",
+        "custom"
+      ]
+    },
+    {
+      "name": "tab_bar_filter",
+      "default": "",
+      "group": "Tab bar",
+      "doc": "A search expression <search_syntax>. Only tabs that match this expression\nwill be shown in the tab bar. The currently active tab is :italic:`always` shown,\nregardless of whether it matches or not. When using this option, the tab bar may\nbe displayed with less tabs than specified in tab_bar_min_tabs, as evaluating\nthe filter is expensive and is done only at display time. This is most useful when\nusing sessions <sessions>. An expression of session:~ or session:^$\nwill show only tabs that belong to the current session or no session. The various\ntab navigation actions such as goto_tab, next_tab, previous_tab, etc.\nare automatically restricted to work only on matching tabs."
+    },
+    {
+      "name": "tab_bar_align",
+      "default": "left",
+      "group": "Tab bar",
+      "doc": "The horizontal alignment of the tab bar, can be one of: left,\ncenter, right.",
+      "choices": [
+        "left",
+        "center",
+        "right"
+      ]
+    },
+    {
+      "name": "tab_bar_min_tabs",
+      "default": "2",
+      "group": "Tab bar",
+      "doc": "The minimum number of tabs that must exist before the tab bar is shown."
+    },
+    {
+      "name": "tab_switch_strategy",
+      "default": "previous",
+      "group": "Tab bar",
+      "doc": "The algorithm to use when switching to a tab when the current tab is closed. The\ndefault of previous will switch to the last used tab. A value of\nleft will switch to the tab to the left of the closed tab. A value of\nright will switch to the tab to the right of the closed tab. A value of\nlast will switch to the right-most tab.",
+      "choices": [
+        "last",
+        "left",
+        "previous",
+        "right"
+      ]
+    },
+    {
+      "name": "tab_fade",
+      "default": "0.25 0.5 0.75 1",
+      "group": "Tab bar",
+      "doc": "Control how each tab fades into the background when using fade for the\ntab_bar_style. Each number is an alpha (between zero and one) that\ncontrols how much the corresponding cell fades into the background, with zero\nbeing no fade and one being full fade. You can change the number of cells used\nby adding/removing entries to this list."
+    },
+    {
+      "name": "tab_separator",
+      "default": "\" \u2507\"",
+      "group": "Tab bar",
+      "doc": "The separator between tabs in the tab bar when using separator as the\ntab_bar_style."
+    },
+    {
+      "name": "tab_powerline_style",
+      "default": "angled",
+      "group": "Tab bar",
+      "doc": "The powerline separator style between tabs in the tab bar when using\npowerline as the tab_bar_style, can be one of: angled,\nslanted, round.",
+      "choices": [
+        "angled",
+        "round",
+        "slanted"
+      ]
+    },
+    {
+      "name": "tab_activity_symbol",
+      "default": "none",
+      "group": "Tab bar",
+      "doc": "Some text or a Unicode symbol to show on the tab if a window in the tab that\ndoes not have focus has some activity. If you want to use leading or trailing\nspaces, surround the text with quotes. See tab_title_template for how\nthis is rendered."
+    },
+    {
+      "name": "tab_title_max_length",
+      "default": "0",
+      "group": "Tab bar",
+      "doc": "The maximum number of cells that can be used to render the text in a tab.\nA value of zero means that no limit is applied."
+    },
+    {
+      "name": "tab_title_template",
+      "default": "\"{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}{title}\"",
+      "group": "Tab bar",
+      "doc": "A template to render the tab title. The default just renders the title with\noptional symbols for bell and activity. If you wish to include the tab-index as\nwell, use something like: {index}:{title}. Useful if you have shortcuts\nmapped for goto_tab N. If you prefer to see the index as a superscript,\nuse {sup.index}. All data available is:\n\ntitle\n    The current tab title.\nindex\n    The tab index usable with goto_tab N <goto_tab> shortcuts.\nlayout_name\n    The current layout name.\nsession_name\n    The name of the kitty session file from which this tab was created, if any.\nactive_session_name\n    The name of the kitty session file from which the active window in this tab was created, if any.\nnum_windows\n    The number of windows in the tab.\nnum_window_groups\n    The number of window groups (a window group is a window and all of its overlay windows) in the tab.\ntab.active_wd\n    The working directory of the currently active window in the tab\n    (expensive, requires syscall). Use tab.active_oldest_wd to get\n    the directory of the oldest foreground process rather than the newest.\ntab.active_exe\n    The name of the executable running in the foreground of the currently\n    active window in the tab (expensive, requires syscall). Use\n    tab.active_oldest_exe for the oldest foreground process.\nmax_title_length\n    The maximum title length available.\nkeyboard_mode\n    The name of the current keyboard mode <modal_mappings> or the empty string if no keyboard mode is active.\ntab.last_focused_progress_percent\n    If a command running in a window reports the progress for a task, show this progress as a percentage\n    from the most recently focused window in the tab. Empty string if no progress is reported.\ntab.progress_percent\n    If a command running in a window reports the progress for a task, show this progress as a percentage\n    from all windows in the tab, averaged. Empty string is no progress is reported.\ncustom\n    This will call a function named draw_title(data) from the file tab_bar.py placed in\n    the kitty config directory. The function will be passed a dictionary of data, the same data that\n    can be used in this template. It can then perform arbitrarily complex processing and return a string.\n    For example: tab_title_template \"{custom}\" will use the output of the function as the tab title.\n    Any print statements in the draw_title() will print to the STDOUT of the kitty process, useful\n    for debugging.\n\n\nNote that formatting is done by Python's string formatting machinery, so you can\nuse, for instance, {layout_name[:2].upper()} to show only the first two\nletters of the layout name, upper-cased. If you want to style the text, you can\nuse styling directives, for example:\n{fmt.fg.red}red{fmt.fg.tab}normal{fmt.bg._00FF00}greenbg{fmt.bg.tab}.\nSimilarly, for bold and italic:\n{fmt.bold}bold{fmt.nobold}normal{fmt.italic}italic{fmt.noitalic}.\nThe 256 eight terminal colors can be used as fmt.fg.color0 through fmt.fg.color255.\nNote that for backward compatibility, if {bell_symbol} or\n{activity_symbol} are not present in the template, they are prepended to\nit."
+    },
+    {
+      "name": "active_tab_title_template",
+      "default": "none",
+      "group": "Tab bar",
+      "doc": "Template to use for active tabs. If not specified falls back to\ntab_title_template."
+    },
+    {
+      "name": "active_tab_foreground",
+      "default": "#000",
+      "group": "Tab bar",
+      "doc": "Tab bar colors and styles."
+    },
+    {
+      "name": "active_tab_background",
+      "default": "#eee",
+      "group": "Tab bar",
+      "doc": ""
+    },
+    {
+      "name": "active_tab_font_style",
+      "default": "bold-italic",
+      "group": "Tab bar",
+      "doc": ""
+    },
+    {
+      "name": "inactive_tab_foreground",
+      "default": "#444",
+      "group": "Tab bar",
+      "doc": ""
+    },
+    {
+      "name": "inactive_tab_background",
+      "default": "#999",
+      "group": "Tab bar",
+      "doc": ""
+    },
+    {
+      "name": "inactive_tab_font_style",
+      "default": "normal",
+      "group": "Tab bar",
+      "doc": ""
+    },
+    {
+      "name": "tab_bar_background",
+      "default": "none",
+      "group": "Tab bar",
+      "doc": "Background color for the tab bar. Defaults to using the terminal background\ncolor."
+    },
+    {
+      "name": "tab_bar_margin_color",
+      "default": "none",
+      "group": "Tab bar",
+      "doc": "Color for the tab bar margin area. Defaults to using the terminal background\ncolor for margins above and below the tab bar. For side margins the default\ncolor is chosen to match the background color of the neighboring tab."
+    },
+    {
+      "name": "foreground",
+      "default": "#dddddd",
+      "group": "Color scheme",
+      "doc": "The foreground and background colors."
+    },
+    {
+      "name": "background",
+      "default": "#000000",
+      "group": "Color scheme",
+      "doc": ""
+    },
+    {
+      "name": "background_opacity",
+      "default": "1.0",
+      "group": "Color scheme",
+      "doc": "The opacity of the terminal background color. A number between zero and one, where one is\nopaque and zero is fully transparent. This will only work if supported by the\nOS (for instance, when using a compositor under X11). Note that it only sets\nthe background color's opacity in cells that have the same background color as\nthe default terminal background, so that things like the status bar in vim,\npowerline prompts, etc. still look good. But it means that if you use a color\ntheme with a background color in your editor, it will not be rendered as\ntransparent. Instead you should change the default background color in your\nkitty config and not use a background color in the editor color scheme. Or use\nthe escape codes to set the terminals default colors in a shell script to\nlaunch your editor. See also transparent_background_colors.\nBe aware that using a value less than 1.0 is a (possibly\nsignificant) performance hit. When using a low value for this setting, it is\ndesirable that you set the background color to a color the matches the\ngeneral color of the desktop background, for best text rendering. Note also,\nthat this setting does not apply to the background_image, if any. The\nbackground image can itself have transparency via its alpha channel if desired,\nand that will be respected.\n\nIf you want to dynamically change transparency of windows, set\ndynamic_background_opacity to yes (this is off by default as it\nhas a performance cost). Changing this option when reloading the config will\nonly work if dynamic_background_opacity was enabled in the original\nconfig."
+    },
+    {
+      "name": "background_blur",
+      "default": "0",
+      "group": "Color scheme",
+      "doc": "Set to a positive value to enable background blur (blurring of the visuals\nbehind a transparent window) on platforms that support it. Only takes effect\nwhen background_opacity is less than one. On macOS, this will also\ncontrol the :italic:`blur radius` (amount of blurring). Setting it to too high\na value will cause severe performance issues and/or rendering artifacts.\nUsually, values up to 64 work well. Note that this might cause performance issues,\ndepending on how the platform implements it, so use with care. Currently supported\non macOS and KDE."
+    },
+    {
+      "name": "transparent_background_colors",
+      "default": "",
+      "group": "Color scheme",
+      "doc": "A space separated list of upto 7 colors, with opacity. When the background color of a cell matches one of these colors,\nit is rendered semi-transparent using the specified opacity.\n\nUseful in more complex UIs like editors where you could want more than a single background color\nto be rendered as transparent, for instance, for a cursor highlight line background or a highlighted block.\nTerminal applications can set this color using The kitty color control <color_control>\nescape code.\n\nThe syntax for specifying colors is: color@opacity, where the @opacity\npart is optional. When unspecified, the value of background_opacity is used. For example::\n\n    transparent_background_colors red@0.5 #00ff00@0.3\n\nNote that you must also set background_opacity to something less than 1 for this setting to work properly."
+    },
+    {
+      "name": "dynamic_background_opacity",
+      "default": "no",
+      "group": "Color scheme",
+      "doc": "Allow changing of the background_opacity dynamically, using either\nkeyboard shortcuts (:sc:`increase_background_opacity` and\n:sc:`decrease_background_opacity`) or the remote control facility. Changing\nthis option by reloading the config is not supported."
+    },
+    {
+      "name": "background_image",
+      "default": "none",
+      "group": "Color scheme",
+      "doc": "Path to a background image. Must be in PNG/JPEG/WEBP/TIFF/GIF/BMP format. Note that when using auto_color_scheme this option is overridden by the color scheme file and must be set inside it to take effect."
+    },
+    {
+      "name": "background_image_layout",
+      "default": "tiled",
+      "group": "Color scheme",
+      "doc": "Whether to tile, scale or clamp the background image. The value can be one of\ntiled, mirror-tiled, scaled, clamped, centered\nor cscaled. The scaled and cscaled values scale the image to the\nwindow size, with cscaled preserving the image aspect ratio.\nNote that when using auto_color_scheme this option is overridden by the color scheme file and must be set inside it to take effect.",
+      "choices": [
+        "mirror-tiled",
+        "scaled",
+        "tiled",
+        "clamped",
+        "centered",
+        "cscaled"
+      ]
+    },
+    {
+      "name": "background_image_linear",
+      "default": "no",
+      "group": "Color scheme",
+      "doc": "When background image is scaled, whether linear interpolation should be used. Note that when using auto_color_scheme this option is overridden by the color scheme file and must be set inside it to take effect."
+    },
+    {
+      "name": "background_tint",
+      "default": "0.0",
+      "group": "Color scheme",
+      "doc": "How much to tint the background image by the background color. This option\nmakes it easier to read the text. Tinting is done using the current background\ncolor for each window. This option applies only if background_image is set.\nNote that when using auto_color_scheme this option is overridden by the color scheme file and must be set inside it to take effect."
+    },
+    {
+      "name": "background_tint_gaps",
+      "default": "1.0",
+      "group": "Color scheme",
+      "doc": "How much to tint the background image at the window gaps by the background\ncolor, after applying background_tint. Since this is multiplicative\nwith background_tint, it can be used to lighten the tint over the window\ngaps for a *separated* look.\nNote that when using auto_color_scheme this option is overridden by the color scheme file and must be set inside it to take effect."
+    },
+    {
+      "name": "dim_opacity",
+      "default": "0.4",
+      "group": "Color scheme",
+      "doc": "How much to dim text that has the DIM/FAINT attribute set. One means no dimming\nand zero means fully dimmed (i.e. invisible)."
+    },
+    {
+      "name": "selection_foreground",
+      "default": "#000000",
+      "group": "Color scheme",
+      "doc": "The foreground and background colors for text selected with the mouse. Setting\nboth of these to none will cause a \"reverse video\" effect for\nselections, where the selection will be the cell text color and the text will\nbecome the cell background color. Setting only selection_foreground to\nnone will cause the foreground color to be used unchanged. Note that\nthese colors can be overridden by the program running in the terminal."
+    },
+    {
+      "name": "selection_background",
+      "default": "#fffacd",
+      "group": "Color scheme",
+      "doc": ""
+    },
+    {
+      "name": "color0",
+      "default": "#000000",
+      "group": "The color table",
+      "doc": "black"
+    },
+    {
+      "name": "color8",
+      "default": "#767676",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color1",
+      "default": "#cc0403",
+      "group": "The color table",
+      "doc": "red"
+    },
+    {
+      "name": "color9",
+      "default": "#f2201f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color2",
+      "default": "#19cb00",
+      "group": "The color table",
+      "doc": "green"
+    },
+    {
+      "name": "color10",
+      "default": "#23fd00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color3",
+      "default": "#cecb00",
+      "group": "The color table",
+      "doc": "yellow"
+    },
+    {
+      "name": "color11",
+      "default": "#fffd00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color4",
+      "default": "#0d73cc",
+      "group": "The color table",
+      "doc": "blue"
+    },
+    {
+      "name": "color12",
+      "default": "#1a8fff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color5",
+      "default": "#cb1ed1",
+      "group": "The color table",
+      "doc": "magenta"
+    },
+    {
+      "name": "color13",
+      "default": "#fd28ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color6",
+      "default": "#0dcdcd",
+      "group": "The color table",
+      "doc": "cyan"
+    },
+    {
+      "name": "color14",
+      "default": "#14ffff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color7",
+      "default": "#dddddd",
+      "group": "The color table",
+      "doc": "white"
+    },
+    {
+      "name": "color15",
+      "default": "#ffffff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "mark1_foreground",
+      "default": "black",
+      "group": "The color table",
+      "doc": "Color for marks of type 1"
+    },
+    {
+      "name": "mark1_background",
+      "default": "#98d3cb",
+      "group": "The color table",
+      "doc": "Color for marks of type 1 (light steel blue)"
+    },
+    {
+      "name": "mark2_foreground",
+      "default": "black",
+      "group": "The color table",
+      "doc": "Color for marks of type 2"
+    },
+    {
+      "name": "mark2_background",
+      "default": "#f2dcd3",
+      "group": "The color table",
+      "doc": "Color for marks of type 1 (beige)"
+    },
+    {
+      "name": "mark3_foreground",
+      "default": "black",
+      "group": "The color table",
+      "doc": "Color for marks of type 3"
+    },
+    {
+      "name": "mark3_background",
+      "default": "#f274bc",
+      "group": "The color table",
+      "doc": "Color for marks of type 3 (violet)"
+    },
+    {
+      "name": "color16",
+      "default": "#000000",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color17",
+      "default": "#00005f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color18",
+      "default": "#000087",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color19",
+      "default": "#0000af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color20",
+      "default": "#0000d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color21",
+      "default": "#0000ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color22",
+      "default": "#005f00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color23",
+      "default": "#005f5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color24",
+      "default": "#005f87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color25",
+      "default": "#005faf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color26",
+      "default": "#005fd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color27",
+      "default": "#005fff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color28",
+      "default": "#008700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color29",
+      "default": "#00875f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color30",
+      "default": "#008787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color31",
+      "default": "#0087af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color32",
+      "default": "#0087d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color33",
+      "default": "#0087ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color34",
+      "default": "#00af00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color35",
+      "default": "#00af5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color36",
+      "default": "#00af87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color37",
+      "default": "#00afaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color38",
+      "default": "#00afd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color39",
+      "default": "#00afff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color40",
+      "default": "#00d700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color41",
+      "default": "#00d75f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color42",
+      "default": "#00d787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color43",
+      "default": "#00d7af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color44",
+      "default": "#00d7d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color45",
+      "default": "#00d7ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color46",
+      "default": "#00ff00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color47",
+      "default": "#00ff5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color48",
+      "default": "#00ff87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color49",
+      "default": "#00ffaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color50",
+      "default": "#00ffd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color51",
+      "default": "#00ffff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color52",
+      "default": "#5f0000",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color53",
+      "default": "#5f005f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color54",
+      "default": "#5f0087",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color55",
+      "default": "#5f00af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color56",
+      "default": "#5f00d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color57",
+      "default": "#5f00ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color58",
+      "default": "#5f5f00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color59",
+      "default": "#5f5f5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color60",
+      "default": "#5f5f87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color61",
+      "default": "#5f5faf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color62",
+      "default": "#5f5fd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color63",
+      "default": "#5f5fff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color64",
+      "default": "#5f8700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color65",
+      "default": "#5f875f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color66",
+      "default": "#5f8787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color67",
+      "default": "#5f87af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color68",
+      "default": "#5f87d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color69",
+      "default": "#5f87ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color70",
+      "default": "#5faf00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color71",
+      "default": "#5faf5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color72",
+      "default": "#5faf87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color73",
+      "default": "#5fafaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color74",
+      "default": "#5fafd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color75",
+      "default": "#5fafff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color76",
+      "default": "#5fd700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color77",
+      "default": "#5fd75f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color78",
+      "default": "#5fd787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color79",
+      "default": "#5fd7af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color80",
+      "default": "#5fd7d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color81",
+      "default": "#5fd7ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color82",
+      "default": "#5fff00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color83",
+      "default": "#5fff5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color84",
+      "default": "#5fff87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color85",
+      "default": "#5fffaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color86",
+      "default": "#5fffd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color87",
+      "default": "#5fffff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color88",
+      "default": "#870000",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color89",
+      "default": "#87005f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color90",
+      "default": "#870087",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color91",
+      "default": "#8700af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color92",
+      "default": "#8700d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color93",
+      "default": "#8700ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color94",
+      "default": "#875f00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color95",
+      "default": "#875f5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color96",
+      "default": "#875f87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color97",
+      "default": "#875faf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color98",
+      "default": "#875fd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color99",
+      "default": "#875fff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color100",
+      "default": "#878700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color101",
+      "default": "#87875f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color102",
+      "default": "#878787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color103",
+      "default": "#8787af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color104",
+      "default": "#8787d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color105",
+      "default": "#8787ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color106",
+      "default": "#87af00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color107",
+      "default": "#87af5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color108",
+      "default": "#87af87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color109",
+      "default": "#87afaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color110",
+      "default": "#87afd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color111",
+      "default": "#87afff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color112",
+      "default": "#87d700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color113",
+      "default": "#87d75f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color114",
+      "default": "#87d787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color115",
+      "default": "#87d7af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color116",
+      "default": "#87d7d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color117",
+      "default": "#87d7ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color118",
+      "default": "#87ff00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color119",
+      "default": "#87ff5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color120",
+      "default": "#87ff87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color121",
+      "default": "#87ffaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color122",
+      "default": "#87ffd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color123",
+      "default": "#87ffff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color124",
+      "default": "#af0000",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color125",
+      "default": "#af005f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color126",
+      "default": "#af0087",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color127",
+      "default": "#af00af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color128",
+      "default": "#af00d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color129",
+      "default": "#af00ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color130",
+      "default": "#af5f00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color131",
+      "default": "#af5f5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color132",
+      "default": "#af5f87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color133",
+      "default": "#af5faf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color134",
+      "default": "#af5fd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color135",
+      "default": "#af5fff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color136",
+      "default": "#af8700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color137",
+      "default": "#af875f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color138",
+      "default": "#af8787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color139",
+      "default": "#af87af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color140",
+      "default": "#af87d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color141",
+      "default": "#af87ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color142",
+      "default": "#afaf00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color143",
+      "default": "#afaf5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color144",
+      "default": "#afaf87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color145",
+      "default": "#afafaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color146",
+      "default": "#afafd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color147",
+      "default": "#afafff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color148",
+      "default": "#afd700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color149",
+      "default": "#afd75f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color150",
+      "default": "#afd787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color151",
+      "default": "#afd7af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color152",
+      "default": "#afd7d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color153",
+      "default": "#afd7ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color154",
+      "default": "#afff00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color155",
+      "default": "#afff5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color156",
+      "default": "#afff87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color157",
+      "default": "#afffaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color158",
+      "default": "#afffd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color159",
+      "default": "#afffff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color160",
+      "default": "#d70000",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color161",
+      "default": "#d7005f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color162",
+      "default": "#d70087",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color163",
+      "default": "#d700af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color164",
+      "default": "#d700d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color165",
+      "default": "#d700ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color166",
+      "default": "#d75f00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color167",
+      "default": "#d75f5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color168",
+      "default": "#d75f87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color169",
+      "default": "#d75faf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color170",
+      "default": "#d75fd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color171",
+      "default": "#d75fff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color172",
+      "default": "#d78700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color173",
+      "default": "#d7875f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color174",
+      "default": "#d78787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color175",
+      "default": "#d787af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color176",
+      "default": "#d787d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color177",
+      "default": "#d787ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color178",
+      "default": "#d7af00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color179",
+      "default": "#d7af5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color180",
+      "default": "#d7af87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color181",
+      "default": "#d7afaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color182",
+      "default": "#d7afd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color183",
+      "default": "#d7afff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color184",
+      "default": "#d7d700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color185",
+      "default": "#d7d75f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color186",
+      "default": "#d7d787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color187",
+      "default": "#d7d7af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color188",
+      "default": "#d7d7d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color189",
+      "default": "#d7d7ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color190",
+      "default": "#d7ff00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color191",
+      "default": "#d7ff5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color192",
+      "default": "#d7ff87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color193",
+      "default": "#d7ffaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color194",
+      "default": "#d7ffd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color195",
+      "default": "#d7ffff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color196",
+      "default": "#ff0000",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color197",
+      "default": "#ff005f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color198",
+      "default": "#ff0087",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color199",
+      "default": "#ff00af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color200",
+      "default": "#ff00d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color201",
+      "default": "#ff00ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color202",
+      "default": "#ff5f00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color203",
+      "default": "#ff5f5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color204",
+      "default": "#ff5f87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color205",
+      "default": "#ff5faf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color206",
+      "default": "#ff5fd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color207",
+      "default": "#ff5fff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color208",
+      "default": "#ff8700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color209",
+      "default": "#ff875f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color210",
+      "default": "#ff8787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color211",
+      "default": "#ff87af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color212",
+      "default": "#ff87d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color213",
+      "default": "#ff87ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color214",
+      "default": "#ffaf00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color215",
+      "default": "#ffaf5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color216",
+      "default": "#ffaf87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color217",
+      "default": "#ffafaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color218",
+      "default": "#ffafd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color219",
+      "default": "#ffafff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color220",
+      "default": "#ffd700",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color221",
+      "default": "#ffd75f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color222",
+      "default": "#ffd787",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color223",
+      "default": "#ffd7af",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color224",
+      "default": "#ffd7d7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color225",
+      "default": "#ffd7ff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color226",
+      "default": "#ffff00",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color227",
+      "default": "#ffff5f",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color228",
+      "default": "#ffff87",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color229",
+      "default": "#ffffaf",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color230",
+      "default": "#ffffd7",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color231",
+      "default": "#ffffff",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color232",
+      "default": "#080808",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color233",
+      "default": "#121212",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color234",
+      "default": "#1c1c1c",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color235",
+      "default": "#262626",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color236",
+      "default": "#303030",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color237",
+      "default": "#3a3a3a",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color238",
+      "default": "#444444",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color239",
+      "default": "#4e4e4e",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color240",
+      "default": "#585858",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color241",
+      "default": "#626262",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color242",
+      "default": "#6c6c6c",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color243",
+      "default": "#767676",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color244",
+      "default": "#808080",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color245",
+      "default": "#8a8a8a",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color246",
+      "default": "#949494",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color247",
+      "default": "#9e9e9e",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color248",
+      "default": "#a8a8a8",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color249",
+      "default": "#b2b2b2",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color250",
+      "default": "#bcbcbc",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color251",
+      "default": "#c6c6c6",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color252",
+      "default": "#d0d0d0",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color253",
+      "default": "#dadada",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color254",
+      "default": "#e4e4e4",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "color255",
+      "default": "#eeeeee",
+      "group": "The color table",
+      "doc": ""
+    },
+    {
+      "name": "shell",
+      "default": ".",
+      "group": "Advanced",
+      "doc": "The shell program to execute. The default value of . means to use\nthe value of of the SHELL environment variable or if unset,\nwhatever shell is set as the default shell for the current user. Note that on\nmacOS if you change this, you might need to add --login and\n--interactive to ensure that the shell starts in interactive mode and\nreads its startup rc files. Environment variables are expanded in this setting."
+    },
+    {
+      "name": "editor",
+      "default": ".",
+      "group": "Advanced",
+      "doc": "The terminal based text editor (such as :program:`vim` or :program:`nano`) to\nuse when editing the kitty config file or similar tasks.\n\nThe default value of . means to use the environment variables\nVISUAL and EDITOR in that order. If these variables aren't\nset, kitty will run your shell ($SHELL -l -i -c env) to see if\nyour shell startup rc files set VISUAL or EDITOR. If that\ndoesn't work, kitty will cycle through various known editors (:program:`vim`,\n:program:`emacs`, etc.) and take the first one that exists on your system."
+    },
+    {
+      "name": "close_on_child_death",
+      "default": "no",
+      "group": "Advanced",
+      "doc": "Close the window when the child process (usually the shell) exits. With the default value\nno, the terminal will remain open when the child exits as long as there\nare still other processes outputting to the terminal (for example disowned or\nbackgrounded processes). When enabled with yes, the window will close as\nsoon as the child process exits. Note that setting it to yes means that\nany background processes still using the terminal can fail silently because\ntheir stdout/stderr/stdin no longer work."
+    },
+    {
+      "name": "allow_remote_control",
+      "default": "no",
+      "group": "Advanced",
+      "doc": "Allow other programs to control kitty. If you turn this on, other programs can\ncontrol all aspects of kitty, including sending text to kitty windows, opening\nnew windows, closing windows, reading the content of windows, etc. Note that\nthis even works over SSH connections. The default setting of no\nprevents any form of remote control. The meaning of the various values are:\n\npassword\n    Remote control requests received over both the TTY device and the socket\n    are confirmed based on passwords, see remote_control_password.\n\nsocket-only\n    Remote control requests received over a socket are accepted\n    unconditionally. Requests received over the TTY are denied.\n    See listen_on.\n\nsocket\n    Remote control requests received over a socket are accepted\n    unconditionally. Requests received over the TTY are confirmed based on\n    password.\n\nno\n    Remote control is completely disabled.\n\nyes\n    Remote control requests are always accepted.",
+      "choices": [
+        "password",
+        "socket-only",
+        "socket",
+        "no",
+        "n",
+        "false",
+        "yes",
+        "y",
+        "true"
+      ]
+    },
+    {
+      "name": "listen_on",
+      "default": "none",
+      "group": "Advanced",
+      "doc": "Listen to the specified socket for remote control connections. Note that this\nwill apply to all kitty instances. It can be overridden by the kitty\n--listen-on command line option. For UNIX sockets, such as\nunix:${TEMP}/mykitty or unix:@mykitty (on Linux). Environment\nvariables are expanded and relative paths are resolved with respect to the\ntemporary directory. If {kitty_pid} is present, then it is replaced by\nthe PID of the kitty process, otherwise the PID of the kitty process is\nappended to the value, with a hyphen. For TCP sockets such as\ntcp:localhost:0 a random port is always used even if a non-zero port\nnumber is specified.  See the help for kitty --listen-on for more\ndetails. Note that this will be ignored unless allow_remote_control is\nset to either: yes, socket or socket-only.\nChanging this option by reloading the config is not supported."
+    },
+    {
+      "name": "update_check_interval",
+      "default": "24",
+      "group": "Advanced",
+      "doc": "The interval to periodically check if an update to kitty is available (in\nhours). If an update is found, a system notification is displayed informing you\nof the available update. The default is to check every 24 hours, set to zero to\ndisable. Update checking is only done by the official binary builds. Distro\npackages or source builds do not do update checking. Changing this option by\nreloading the config is not supported."
+    },
+    {
+      "name": "startup_session",
+      "default": "none",
+      "group": "Advanced",
+      "doc": "Path to a session file to use for all kitty instances. Can be overridden by\nusing the kitty --session =none command line option for individual\ninstances. See sessions in the kitty documentation for details. Note that\nrelative paths are interpreted with respect to the kitty config directory.\nEnvironment variables in the path are expanded. Changing this option by\nreloading the config is not supported. Note that if kitty is invoked with command line\narguments specifying a command to run, this option is ignored."
+    },
+    {
+      "name": "clipboard_control",
+      "default": "write-clipboard write-primary read-clipboard-ask read-primary-ask",
+      "group": "Advanced",
+      "doc": "Allow programs running in kitty to read and write from the clipboard. You can\ncontrol exactly which actions are allowed. The possible actions are:\nwrite-clipboard, read-clipboard, write-primary,\nread-primary, read-clipboard-ask, read-primary-ask. The\ndefault is to allow writing to the clipboard and primary selection and to ask\nfor permission when a program tries to read from the clipboard. Note that\ndisabling the read confirmation is a security risk as it means that any program,\neven the ones running on a remote server via SSH can read your clipboard. See\nalso clipboard_max_size."
+    },
+    {
+      "name": "clipboard_max_size",
+      "default": "512",
+      "group": "Advanced",
+      "doc": "The maximum size (in MB) of data from programs running in kitty that will be\nstored for writing to the system clipboard. A value of zero means no size limit\nis applied. See also clipboard_control."
+    },
+    {
+      "name": "file_transfer_confirmation_bypass",
+      "default": "",
+      "group": "Advanced",
+      "doc": "The password that can be supplied to the file transfer kitten\n</kittens/transfer> to skip the transfer confirmation prompt. This should only\nbe used when initiating transfers from trusted computers, over trusted networks\nor encrypted transports, as it allows any programs running on the remote machine\nto read/write to the local filesystem, without permission."
+    },
+    {
+      "name": "allow_hyperlinks",
+      "default": "yes",
+      "group": "Advanced",
+      "doc": "Process hyperlink <hyperlinks> escape sequences (OSC 8). If disabled OSC\n8 escape sequences are ignored. Otherwise they become clickable links, that you\ncan click with the mouse or by using the hints kitten </kittens/hints>.\nThe special value of ask means that kitty will ask before opening the\nlink when clicked."
+    },
+    {
+      "name": "shell_integration",
+      "default": "enabled",
+      "group": "Advanced",
+      "doc": "Enable shell integration on supported shells. This enables features such as\njumping to previous prompts, browsing the output of the previous command in a\npager, etc. on supported shells. Set to disabled to turn off shell\nintegration, completely. It is also possible to disable individual features, set\nto a space separated list of these values: no-rc, no-cursor,\nno-title, no-cwd, no-prompt-mark, no-complete, no-sudo.\nSee Shell integration <shell_integration> for details."
+    },
+    {
+      "name": "allow_cloning",
+      "default": "ask",
+      "group": "Advanced",
+      "doc": "Control whether programs running in the terminal can request new windows to be\ncreated. The canonical example is clone-in-kitty <clone_shell>. By\ndefault, kitty will ask for permission for each clone request. Allowing cloning\nunconditionally gives programs running in the terminal (including over SSH)\npermission to execute arbitrary code, as the user who is running the terminal,\non the computer that the terminal is running on.",
+      "choices": [
+        "yes",
+        "y",
+        "true",
+        "no",
+        "n",
+        "false",
+        "ask"
+      ]
+    },
+    {
+      "name": "clone_source_strategies",
+      "default": "venv,conda,env_var,path",
+      "group": "Advanced",
+      "doc": "Control what shell code is sourced when running :command:`clone-in-kitty`\nin the newly cloned window. The supported strategies are:\n\nvenv\n    Source the file $VIRTUAL_ENV/bin/activate. This is used by the\n    Python stdlib venv module and allows cloning venvs automatically.\nconda\n    Run conda activate $CONDA_DEFAULT_ENV. This supports the virtual\n    environments created by :program:`conda`.\nenv_var\n    Execute the contents of the environment variable\n    KITTY_CLONE_SOURCE_CODE with eval.\npath\n    Source the file pointed to by the environment variable\n    KITTY_CLONE_SOURCE_PATH.\n\nThis option must be a comma separated list of the above values. Only the\nfirst valid match, in the order specified, is sourced."
+    },
+    {
+      "name": "notify_on_cmd_finish",
+      "default": "never",
+      "group": "Advanced",
+      "doc": "Show a desktop notification when a long-running command finishes\n(needs shell_integration).\nThe possible values are:\n\nnever\n    Never send a notification.\n\nunfocused\n    Only send a notification when the window does not have keyboard focus.\n\ninvisible\n    Only send a notification when the window both is unfocused and not visible\n    to the user, for example, because it is in an inactive tab or its OS window\n    is not currently visible (on platforms that support OS window visibility querying\n    this considers an OS Window visible iff it is active).\n\nalways\n    Always send a notification, regardless of window state.\n\nThere are two optional arguments:\n\nFirst, the minimum duration for what is considered a\nlong running command. The default is 5 seconds. Specify a second argument\nto set the duration. For example: invisible 15.\nDo not set the value too small, otherwise a command that launches a new OS Window\nand exits will spam a notification.\n\nSecond, the action to perform. The default is notify. The possible values are:\n\nnotify\n    Send a desktop notification. The subsequent arguments are optional and specify when\n    the notification is automatically cleared. The set of possible events when the notification is\n    cleared are: focus and next. focus means that when the notification\n    policy is unfocused or invisible the notification is automatically cleared\n    when the window regains focus. The value of next means that the previous notification\n    is cleared when the next notification is shown. The default when no arguments are specified\n    is: focus next.\n\nbell\n    Ring the terminal bell.\n\nnotify-bell\n    Send a desktop notification and ring the terminal bell.\n    The arguments are the same as for `notify`.\n\ncommand\n    Run a custom command. All subsequent arguments are the cmdline to run.\n\nSome more examples::\n\n    # Send a notification when a command takes more than 5 seconds in an unfocused window\n    notify_on_cmd_finish unfocused\n    # Send a notification when a command takes more than 10 seconds in a invisible window\n    notify_on_cmd_finish invisible 10.0\n    # Ring a bell when a command takes more than 10 seconds in a invisible window\n    notify_on_cmd_finish invisible 10.0 bell\n    # Run 'notify-send' when a command takes more than 10 seconds in a invisible window\n    # Here %c is replaced by the current command line and %s by the job exit code\n    notify_on_cmd_finish invisible 10.0 command notify-send \"job finished with status: %s\" %c\n    # Do not clear previous notification when next command finishes or window regains focus\n    notify_on_cmd_finish invisible 5.0 notify"
+    },
+    {
+      "name": "term",
+      "default": "xterm-kitty",
+      "group": "Advanced",
+      "doc": "The value of the TERM environment variable to set. Changing this can\nbreak many terminal programs, only change it if you know what you are doing, not\nbecause you read some advice on \"Stack Overflow\" to change it. The\nTERM variable is used by various programs to get information about the\ncapabilities and behavior of the terminal. If you change it, depending on what\nprograms you run, and how different the terminal you are changing it to is,\nvarious things from key-presses, to colors, to various advanced features may not\nwork. Changing this option by reloading the config will only affect newly\ncreated windows."
+    },
+    {
+      "name": "terminfo_type",
+      "default": "path",
+      "group": "Advanced",
+      "doc": "The value of the TERMINFO environment variable to set. This variable is\nused by programs running in the terminal to search for terminfo databases. The default value\nof path causes kitty to set it to a filesystem location containing the\nkitty terminfo database. A value of direct means put the entire database into\nthe env var directly. This can be useful when connecting to containers, for example. But,\nnote that not all software supports this. A value of none means do not touch the variable.",
+      "choices": [
+        "path",
+        "direct",
+        "none"
+      ]
+    },
+    {
+      "name": "forward_stdio",
+      "default": "no",
+      "group": "Advanced",
+      "doc": "Forward STDOUT and STDERR of the kitty process to child processes.\nThis is useful for debugging as it\nallows child processes to print to kitty's STDOUT directly. For example,\necho hello world >&$KITTY_STDIO_FORWARDED in a shell will print\nto the parent kitty's STDOUT. Sets the KITTY_STDIO_FORWARDED=fdnum\nenvironment variable so child processes know about the forwarding. Note that\non macOS this prevents the shell from being run via the login utility so getlogin()\nwill not work in programs run in this session."
+    },
+    {
+      "name": "wayland_titlebar_color",
+      "default": "system",
+      "group": "OS specific tweaks",
+      "doc": "The color of the kitty window's titlebar on Wayland systems with client\nside window decorations such as GNOME. A value of system means to use\nthe default system colors, a value of background means to use the\nbackground color of the currently active kitty window and finally you can use an\narbitrary color, such as #12af59 or red."
+    },
+    {
+      "name": "macos_titlebar_color",
+      "default": "system",
+      "group": "OS specific tweaks",
+      "doc": "The color of the kitty window's titlebar on macOS. A value of\nsystem means to use the default system color, light or\ndark can also be used to set it explicitly. A value of\nbackground means to use the background color of the currently active\nwindow and finally you can use an arbitrary color, such as #12af59 or\nred."
+    },
+    {
+      "name": "macos_option_as_alt",
+      "default": "no",
+      "group": "OS specific tweaks",
+      "doc": "Use the Option key as an Alt key on macOS. With this set to\nno, kitty will use the macOS native Option+Key to enter Unicode\ncharacter behavior. This will break any Alt+Key keyboard shortcuts in\nyour terminal programs, but you can use the macOS Unicode input technique. You\ncan use the values: left, right or both to use only the\nleft, right or both Option keys as Alt, instead. Note that kitty\nitself always treats Option the same as Alt. This means you cannot\nuse this option to configure different kitty shortcuts for Option+Key\nvs. Alt+Key. Also, any kitty shortcuts using Option/Alt+Key will\ntake priority, so that any such key presses will not be passed to terminal\nprograms running inside kitty. Changing this option by reloading the config is\nnot supported."
+    },
+    {
+      "name": "macos_hide_from_tasks",
+      "default": "no",
+      "group": "OS specific tweaks",
+      "doc": "Hide the kitty window from running tasks on macOS (\u2318+Tab and the Dock).\nChanging this option by reloading the config is not supported."
+    },
+    {
+      "name": "macos_quit_when_last_window_closed",
+      "default": "no",
+      "group": "OS specific tweaks",
+      "doc": "Have kitty quit when all the top-level windows are closed on macOS. By default,\nkitty will stay running, even with no open windows, as is the expected behavior\non macOS."
+    },
+    {
+      "name": "macos_window_resizable",
+      "default": "yes",
+      "group": "OS specific tweaks",
+      "doc": "Disable this if you want kitty top-level OS windows to not be resizable on\nmacOS."
+    },
+    {
+      "name": "macos_thicken_font",
+      "default": "0",
+      "group": "OS specific tweaks",
+      "doc": "Draw an extra border around the font with the given width, to increase\nlegibility at small font sizes on macOS. For example, a value of 0.75\nwill result in rendering that looks similar to sub-pixel antialiasing at common\nfont sizes. Note that in modern kitty, this option is obsolete (although still\nsupported). Consider using text_composition_strategy instead."
+    },
+    {
+      "name": "macos_traditional_fullscreen",
+      "default": "no",
+      "group": "OS specific tweaks",
+      "doc": "Use the macOS traditional full-screen transition, that is faster, but less\npretty."
+    },
+    {
+      "name": "macos_show_window_title_in",
+      "default": "all",
+      "group": "OS specific tweaks",
+      "doc": "Control where the window title is displayed on macOS. A value of window\nwill show the title of the currently active window at the top of the macOS\nwindow. A value of menubar will show the title of the currently active\nwindow in the macOS global menu bar, making use of otherwise wasted space. A\nvalue of all will show the title in both places, and none hides\nthe title. See macos_menubar_title_max_length for how to control the\nlength of the title in the menu bar.",
+      "choices": [
+        "all",
+        "menubar",
+        "none",
+        "window"
+      ]
+    },
+    {
+      "name": "macos_menubar_title_max_length",
+      "default": "0",
+      "group": "OS specific tweaks",
+      "doc": "The maximum number of characters from the window title to show in the macOS\nglobal menu bar. Values less than one means that there is no maximum limit."
+    },
+    {
+      "name": "macos_custom_beam_cursor",
+      "default": "no",
+      "group": "OS specific tweaks",
+      "doc": "Use a custom mouse cursor for macOS that is easier to see on both light\nand dark backgrounds. Nowadays, the default macOS cursor already comes with a\nwhite border. WARNING: this might make your mouse cursor invisible on\ndual GPU machines. Changing this option by reloading the config is not supported."
+    },
+    {
+      "name": "macos_colorspace",
+      "default": "srgb",
+      "group": "OS specific tweaks",
+      "doc": "The colorspace in which to interpret terminal colors. The default of\nsrgb will cause colors to match those seen in web browsers. The value of\ndefault will use whatever the native colorspace of the display is.\nThe value of displayp3 will use Apple's special snowflake display P3\ncolor space, which will result in over saturated (brighter) colors with some\ncolor shift. Reloading configuration will change this value only for newly\ncreated OS windows.",
+      "choices": [
+        "srgb",
+        "default",
+        "displayp3"
+      ]
+    },
+    {
+      "name": "linux_display_server",
+      "default": "auto",
+      "group": "OS specific tweaks",
+      "doc": "Choose between Wayland and X11 backends. By default, an appropriate backend\nbased on the system state is chosen automatically. Set it to x11 or\nwayland to force the choice. Changing this option by reloading the\nconfig is not supported.",
+      "choices": [
+        "auto",
+        "wayland",
+        "x11"
+      ]
+    },
+    {
+      "name": "wayland_enable_ime",
+      "default": "yes",
+      "group": "OS specific tweaks",
+      "doc": "Enable Input Method Extension on Wayland. This is typically used for\ninputting text in East Asian languages. However, its implementation in\nWayland is often buggy and introduces latency into the input loop,\nso disable this if you know you dont need it. Changing this option\nby reloading the config is not supported, it will not have any effect."
+    },
+    {
+      "name": "kitty_mod",
+      "default": "ctrl+shift",
+      "group": "Keyboard shortcuts",
+      "doc": "Special modifier key alias for default shortcuts. You can change the value of\nthis option to alter all default shortcuts that use kitty_mod."
+    },
+    {
+      "name": "clear_all_shortcuts",
+      "default": "no",
+      "group": "Keyboard shortcuts",
+      "doc": "Remove all shortcut definitions up to this point. Useful, for instance, to\nremove the default shortcuts."
+    }
+  ],
+  "multi_options": [
+    {
+      "name": "symbol_map",
+      "group": "Fonts",
+      "doc": "Map the specified Unicode codepoints to a particular font. Useful if you need\nspecial rendering for some symbols, such as for Powerline. Avoids the need for\npatched fonts. Each Unicode code point is specified in the form U+<code\npoint in hexadecimal>. You can specify multiple code points, separated by\ncommas and ranges separated by hyphens. This option can be specified multiple\ntimes. The syntax is::\n\n    symbol_map codepoints Font Family Name",
+      "default": "U+E0A0-U+E0A3,U+E0C0-U+E0C7 PowerlineSymbols"
+    },
+    {
+      "name": "narrow_symbols",
+      "group": "Fonts",
+      "doc": "Usually, for Private Use Unicode characters and some symbol/dingbat characters,\nif the character is followed by one or more spaces, kitty will use those extra\ncells to render the character larger, if the character in the font has a wide\naspect ratio. Using this option you can force kitty to restrict the specified\ncode points to render in the specified number of cells (defaulting to one cell).\nThis option can be specified multiple times. The syntax is::\n\n    narrow_symbols codepoints [optionally the number of cells]",
+      "default": "U+E0A0-U+E0A3,U+E0C0-U+E0C7 1"
+    },
+    {
+      "name": "font_features",
+      "group": "Fonts",
+      "doc": "Choose exactly which OpenType features to enable or disable. Note that for the\nmain fonts, features can be specified when selecting the font using the choose-fonts kitten.\nThis setting is useful for fallback fonts.\n\nSome fonts might have features worthwhile in a terminal. For example, Fira Code\nincludes a discretionary feature, zero, which in that font changes the\nappearance of the zero (0), to make it more easily distinguishable from \u00d8. Fira\nCode also includes other discretionary features known as Stylistic Sets which\nhave the tags ss01 through ss20.\n\nFor the exact syntax to use for individual features, see the\n:link:`HarfBuzz documentation\n<https://harfbuzz.github.io/harfbuzz-hb-common.html#hb-feature-from-string>`.\n\nNote that this code is indexed by PostScript name, and not the font family. This\nallows you to define very precise feature settings; e.g. you can disable a\nfeature in the italic font but not in the regular font.\n\nOn Linux, font features are first read from the FontConfig database and then\nthis option is applied, so they can be configured in a single, central place.\n\nTo get the PostScript name for a font, use the fc-scan file.ttf command on Linux\nor the Font Book tool on macOS <https://apple.stackexchange.com/questions/79875/how-can-i-get-the-postscript-name-of-a-ttf-font-installed-in-os-x>_.\n\nEnable alternate zero and oldstyle numerals::\n\n    font_features FiraCode-Retina +zero +onum\n\nEnable only alternate zero in the bold font::\n\n    font_features FiraCode-Bold +zero\n\nDisable the normal ligatures, but keep the calt feature which (in this\nfont) breaks up monotony::\n\n    font_features TT2020StyleB-Regular -liga +calt\n\nIn conjunction with force_ltr, you may want to disable Arabic shaping\nentirely, and only look at their isolated forms if they show up in a document.\nYou can do this with e.g.::\n\n    font_features UnifontMedium +isol -medi -fina -init",
+      "default": "none"
+    },
+    {
+      "name": "modify_font",
+      "group": "Fonts",
+      "doc": "Modify font characteristics such as the position or thickness of the underline\nand strikethrough. The modifications can have the suffix px for pixels\nor % for percentage of original value. No suffix means use pts.\nFor example::\n\n    modify_font underline_position -2\n    modify_font underline_thickness 150%\n    modify_font strikethrough_position 2px\n\nAdditionally, you can modify the size of the cell in which each font glyph is\nrendered and the baseline at which the glyph is placed in the cell.\nFor example::\n\n    modify_font cell_width 80%\n    modify_font cell_height -2px\n    modify_font baseline 3\n\nNote that modifying the baseline will automatically adjust the underline and\nstrikethrough positions by the same amount. Increasing the baseline raises\nglyphs inside the cell and decreasing it lowers them. Decreasing the cell size\nmight cause rendering artifacts, so use with care.",
+      "default": ""
+    },
+    {
+      "name": "remote_control_password",
+      "group": "Advanced",
+      "doc": "Allow other programs to control kitty using passwords. This option can be\nspecified multiple times to add multiple passwords. If no passwords are present\nkitty will ask the user for permission if a program tries to use remote control\nwith a password. A password can also *optionally* be associated with a set of\nallowed remote control actions. For example::\n\n    remote_control_password \"my passphrase\" get-colors set-colors focus-window focus-tab\n\nOnly the specified actions will be allowed when using this password.\nGlob patterns can be used too, for example::\n\n    remote_control_password \"my passphrase\" set-tab-* resize-*\n\nTo get a list of available actions, run::\n\n    kitten @ --help\n\nA set of actions to be allowed when no password is sent can be specified by\nusing an empty password. For example::\n\n    remote_control_password \"\" *-colors\n\nFinally, the path to a python module can be specified that provides a function\nis_cmd_allowed that is used to check every remote control command.\nFor example::\n\n    remote_control_password \"my passphrase\" my_rc_command_checker.py\n\nRelative paths are resolved from the kitty configuration directory.\nSee rc_custom_auth for details.",
+      "default": ""
+    },
+    {
+      "name": "env",
+      "group": "Advanced",
+      "doc": "Specify the environment variables to be set in all child processes. Using the\nname with an equal sign (e.g. env VAR=) will set it to the empty string.\nSpecifying only the name (e.g. env VAR) will remove the variable from\nthe child process' environment. Note that environment variables are expanded\nrecursively, for example::\n\n    env VAR1=a\n    env VAR2=${HOME}/${VAR1}/b\n\nThe value of VAR2 will be <path to home directory>/a/b.\n\nUse the special\nvalue read_from_shell to have kitty read the specified variables from\nyour login shell <shell> configuration.\nUseful if your shell startup files setup a bunch of environment variables that you want available to kitty and\nin kitty session files. Each variable name is treated as a glob pattern to match. For example:\nenv read_from_shell=PATH LANG LC_* XDG_* EDITOR VISUAL. Note that these variables are only\nread after the configuration is fully processed, thus they are not available for recursive expansion and\nthey will override any variables set by other env directives.",
+      "default": ""
+    },
+    {
+      "name": "filter_notification",
+      "group": "Advanced",
+      "doc": "Specify rules to filter out notifications sent by applications running in kitty.\nCan be specified multiple times to create multiple filter rules. A rule specification\nis of the form field:regexp. A filter rule\ncan match on any of the fields: title, body, app, type.\nThe special value of all filters out all notifications. Rules can be combined\nusing Boolean operators. Some examples::\n\n    filter_notification title:hello or body:\"abc.*def\"\n    # filter out notification from vim except for ones about updates, (?i)\n    # makes matching case insensitive.\n    filter_notification app:\"[ng]?vim\" and not body:\"(?i)update\"\n    # filter out all notifications\n    filter_notification all\n\nThe field app is the name of the application sending the notification and type\nis the type of the notification. Not all applications will send these fields, so you can also\nmatch on the title and body of the notification text. More sophisticated programmatic filtering\nand custom actions on notifications can be done by creating a notifications.py file in the\nkitty config directory (/.config/kitty). An annotated sample is\n:link:`available <https://github.com/kovidgoyal/kitty/blob/master/docs/notifications.py>`.",
+      "default": ""
+    },
+    {
+      "name": "watcher",
+      "group": "Advanced",
+      "doc": "Path to python file which will be loaded for watchers. Can be specified\nmore than once to load multiple watchers. The watchers will be added to every\nkitty window. Relative paths are resolved relative to the kitty config\ndirectory. Note that reloading the config will only affect windows created after\nthe reload.",
+      "default": ""
+    },
+    {
+      "name": "exe_search_path",
+      "group": "Advanced",
+      "doc": "Control where kitty finds the programs to run. The default search order is:\nFirst search the system wide PATH, then /.local/bin and\n/bin. If still not found, the PATH defined in the login shell\nafter sourcing all its startup files is tried. Finally, if present, the\nPATH specified by the env option is tried.\n\nThis option allows you to prepend, append, or remove paths from this search\norder. It can be specified multiple times for multiple paths. A simple path will\nbe prepended to the search order. A path that starts with the + sign\nwill be append to the search order, after /bin above. A path that\nstarts with the - sign will be removed from the entire search order.\nFor example::\n\n    exe_search_path /some/prepended/path\n    exe_search_path +/some/appended/path\n    exe_search_path -/some/excluded/path",
+      "default": ""
+    },
+    {
+      "name": "menu_map",
+      "group": "Advanced",
+      "doc": "Specify entries for various menus in kitty. Currently only the global menubar on macOS\nis supported. For example::\n\n   menu_map global \"Actions::Launch something special\" launch --hold --type=os-window sh -c \"echo hello world\"\n\nThis will create a menu entry named \"Launch something special\" in an \"Actions\" menu in the macOS global menubar.\nSub-menus can be created by adding more levels separated by the :: characters.",
+      "default": ""
+    },
+    {
+      "name": "action_alias",
+      "group": "Keyboard shortcuts",
+      "doc": "Define action aliases to avoid repeating the same options in multiple mappings.\nAliases can be defined for any action and will be expanded recursively. For\nexample, the above alias allows you to create mappings to launch a new tab in\nthe current working directory without duplication::\n\n    map f1 launch_tab vim\n    map f2 launch_tab emacs\n\nSimilarly, to alias kitten invocation::\n\n    action_alias hints kitten hints --hints-offset=0",
+      "default": "launch_tab launch --type=tab --cwd=current"
+    },
+    {
+      "name": "kitten_alias",
+      "group": "Keyboard shortcuts",
+      "doc": "Like action_alias above, but specifically for kittens. Generally, prefer\nto use action_alias. This option is a legacy version, present for\nbackwards compatibility. It causes all invocations of the aliased kitten to be\nsubstituted. So the example above will cause all invocations of the hints kitten\nto have the --hints-offset=0 <kitty +kitten hints --hints-offset>\noption applied.",
+      "default": "hints hints --hints-offset=0"
+    }
+  ],
+  "actions": [
+    {
+      "name": "clear_last_command",
+      "short": "Clear the last command",
+      "doc": ""
+    },
+    {
+      "name": "clear_screen",
+      "short": "Clear screen",
+      "doc": ""
+    },
+    {
+      "name": "clear_scrollback",
+      "short": "Clear scrollback",
+      "doc": ""
+    },
+    {
+      "name": "clear_terminal_and_scrollback",
+      "short": "Clear to start",
+      "doc": ""
+    },
+    {
+      "name": "close_os_window",
+      "short": "Close OS window",
+      "doc": ""
+    },
+    {
+      "name": "close_tab",
+      "short": "Close tab",
+      "doc": ""
+    },
+    {
+      "name": "close_window",
+      "short": "Close window",
+      "doc": ""
+    },
+    {
+      "name": "copy_or_noop",
+      "short": "Copy to clipboard or pass through",
+      "doc": ""
+    },
+    {
+      "name": "copy_to_clipboard",
+      "short": "Copy to clipboard",
+      "doc": "There is also a copy_or_interrupt action that can be optionally mapped\nto Ctrl+C. It will copy only if there is a selection and send an\ninterrupt otherwise. Similarly, copy_and_clear_or_interrupt will copy\nand clear the selection or send an interrupt if there is no selection.\nThe copy_or_noop action will copy if there is a selection and pass\nthe key through to the application running in the terminal if there is no selection."
+    },
+    {
+      "name": "debug_config",
+      "short": "Debug kitty configuration",
+      "doc": "Show details about exactly what configuration kitty is running with and its host\nenvironment. Useful for debugging issues."
+    },
+    {
+      "name": "decrease_background_opacity",
+      "short": "Decrease background opacity",
+      "doc": ""
+    },
+    {
+      "name": "decrease_font_size",
+      "short": "Decrease font size",
+      "doc": ""
+    },
+    {
+      "name": "edit_config_file",
+      "short": "Edit config file",
+      "doc": ""
+    },
+    {
+      "name": "eighth_window",
+      "short": "Eighth window",
+      "doc": ""
+    },
+    {
+      "name": "fifth_window",
+      "short": "Fifth window",
+      "doc": ""
+    },
+    {
+      "name": "first_window",
+      "short": "First window",
+      "doc": ""
+    },
+    {
+      "name": "focus_visible_window",
+      "short": "Visually select and focus window",
+      "doc": "Display overlay numbers and alphabets on the window, and switch the focus to the\nwindow when you press the key. When there are only two windows, the focus will\nbe switched directly without displaying the overlay. You can change the overlay\ncharacters and their order with option visual_window_select_characters."
+    },
+    {
+      "name": "fourth_window",
+      "short": "Fourth window",
+      "doc": ""
+    },
+    {
+      "name": "full_background_opacity",
+      "short": "Make background fully opaque",
+      "doc": ""
+    },
+    {
+      "name": "goto_file_line",
+      "short": "Open the selected file at the selected line",
+      "doc": "Select something that looks like filename:linenum and open it in\nyour default editor at the specified line number."
+    },
+    {
+      "name": "hide_macos_app",
+      "short": "Hide macOS kitty application",
+      "doc": ""
+    },
+    {
+      "name": "hide_macos_other_apps",
+      "short": "Hide macOS other applications",
+      "doc": ""
+    },
+    {
+      "name": "increase_background_opacity",
+      "short": "Increase background opacity",
+      "doc": ""
+    },
+    {
+      "name": "increase_font_size",
+      "short": "Increase font size",
+      "doc": ""
+    },
+    {
+      "name": "input_unicode_character",
+      "short": "Unicode input",
+      "doc": ""
+    },
+    {
+      "name": "insert_chosen_directory",
+      "short": "Insert chosen directory",
+      "doc": "Select a directory using the choose-files </kittens/choose-files> kitten and insert\nit into the terminal."
+    },
+    {
+      "name": "insert_chosen_file",
+      "short": "Insert chosen file",
+      "doc": "Select a file using the choose-files </kittens/choose-files> kitten and insert\nit into the terminal."
+    },
+    {
+      "name": "insert_selected_hash",
+      "short": "Insert selected hash",
+      "doc": "Select something that looks like a hash and insert it into the terminal. Useful\nwith :program:`git`, which uses SHA1 hashes to identify commits."
+    },
+    {
+      "name": "insert_selected_line",
+      "short": "Insert selected line",
+      "doc": "Select a line of text and insert it into the terminal. Useful for the output of\nthings like: ls -1."
+    },
+    {
+      "name": "insert_selected_path",
+      "short": "Insert selected path",
+      "doc": "Select a path/filename and insert it into the terminal. Useful, for instance to\nrun :program:`git` commands on a filename output from a previous :program:`git`\ncommand."
+    },
+    {
+      "name": "insert_selected_word",
+      "short": "Insert selected word",
+      "doc": "Select words and insert into terminal."
+    },
+    {
+      "name": "kitty_shell",
+      "short": "Open the kitty command shell",
+      "doc": "Open the kitty shell in a new window / tab / overlay /\nos_window to control kitty using commands."
+    },
+    {
+      "name": "macos_cycle_through_os_windows",
+      "short": "macOS Cycle through OS Windows",
+      "doc": ""
+    },
+    {
+      "name": "macos_cycle_through_os_windows_backwards",
+      "short": "macOS Cycle through OS Windows backwards",
+      "doc": ""
+    },
+    {
+      "name": "minimize_macos_window",
+      "short": "Minimize macOS window",
+      "doc": ""
+    },
+    {
+      "name": "move_tab_backward",
+      "short": "Move tab backward",
+      "doc": ""
+    },
+    {
+      "name": "move_tab_forward",
+      "short": "Move tab forward",
+      "doc": ""
+    },
+    {
+      "name": "move_window_backward",
+      "short": "Move window backward",
+      "doc": ""
+    },
+    {
+      "name": "move_window_forward",
+      "short": "Move window forward",
+      "doc": ""
+    },
+    {
+      "name": "move_window_to_top",
+      "short": "Move window to top",
+      "doc": ""
+    },
+    {
+      "name": "new_os_window",
+      "short": "New OS window",
+      "doc": "Works like new_window above, except that it opens a top-level OS\nwindow <os_window>. In particular you can use new_os_window_with_cwd to\nopen a window with the current working directory."
+    },
+    {
+      "name": "new_tab",
+      "short": "New tab",
+      "doc": ""
+    },
+    {
+      "name": "new_window",
+      "short": "New window",
+      "doc": "You can open a new kitty window <window> running an arbitrary program,\nfor example::\n\n    map kitty_mod+y launch mutt\n\nYou can open a new window with the current working directory set to the working\ndirectory of the current window using::\n\n    map ctrl+alt+enter launch --cwd=current\n\nYou can open a new window that is allowed to control kitty via\nthe kitty remote control facility with launch --allow-remote-control.\nAny programs running in that window will be allowed to control kitty.\nFor example::\n\n    map ctrl+enter launch --allow-remote-control some_program\n\nYou can open a new window next to the currently active window or as the first\nwindow, with::\n\n    map ctrl+n launch --location=neighbor\n    map ctrl+f launch --location=first\n\nFor more details, see launch."
+    },
+    {
+      "name": "next_layout",
+      "short": "Next layout",
+      "doc": ""
+    },
+    {
+      "name": "next_tab",
+      "short": "Next tab",
+      "doc": ""
+    },
+    {
+      "name": "next_window",
+      "short": "Next window",
+      "doc": ""
+    },
+    {
+      "name": "ninth_window",
+      "short": "Ninth window",
+      "doc": ""
+    },
+    {
+      "name": "open_kitty_website",
+      "short": "Open kitty Website",
+      "doc": ""
+    },
+    {
+      "name": "open_selected_hyperlink",
+      "short": "Open the selected hyperlink",
+      "doc": "Select a hyperlink <hyperlinks> (i.e. a URL that has been marked as such\nby the terminal program, for example, by ls --hyperlink=auto)."
+    },
+    {
+      "name": "open_selected_path",
+      "short": "Open selected path",
+      "doc": "Select a path/filename and open it with the default open program."
+    },
+    {
+      "name": "open_url",
+      "short": "Open URL",
+      "doc": "Open a currently visible URL using the keyboard. The program used to open the\nURL is specified in open_url_with."
+    },
+    {
+      "name": "pass_selection_to_program",
+      "short": "Pass selection to program",
+      "doc": "You can also pass the contents of the current selection to any program with\npass_selection_to_program. By default, the system's open program is used,\nbut you can specify your own, the selection will be passed as a command line\nargument to the program. For example::\n\n    map kitty_mod+o pass_selection_to_program firefox\n\nYou can pass the current selection to a terminal program running in a new kitty\nwindow, by using the @selection placeholder::\n\n    map kitty_mod+y new_window less @selection"
+    },
+    {
+      "name": "paste_from_clipboard",
+      "short": "Paste from clipboard",
+      "doc": ""
+    },
+    {
+      "name": "paste_from_selection",
+      "short": "Paste from selection",
+      "doc": ""
+    },
+    {
+      "name": "previous_tab",
+      "short": "Previous tab",
+      "doc": ""
+    },
+    {
+      "name": "previous_window",
+      "short": "Previous window",
+      "doc": ""
+    },
+    {
+      "name": "quit",
+      "short": "Quit kitty",
+      "doc": ""
+    },
+    {
+      "name": "reload_config_file",
+      "short": "Reload kitty.conf",
+      "doc": "Reload kitty.conf, applying any changes since the last time it was\nloaded. Note that a handful of options cannot be dynamically changed and\nrequire a full restart of kitty. Particularly, when changing shortcuts for\nactions located on the macOS global menu bar, a full restart is needed. You can\nalso map a keybinding to load a different config file, for example::\n\n    map f5 load_config /path/to/alternative/kitty.conf\n\nNote that all options from the original kitty.conf are discarded, in\nother words the new configuration *replace* the old ones."
+    },
+    {
+      "name": "reset_background_opacity",
+      "short": "Reset background opacity",
+      "doc": ""
+    },
+    {
+      "name": "reset_font_size",
+      "short": "Reset font size",
+      "doc": ""
+    },
+    {
+      "name": "reset_terminal",
+      "short": "Reset the terminal",
+      "doc": "You can create shortcuts to clear/reset the terminal. For example::\n\n    # Reset the terminal\n    map f1 clear_terminal reset active\n    # Clear the terminal screen by erasing all contents\n    map f1 clear_terminal clear active\n    # Clear the terminal scrollback by erasing it\n    map f1 clear_terminal scrollback active\n    # Scroll the contents of the screen into the scrollback\n    map f1 clear_terminal scroll active\n    # Clear everything on screen up to the line with the cursor or the start of the current prompt (needs shell integration)\n    map f1 clear_terminal to_cursor active\n    # Same as above except cleared lines are moved into scrollback\n    map f1 clear_terminal to_cursor_scroll active\n    # Erase the last command and its output (needs shell integration to work)\n    map f1 clear_terminal last_command active\n\nIf you want to operate on all kitty windows instead of just the current one, use\n:italic:`all` instead of :italic:`active`.\n\nSome useful functions that can be defined in the shell rc files to perform various kinds of\nclearing of the current window:\n\n\n\n    clear-only-screen() {\n        printf \"\\e[H\\e[2J\"\n    }\n\n    clear-screen-and-scrollback() {\n        printf \"\\e[H\\e[3J\"\n    }\n\n    clear-screen-saving-contents-in-scrollback() {\n        printf \"\\e[H\\e[22J\"\n    }\n\nFor instance, using these escape codes, it is possible to remap Ctrl+L\nto both scroll the current screen contents into the scrollback buffer and clear\nthe screen, instead of just clearing the screen. For ZSH, in /.zshrc, add:\n\n\n\n    ctrl_l() {\n        builtin print -rn -- $'\\r\\e[0J\\e[H\\e[22J' >\"$TTY\"\n        builtin zle .reset-prompt\n        builtin zle -R\n    }\n    zle -N ctrl_l\n    bindkey '^l' ctrl_l\n\nAlternatively, you can just add map ctrl+l clear_terminal to_cursor_scroll active to kitty.conf which\nworks with no changes to the shell rc files, but only clears up to the prompt, it does not clear any text at the prompt itself."
+    },
+    {
+      "name": "scroll_end",
+      "short": "Scroll to bottom",
+      "doc": ""
+    },
+    {
+      "name": "scroll_home",
+      "short": "Scroll to top",
+      "doc": ""
+    },
+    {
+      "name": "scroll_line_down",
+      "short": "Scroll line down",
+      "doc": ""
+    },
+    {
+      "name": "scroll_line_up",
+      "short": "Scroll line up",
+      "doc": ""
+    },
+    {
+      "name": "scroll_page_down",
+      "short": "Scroll page down",
+      "doc": ""
+    },
+    {
+      "name": "scroll_page_up",
+      "short": "Scroll page up",
+      "doc": ""
+    },
+    {
+      "name": "scroll_to_next_prompt",
+      "short": "Scroll to next shell prompt",
+      "doc": ""
+    },
+    {
+      "name": "scroll_to_previous_prompt",
+      "short": "Scroll to previous shell prompt",
+      "doc": "Use a parameter of 0 for scroll_to_prompt to scroll to the last\njumped to or the last clicked position. Requires shell integration\n<shell_integration> to work."
+    },
+    {
+      "name": "search_scrollback",
+      "short": "Search the scrollback within a pager",
+      "doc": "Search for currently selected text in the scrollback using the configured scrollback_pager.\nAssumes that pressing the / key triggers search mode in the pager. If you want to create\na manual mapping with a special pager for this, you can use something like:\n\n    map f1 combine : launch --stdin-source=@screen_scrollback --stdin-add-formatting --type=overlay mypager : send_key /\n\nFor more sophisticated control, such as using the current selection, use remote_control_script."
+    },
+    {
+      "name": "second_window",
+      "short": "Second window",
+      "doc": ""
+    },
+    {
+      "name": "send_text",
+      "short": "Send arbitrary text on key presses",
+      "doc": "You can tell kitty to send arbitrary (UTF-8) encoded text to the client program\nwhen pressing specified shortcut keys. For example::\n\n    map ctrl+alt+a send_text all Special text\n\nThis will send \"Special text\" when you press the Ctrl+Alt+A key\ncombination. The text to be sent decodes :link:`ANSI C escapes <https://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html>`\nso you can use escapes like \\\\e to send control codes or \\\\u21fb to send\nUnicode characters (or you can just input the Unicode characters directly as\nUTF-8 text). You can use kitten show-key to get the key escape\ncodes you want to emulate.\n\nThe first argument to send_text is the keyboard modes in which to\nactivate the shortcut. The possible values are normal,\napplication, kitty or a comma separated combination of them.\nThe modes normal and application refer to the DECCKM\ncursor key mode for terminals, and kitty refers to the kitty extended\nkeyboard protocol. The special value all means all of them.\n\nSome more examples::\n\n    # Output a word and move the cursor to the start of the line (like typing and pressing Home)\n    map ctrl+alt+a send_text normal Word\\e[H\n    map ctrl+alt+a send_text application Word\\eOH\n    # Run a command at a shell prompt (like typing the command and pressing Enter)\n    map ctrl+alt+a send_text normal,application some command with arguments\\r"
+    },
+    {
+      "name": "set_tab_title",
+      "short": "Set tab title",
+      "doc": ""
+    },
+    {
+      "name": "seventh_window",
+      "short": "Seventh window",
+      "doc": ""
+    },
+    {
+      "name": "show_kitty_doc",
+      "short": "Show documentation",
+      "doc": ""
+    },
+    {
+      "name": "show_last_command_output",
+      "short": "Browse output of the last shell command in pager",
+      "doc": "You can also define additional shortcuts to get the command output.\nFor example, to get the first command output on screen::\n\n    map f1 show_first_command_output_on_screen\n\nTo get the command output that was last accessed by a keyboard action or mouse\naction::\n\n    map f1 show_last_visited_command_output\n\nYou can pipe the output of the last command run in the shell using the\nlaunch action. For example, the following opens the output in less in an\noverlay window::\n\n    map f1 launch --stdin-source=@last_cmd_output --stdin-add-formatting --type=overlay less +G -R\n\nTo get the output of the first command on the screen, use @first_cmd_output_on_screen.\nTo get the output of the last jumped to command, use @last_visited_cmd_output.\n\nRequires shell integration <shell_integration> to work."
+    },
+    {
+      "name": "show_scrollback",
+      "short": "Browse scrollback buffer in pager",
+      "doc": "You can pipe the contents of the current screen and history buffer as\nSTDIN to an arbitrary program using launch --stdin-source.\nFor example, the following opens the scrollback buffer in less in an\noverlay window::\n\n    map f1 launch --stdin-source=@screen_scrollback --stdin-add-formatting --type=overlay less +G -R\n\nFor more details on piping screen and buffer contents to external programs,\nsee launch."
+    },
+    {
+      "name": "sixth_window",
+      "short": "Sixth window",
+      "doc": ""
+    },
+    {
+      "name": "start_resizing_window",
+      "short": "Start resizing window",
+      "doc": ""
+    },
+    {
+      "name": "swap_with_window",
+      "short": "Visually swap window with another",
+      "doc": "Works like focus_visible_window above, but swaps the window."
+    },
+    {
+      "name": "tenth_window",
+      "short": "Tenth window",
+      "doc": ""
+    },
+    {
+      "name": "third_window",
+      "short": "Third window",
+      "doc": ""
+    },
+    {
+      "name": "toggle_fullscreen",
+      "short": "Toggle fullscreen",
+      "doc": ""
+    },
+    {
+      "name": "toggle_macos_secure_keyboard_entry",
+      "short": "Toggle macOS secure keyboard entry",
+      "doc": ""
+    },
+    {
+      "name": "toggle_maximized",
+      "short": "Toggle maximized",
+      "doc": ""
+    }
+  ],
+  "directives": [
+    {
+      "name": "map",
+      "doc": "Keys are identified simply by their lowercase Unicode characters. For example:\na for the A key, [ for the left square bracket key, etc.\nFor functional keys, such as Enter or Escape, the names are present\nat Functional key definitions <functional>. For modifier keys, the names\nare ctrl (control, \u2303), shift (\u21e7), alt\n(opt, option, \u2325), super (cmd, command,\n\u2318).\n\nSimple shortcut mapping is done with the map directive. For full details\non advanced mapping including modal and per application maps, see mapping.\nSome quick examples to illustrate common tasks::\n\n    # unmap a keyboard shortcut, passing it to the program running in kitty\n    map kitty_mod+space\n    # completely ignore a keyboard event\n    map ctrl+alt+f1 discard_event\n    # combine multiple actions\n    map kitty_mod+e combine : new_window : next_layout\n    # multi-key shortcuts\n    map ctrl+x>ctrl+y>z action\n\nThe full list of actions that can be mapped to key presses is available\nhere </actions>."
+    },
+    {
+      "name": "mouse_map",
+      "doc": "Mouse buttons can be mapped to perform arbitrary actions. The syntax is:\n\n\n\n    mouse_map button-name event-type modes action\n\nWhere button-name is one of left, middle, right,\nb1 ... b8 with added keyboard modifiers. For example:\nctrl+shift+left refers to holding the Ctrl+Shift keys while\nclicking with the left mouse button. The value b1 ... b8 can be\nused to refer to up to eight buttons on a mouse.\n\nevent-type is one of press, release,\ndoublepress, triplepress, click, doubleclick.\nmodes indicates whether the action is performed when the mouse is\ngrabbed by the program running in the terminal, or not. The values are\ngrabbed or ungrabbed or a comma separated combination of them.\ngrabbed refers to when the program running in the terminal has requested\nmouse events. Note that the click and double click events have a delay of\nclick_interval to disambiguate from double and triple presses.\n\nYou can run kitty with the kitty --debug-input command line option\nto see mouse events. See the builtin actions below to get a sense of what is\npossible.\n\nIf you want to unmap a button, map it to nothing. For example, to disable\nopening of URLs with a plain click::\n\n    mouse_map left click ungrabbed\n\nSee all the mappable actions including mouse actions here </actions>.\n\nNote:\n    Once a selection is started, releasing the button that started it will\n    automatically end it and no release event will be dispatched."
+    }
+  ]
+}
