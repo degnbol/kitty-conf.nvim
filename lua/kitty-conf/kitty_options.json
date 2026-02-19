@@ -4,7 +4,7 @@
       "name": "font_family",
       "default": "monospace",
       "group": "Fonts",
-      "doc": "You can specify different fonts for the bold/italic/bold-italic variants.\nThe easiest way to select fonts is to run the kitten choose-fonts command\nwhich will present a nice UI for you to select the fonts you want with previews\nand support for selecting variable fonts and font features. If you want to learn\nto select fonts manually, read the font specification syntax <font_spec_syntax>."
+      "doc": "You can specify different fonts for the bold/italic/bold-italic variants.\nThe easiest way to select fonts is to run the kitten choose-fonts command\nwhich will present a nice UI for you to select the fonts you want with previews\nand support for selecting variable fonts and font features. If you want to learn\nto select fonts manually, read the font specification syntax."
     },
     {
       "name": "bold_font",
@@ -34,13 +34,17 @@
       "name": "force_ltr",
       "default": "no",
       "group": "Fonts",
-      "doc": "kitty does not support BIDI (bidirectional text), however, for RTL scripts,\nwords are automatically displayed in RTL. That is to say, in an RTL script, the\nwords \"HELLO WORLD\" display in kitty as \"WORLD HELLO\", and if you try to select\na substring of an RTL-shaped string, you will get the character that would be\nthere had the string been LTR. For example, assuming the Hebrew word\n\u05d9\u05e8\u05d5\u05e9\u05dc\u05d9\u05dd, selecting the character that on the screen appears to be \u05dd actually\nwrites into the selection buffer the character \u05d9. kitty's default behavior is\nuseful in conjunction with a filter to reverse the word order, however, if you\nwish to manipulate RTL glyphs, it can be very challenging to work with, so this\noption is provided to turn it off. Furthermore, this option can be used with the\ncommand line program :link:`GNU FriBidi\n<https://github.com/fribidi/fribidi#executable>` to get BIDI support, because it\nwill force kitty to always treat the text as LTR, which FriBidi expects for\nterminals."
+      "doc": "kitty does not support BIDI (bidirectional text), however, for RTL scripts,\nwords are automatically displayed in RTL. That is to say, in an RTL script, the\nwords \"HELLO WORLD\" display in kitty as \"WORLD HELLO\", and if you try to select\na substring of an RTL-shaped string, you will get the character that would be\nthere had the string been LTR. For example, assuming the Hebrew word\n\u05d9\u05e8\u05d5\u05e9\u05dc\u05d9\u05dd, selecting the character that on the screen appears to be \u05dd actually\nwrites into the selection buffer the character \u05d9. kitty's default behavior is\nuseful in conjunction with a filter to reverse the word order, however, if you\nwish to manipulate RTL glyphs, it can be very challenging to work with, so this\noption is provided to turn it off. Furthermore, this option can be used with the\ncommand line program GNU FriBidi to get BIDI support, because it\nwill force kitty to always treat the text as LTR, which FriBidi expects for\nterminals.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "disable_ligatures",
       "default": "never",
       "group": "Fonts",
-      "doc": "Choose how you want to handle multi-character ligatures. The default is to\nalways render them. You can tell kitty to not render them when the cursor is\nover them by using cursor to make editing easier, or have kitty never\nrender them at all by using always, if you don't like them. The ligature\nstrategy can be set per-window either using the kitty remote control facility\nor by defining shortcuts for it in kitty.conf, for example::\n\n    map alt+1 disable_ligatures_in active always\n    map alt+2 disable_ligatures_in all never\n    map alt+3 disable_ligatures_in tab cursor\n\nNote that this refers to programming ligatures, typically implemented using the\ncalt OpenType feature. For disabling general ligatures, use the\nfont_features option."
+      "doc": "Choose how you want to handle multi-character ligatures. The default is to\nalways render them. You can tell kitty to not render them when the cursor is\nover them by using cursor to make editing easier, or have kitty never\nrender them at all by using always, if you don't like them. The ligature\nstrategy can be set per-window either using the kitty remote control facility\nor by defining shortcuts for it in kitty.conf, for example:\n\n    map alt+1 disable_ligatures_in active always\n    map alt+2 disable_ligatures_in all never\n    map alt+3 disable_ligatures_in tab cursor\n\nNote that this refers to programming ligatures, typically implemented using the\ncalt OpenType feature. For disabling general ligatures, use the\nfont_features option."
     },
     {
       "name": "box_drawing_scale",
@@ -80,13 +84,16 @@
       "name": "text_fg_override_threshold",
       "default": "0",
       "group": "Fonts",
-      "doc": "A setting to prevent low contrast between foreground and background colors.\nUseful when working with applications that use colors that do not contrast\nwell with your preferred color scheme. The default value is 0, which means no color overriding is performed.\nThere are two modes of operation:\n\nA value with the suffix ratio represents the minimum accepted contrast ratio between the foreground and background color.\nPossible values range from 0.0 ratio to 21.0 ratio.\nFor example, to meet :link:`WCAG level AA <https://en.wikipedia.org/wiki/Web_Content_Accessibility_Guidelines>`\na value of 4.5 ratio can be provided.\nThe algorithm is implemented using :link:`HSLuv <https://www.hsluv.org/>` which enables it to change\nthe perceived lightness of a color just as much as needed without really changing its hue and saturation.\n\nA value with the suffix % represents the minimum accepted difference in luminance\nbetween the foreground and background color, below which kitty will override the foreground color.\nIt is percentage ranging from 0 % to 100 %. If the difference in luminance of the\nforeground and background is below this threshold, the foreground color will be set\nto white if the background is dark or black if the background is light.\n\nWARNING: Some programs use characters (such as block characters) for graphics\ndisplay and may expect to be able to set the foreground and background to the\nsame color (or similar colors). If you see unexpected stripes, dots, lines,\nincorrect color, no color where you expect color, or any kind of graphic\ndisplay problem try setting text_fg_override_threshold to 0 to\nsee if this is the cause of the problem or consider using the ratio mode of operation\ndescribed above instead of the % mode of operation."
+      "doc": "A setting to prevent low contrast between foreground and background colors.\nUseful when working with applications that use colors that do not contrast\nwell with your preferred color scheme. The default value is 0, which means no color overriding is performed.\nThere are two modes of operation:\n\nA value with the suffix ratio represents the minimum accepted contrast ratio between the foreground and background color.\nPossible values range from 0.0 ratio to 21.0 ratio.\nFor example, to meet WCAG level AA\na value of 4.5 ratio can be provided.\nThe algorithm is implemented using HSLuv which enables it to change\nthe perceived lightness of a color just as much as needed without really changing its hue and saturation.\n\nA value with the suffix % represents the minimum accepted difference in luminance\nbetween the foreground and background color, below which kitty will override the foreground color.\nIt is percentage ranging from 0 % to 100 %. If the difference in luminance of the\nforeground and background is below this threshold, the foreground color will be set\nto white if the background is dark or black if the background is light.\n\nWARNING: Some programs use characters (such as block characters) for graphics\ndisplay and may expect to be able to set the foreground and background to the\nsame color (or similar colors). If you see unexpected stripes, dots, lines,\nincorrect color, no color where you expect color, or any kind of graphic\ndisplay problem try setting text_fg_override_threshold to 0 to\nsee if this is the cause of the problem or consider using the ratio mode of operation\ndescribed above instead of the % mode of operation."
     },
     {
       "name": "cursor",
       "default": "#cccccc",
       "group": "Text cursor customization",
-      "doc": "Default text cursor color. If set to the special value none the cursor will\nbe rendered with a \"reverse video\" effect. Its color will be the color of the\ntext in the cell it is over and the text will be rendered with the background\ncolor of the cell. Note that if the program running in the terminal sets a\ncursor color, this takes precedence. Also, the cursor colors are modified if\nthe cell background and foreground colors have very low contrast. Note that some\nthemes set this value, so if you want to override it, place your value after\nthe lines where the theme file is included."
+      "doc": "Default text cursor color. If set to the special value none the cursor will\nbe rendered with a \"reverse video\" effect. Its color will be the color of the\ntext in the cell it is over and the text will be rendered with the background\ncolor of the cell. Note that if the program running in the terminal sets a\ncursor color, this takes precedence. Also, the cursor colors are modified if\nthe cell background and foreground colors have very low contrast. Note that some\nthemes set this value, so if you want to override it, place your value after\nthe lines where the theme file is included.",
+      "choices": [
+        "none"
+      ]
     },
     {
       "name": "cursor_text_color",
@@ -98,7 +105,7 @@
       "name": "cursor_shape",
       "default": "block",
       "group": "Text cursor customization",
-      "doc": "The cursor shape can be one of block, beam, underline.\nNote that when reloading the config this will be changed only if the cursor\nshape has not been set by the program running in the terminal. This sets the\ndefault cursor shape, applications running in the terminal can override it. In\nparticular, shell integration <shell_integration> in kitty sets the\ncursor shape to beam at shell prompts. You can avoid this by setting\nshell_integration to no-cursor.",
+      "doc": "The cursor shape can be one of block, beam, underline.\nNote that when reloading the config this will be changed only if the cursor\nshape has not been set by the program running in the terminal. This sets the\ndefault cursor shape, applications running in the terminal can override it. In\nparticular, shell integration in kitty sets the\ncursor shape to beam at shell prompts. You can avoid this by setting\nshell_integration to no-cursor.",
       "choices": [
         "block",
         "beam",
@@ -134,7 +141,7 @@
       "name": "cursor_blink_interval",
       "default": "-1",
       "group": "Text cursor customization",
-      "doc": "The interval to blink the cursor (in seconds). Set to zero to disable blinking.\nNegative values mean use system default. Note that the minimum interval will be\nlimited to repaint_delay. You can also animate the cursor blink by specifying\nan easing function. For example, setting this to option to 0.5 ease-in-out\nwill cause the cursor blink to be animated over a second, in the first half of the second\nit will go from opaque to transparent and then back again over the next half. You can specify\ndifferent easing functions for the two halves, for example: -1 linear ease-out. kitty\nsupports all the :link:`CSS easing functions <https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function>`.\nNote that turning on animations uses extra power as it means the screen is redrawn multiple times\nper blink interval. See also, cursor_stop_blinking_after. This setting also controls blinking\ntext, which blinks in exact rhythm with the cursor."
+      "doc": "The interval to blink the cursor (in seconds). Set to zero to disable blinking.\nNegative values mean use system default. Note that the minimum interval will be\nlimited to repaint_delay. You can also animate the cursor blink by specifying\nan easing function. For example, setting this to option to 0.5 ease-in-out\nwill cause the cursor blink to be animated over a second, in the first half of the second\nit will go from opaque to transparent and then back again over the next half. You can specify\ndifferent easing functions for the two halves, for example: -1 linear ease-out. kitty\nsupports all the CSS easing functions.\nNote that turning on animations uses extra power as it means the screen is redrawn multiple times\nper blink interval. See also, cursor_stop_blinking_after. This setting also controls blinking\ntext, which blinks in exact rhythm with the cursor."
     },
     {
       "name": "cursor_stop_blinking_after",
@@ -164,7 +171,10 @@
       "name": "cursor_trail_color",
       "default": "none",
       "group": "Text cursor customization",
-      "doc": "Set the color of the cursor trail when cursor_trail is enabled.\nIf set to 'none' (the default), the cursor trail will use the cursor's\nbackground color. Otherwise, specify a color value (e.g., #ff0000 for red,\nor a named color like 'red'). This allows you to customize the appearance\nof the cursor trail independently of the cursor color."
+      "doc": "Set the color of the cursor trail when cursor_trail is enabled.\nIf set to 'none' (the default), the cursor trail will use the cursor's\nbackground color. Otherwise, specify a color value (e.g., #ff0000 for red,\nor a named color like 'red'). This allows you to customize the appearance\nof the cursor trail independently of the cursor color.",
+      "choices": [
+        "none"
+      ]
     },
     {
       "name": "scrollback_lines",
@@ -189,13 +199,21 @@
       "name": "scrollbar_interactive",
       "default": "yes",
       "group": "Scrollback",
-      "doc": "If disabled, the scrollbar will not be controllable via th emouse and all mouse events\nwill pass through the scrollbar."
+      "doc": "If disabled, the scrollbar will not be controllable via th emouse and all mouse events\nwill pass through the scrollbar.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "scrollbar_jump_on_click",
       "default": "yes",
       "group": "Scrollback",
-      "doc": "When enabled clicking in the scrollbar track will cause the scroll position to\njump to the clicked location, otherwise the scroll position will only move\ntowards the position by a single screenful, which is how traditional scrollbars behave."
+      "doc": "When enabled clicking in the scrollbar track will cause the scroll position to\njump to the clicked location, otherwise the scroll position will only move\ntowards the position by a single screenful, which is how traditional scrollbars behave.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "scrollbar_width",
@@ -267,7 +285,7 @@
       "name": "scrollback_pager",
       "default": "less --chop-long-lines --RAW-CONTROL-CHARS +INPUT_LINE_NUMBER",
       "group": "Scrollback",
-      "doc": "Program with which to view scrollback in a new window. The scrollback buffer is\npassed as STDIN to this program. If you change it, make sure the program you use\ncan handle ANSI escape sequences for colors and text formatting.\nINPUT_LINE_NUMBER in the command line above will be replaced by an integer\nrepresenting which line should be at the top of the screen. Similarly\nCURSOR_LINE and CURSOR_COLUMN will be replaced by the current cursor position or\nset to 0 if there is no cursor, for example, when showing the last command\noutput.\n\nIf you would rather use neovim to view the scrollback, use something like this::\n\n    scrollback_pager nvim --cmd 'set eventignore=FileType' +'nnoremap q ZQ' +'call nvim_open_term(0, {})' +'set nomodified nolist' +'$' -\n\nThe above works for neovim 0.12 and newer. There is also a dedicated plugin\n:link:`kitty-scrollback.nvim <https://github.com/mikesmithgh/kitty-scrollback.nvim>`\nyou can use with more features that works with older neovim as well."
+      "doc": "Program with which to view scrollback in a new window. The scrollback buffer is\npassed as STDIN to this program. If you change it, make sure the program you use\ncan handle ANSI escape sequences for colors and text formatting.\nINPUT_LINE_NUMBER in the command line above will be replaced by an integer\nrepresenting which line should be at the top of the screen. Similarly\nCURSOR_LINE and CURSOR_COLUMN will be replaced by the current cursor position or\nset to 0 if there is no cursor, for example, when showing the last command\noutput.\n\nIf you would rather use neovim to view the scrollback, use something like this:\n\n    scrollback_pager nvim --cmd 'set eventignore=FileType' +'nnoremap q ZQ' +'call nvim_open_term(0, {})' +'set nomodified nolist' +'$' -\n\nThe above works for neovim 0.12 and newer. There is also a dedicated plugin\nkitty-scrollback.nvim\nyou can use with more features that works with older neovim as well."
     },
     {
       "name": "scrollback_pager_history_size",
@@ -279,7 +297,11 @@
       "name": "scrollback_fill_enlarged_window",
       "default": "no",
       "group": "Scrollback",
-      "doc": "Fill new space with lines from the scrollback buffer after enlarging a window."
+      "doc": "Fill new space with lines from the scrollback buffer after enlarging a window.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "wheel_scroll_multiplier",
@@ -291,7 +313,7 @@
       "name": "wheel_scroll_min_lines",
       "default": "1",
       "group": "Scrollback",
-      "doc": "The minimum number of lines scrolled by the mouse wheel. The scroll\nmultiplier <wheel_scroll_multiplier> only takes effect after it reaches this\nnumber. Note that this is only used for low precision scrolling devices like\nwheel mice that scroll by very small amounts when using the wheel. With a\nnegative number, the minimum number of lines will always be added."
+      "doc": "The minimum number of lines scrolled by the mouse wheel. The scroll\nmultiplier only takes effect after it reaches this\nnumber. Note that this is only used for low precision scrolling devices like\nwheel mice that scroll by very small amounts when using the wheel. With a\nnegative number, the minimum number of lines will always be added."
     },
     {
       "name": "touch_scroll_multiplier",
@@ -303,21 +325,13 @@
       "name": "mouse_hide_wait",
       "default": "3.0",
       "group": "Mouse",
-      "doc": "Hide mouse cursor after the specified number of seconds of the mouse not being\nused. Set to zero to disable mouse cursor hiding. Set to a negative value to\nhide the mouse cursor immediately when typing text. Disabled by default on macOS\nas getting it to work robustly with the ever-changing sea of bugs that is Cocoa\nis too much effort.\n\nBy default, once the cursor is hidden, it is immediately unhidden on any\nfurther mouse events.\n\nTwo formats are supported:\n - <hide-wait>\n - <hide-wait> <unhide-wait> <unhide-threshold> <scroll-unhide>\n\nTo change the unhide behavior, the optional parameters <unhide-wait>,\n<unhide-threshold>, and <scroll-unhide> may be set.\n\n<unhide-wait>\n    Waits for the specified number of seconds after mouse events before unhiding the\n    mouse cursor. Set to zero to unhide mouse cursor immediately on mouse activity.\n    This is useful to prevent the mouse cursor from unhiding on accidental swipes on\n    the trackpad.\n\n<unhide-threshold>\n    Sets the threshold of mouse activity required to unhide the mouse cursor, when\n    the <unhide-wait> option is non-zero. When <unhide-wait> is zero, this has no\n    effect.\n\n    For example, if <unhide-threshold> is 40 and <unhide-wait> is 2.5, when kitty\n    detects a mouse event, it records the number of mouse events in the next 2.5\n    seconds, and checks if that exceeds 40 * 2.5 = 100. If it does, then the mouse\n    cursor is unhidden, otherwise nothing happens.\n\n<scroll-unhide>\n    Controls what mouse events may unhide the mouse cursor. If enabled, both scroll\n    and movement events may unhide the cursor. If disabled, only mouse movements can\n    unhide the cursor.\n\nExamples of valid values:\n - 0.0\n - 1.0\n - -1.0\n - 0.1 3.0 40 yes"
+      "doc": "Hide mouse cursor after the specified number of seconds of the mouse not being\nused. Set to zero to disable mouse cursor hiding. Set to a negative value to\nhide the mouse cursor immediately when typing text. Disabled by default on macOS\nas getting it to work robustly with the ever-changing sea of bugs that is Cocoa\nis too much effort.\n\nBy default, once the cursor is hidden, it is immediately unhidden on any\nfurther mouse events.\n\nTwo formats are supported:\n -\n -\n\nTo change the unhide behavior, the optional parameters,, and may be set.\n    Waits for the specified number of seconds after mouse events before unhiding the\n    mouse cursor. Set to zero to unhide mouse cursor immediately on mouse activity.\n    This is useful to prevent the mouse cursor from unhiding on accidental swipes on\n    the trackpad.\n    Sets the threshold of mouse activity required to unhide the mouse cursor, when\n    the option is non-zero. When is zero, this has no\n    effect.\n\n    For example, if is 40 and is 2.5, when kitty\n    detects a mouse event, it records the number of mouse events in the next 2.5\n    seconds, and checks if that exceeds 40 * 2.5 = 100. If it does, then the mouse\n    cursor is unhidden, otherwise nothing happens.\n    Controls what mouse events may unhide the mouse cursor. If enabled, both scroll\n    and movement events may unhide the cursor. If disabled, only mouse movements can\n    unhide the cursor.\n\nExamples of valid values:\n - 0.0\n - 1.0\n - -1.0\n - 0.1 3.0 40 yes"
     },
     {
       "name": "url_color",
       "default": "#0087bd",
       "group": "Mouse",
-      "doc": "The color and style for highlighting URLs on mouse-over. url_style can\nbe one of: none, straight, double, curly,\ndotted, dashed.",
-      "choices": [
-        "none",
-        "straight",
-        "double",
-        "curly",
-        "dotted",
-        "dashed"
-      ]
+      "doc": "The color and style for highlighting URLs on mouse-over. url_style can\nbe one of: none, straight, double, curly,\ndotted, dashed."
     },
     {
       "name": "url_style",
@@ -329,7 +343,7 @@
       "name": "open_url_with",
       "default": "default",
       "group": "Mouse",
-      "doc": "The program to open clicked URLs. The special value default will first\nlook for any URL handlers defined via the open_actions facility and if\nnon are found, it will use the Operating System's default URL handler\n(:program:`open` on macOS and :program:`xdg-open` on Linux)."
+      "doc": "The program to open clicked URLs. The special value default will first\nlook for any URL handlers defined via the open_actions facility and if\nnon are found, it will use the Operating System's default URL handler\n(open on macOS and xdg-open on Linux)."
     },
     {
       "name": "url_prefixes",
@@ -341,7 +355,11 @@
       "name": "detect_urls",
       "default": "yes",
       "group": "Mouse",
-      "doc": "Detect URLs under the mouse. Detected URLs are highlighted with an underline and\nthe mouse cursor becomes a hand over them. Even if this option is disabled, URLs\nare still clickable. See also the underline_hyperlinks option to control\nhow hyperlinks (as opposed to plain text URLs) are displayed."
+      "doc": "Detect URLs under the mouse. Detected URLs are highlighted with an underline and\nthe mouse cursor becomes a hand over them. Even if this option is disabled, URLs\nare still clickable. See also the underline_hyperlinks option to control\nhow hyperlinks (as opposed to plain text URLs) are displayed.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "url_excluded_characters",
@@ -353,7 +371,11 @@
       "name": "show_hyperlink_targets",
       "default": "no",
       "group": "Mouse",
-      "doc": "When the mouse hovers over a terminal hyperlink, show the actual URL that will\nbe activated when the hyperlink is clicked."
+      "doc": "When the mouse hovers over a terminal hyperlink, show the actual URL that will\nbe activated when the hyperlink is clicked.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "underline_hyperlinks",
@@ -370,13 +392,21 @@
       "name": "copy_on_select",
       "default": "no",
       "group": "Mouse",
-      "doc": "Copy to clipboard or a private buffer on select. With this set to\nclipboard, selecting text with the mouse will cause the text to be\ncopied to clipboard. Useful on platforms such as macOS that do not have the\nconcept of primary selection. You can instead specify a name such as a1\nto copy to a private kitty buffer. Map a shortcut with the\npaste_from_buffer action to paste from this private buffer.\nFor example::\n\n    copy_on_select a1\n    map shift+cmd+v paste_from_buffer a1\n\nNote that copying to the clipboard is a security risk, as all programs,\nincluding websites open in your browser can read the contents of the system\nclipboard."
+      "doc": "Copy to clipboard or a private buffer on select. With this set to\nclipboard, selecting text with the mouse will cause the text to be\ncopied to clipboard. Useful on platforms such as macOS that do not have the\nconcept of primary selection. You can instead specify a name such as a1\nto copy to a private kitty buffer. Map a shortcut with the\npaste_from_buffer action to paste from this private buffer.\nFor example:\n\n    copy_on_select a1\n    map shift+cmd+v paste_from_buffer a1\n\nNote that copying to the clipboard is a security risk, as all programs,\nincluding websites open in your browser can read the contents of the system\nclipboard.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "clear_selection_on_clipboard_loss",
       "default": "no",
       "group": "Mouse",
-      "doc": "When the contents of the clipboard no longer reflect the current selection, clear it.\nThis is primarily useful on platforms such as Linux where selecting text automatically\ncopies it to a special \"primary selection\" clipboard or if you have copy_on_select\nset to clipboard.\n\nNote that on macOS the system does not provide notifications when the clipboard owner\nis changed, so there, copying to clipboard in a non-kitty application will not clear\nselections even if copy_on_select is enabled."
+      "doc": "When the contents of the clipboard no longer reflect the current selection, clear it.\nThis is primarily useful on platforms such as Linux where selecting text automatically\ncopies it to a special \"primary selection\" clipboard or if you have copy_on_select\nset to clipboard.\n\nNote that on macOS the system does not provide notifications when the clipboard owner\nis changed, so there, copying to clipboard in a non-kitty application will not clear\nselections even if copy_on_select is enabled.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "paste_actions",
@@ -417,7 +447,11 @@
       "name": "focus_follows_mouse",
       "default": "no",
       "group": "Mouse",
-      "doc": "Set the active window to the window under the mouse when moving the mouse around.\nOn macOS, this will also cause the OS Window under the mouse to be focused automatically when the\nmouse enters it."
+      "doc": "Set the active window to the window under the mouse when moving the mouse around.\nOn macOS, this will also cause the OS Window under the mouse to be focused automatically when the\nmouse enters it.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "pointer_shape_when_grabbed",
@@ -509,7 +543,11 @@
       "name": "clear_all_mouse_actions",
       "default": "no",
       "group": "Mouse actions",
-      "doc": "Remove all mouse action definitions up to this point. Useful, for instance, to\nremove the default mouse actions."
+      "doc": "Remove all mouse action definitions up to this point. Useful, for instance, to\nremove the default mouse actions.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "repaint_delay",
@@ -527,37 +565,55 @@
       "name": "sync_to_monitor",
       "default": "yes",
       "group": "Performance tuning",
-      "doc": "Sync screen updates to the refresh rate of the monitor. This prevents\n:link:`screen tearing <https://en.wikipedia.org/wiki/Screen_tearing>` when\nscrolling. However, it limits the rendering speed to the refresh rate of your\nmonitor. With a very high speed mouse/high keyboard repeat rate, you may notice\nsome slight input latency. If so, set this to no."
+      "doc": "Sync screen updates to the refresh rate of the monitor. This prevents\nscreen tearing when\nscrolling. However, it limits the rendering speed to the refresh rate of your\nmonitor. With a very high speed mouse/high keyboard repeat rate, you may notice\nsome slight input latency. If so, set this to no.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "enable_audio_bell",
       "default": "yes",
       "group": "Terminal bell",
-      "doc": "The audio bell. Useful to disable it in environments that require silence."
+      "doc": "The audio bell. Useful to disable it in environments that require silence.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "visual_bell_duration",
       "default": "0.0",
       "group": "Terminal bell",
-      "doc": "The visual bell duration (in seconds). Flash the screen when a bell occurs for\nthe specified number of seconds. Set to zero to disable. The flash is animated, fading\nin and out over the specified duration. The easing function used for the fading can be controlled.\nFor example, 2.0 linear will casuse the flash to fade in and out linearly. The default\nif unspecified is to use ease-in-out which fades slowly at the start, middle and end.\nYou can specify different easing functions for the fade-in and fade-out parts, like this:\n2.0 ease-in linear. kitty\nsupports all the :link:`CSS easing functions <https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function>`."
+      "doc": "The visual bell duration (in seconds). Flash the screen when a bell occurs for\nthe specified number of seconds. Set to zero to disable. The flash is animated, fading\nin and out over the specified duration. The easing function used for the fading can be controlled.\nFor example, 2.0 linear will casuse the flash to fade in and out linearly. The default\nif unspecified is to use ease-in-out which fades slowly at the start, middle and end.\nYou can specify different easing functions for the fade-in and fade-out parts, like this:\n2.0 ease-in linear. kitty\nsupports all the CSS easing functions."
     },
     {
       "name": "visual_bell_color",
       "default": "none",
       "group": "Terminal bell",
-      "doc": "The color used by visual bell. Set to none will fall back to selection\nbackground color. If you feel that the visual bell is too bright, you can\nset it to a darker color."
+      "doc": "The color used by visual bell. Set to none will fall back to selection\nbackground color. If you feel that the visual bell is too bright, you can\nset it to a darker color.",
+      "choices": [
+        "none"
+      ]
     },
     {
       "name": "window_alert_on_bell",
       "default": "yes",
       "group": "Terminal bell",
-      "doc": "Request window attention on bell. Makes the dock icon bounce on macOS or the\ntaskbar flash on Linux."
+      "doc": "Request window attention on bell. Makes the dock icon bounce on macOS or the\ntaskbar flash on Linux.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "bell_on_tab",
       "default": "\"\ud83d\udd14 \"",
       "group": "Terminal bell",
-      "doc": "Some text or a Unicode symbol to show on the tab if a window in the tab that\ndoes not have focus has a bell. If you want to use leading or trailing\nspaces, surround the text with quotes. See tab_title_template for how\nthis is rendered.\n\nFor backwards compatibility, values of yes, y and true\nare converted to the default bell symbol and no, n,\nfalse and none are converted to the empty string."
+      "doc": "Some text or a Unicode symbol to show on the tab if a window in the tab that\ndoes not have focus has a bell. If you want to use leading or trailing\nspaces, surround the text with quotes. See tab_title_template for how\nthis is rendered.\n\nFor backwards compatibility, values of yes, y and true\nare converted to the default bell symbol and no, n,\nfalse and none are converted to the empty string.",
+      "choices": [
+        "none"
+      ]
     },
     {
       "name": "command_on_bell",
@@ -569,19 +625,26 @@
       "name": "bell_path",
       "default": "none",
       "group": "Terminal bell",
-      "doc": "Path to a sound file to play as the bell sound. If set to none, the\nsystem default bell sound is used. Must be in a format supported by the\noperating systems sound API, such as WAV or OGA on Linux (libcanberra) or AIFF,\nMP3 or WAV on macOS (NSSound). Relative paths are resolved\nwith respect to the kitty config directory."
+      "doc": "Path to a sound file to play as the bell sound. If set to none, the\nsystem default bell sound is used. Must be in a format supported by the\noperating systems sound API, such as WAV or OGA on Linux (libcanberra) or AIFF,\nMP3 or WAV on macOS (NSSound). Relative paths are resolved\nwith respect to the kitty config directory.",
+      "choices": [
+        "none"
+      ]
     },
     {
       "name": "linux_bell_theme",
       "default": "__custom",
       "group": "Terminal bell",
-      "doc": "The XDG Sound Theme kitty will use to play the bell sound.\nOn Wayland, when the compositor supports it, it is asked to play the system default\nbell sound, and this setting has no effect. Note that Hyprland claims to support this\nprotocol, but :link:`does not actually play a sound <https://github.com/hyprwm/Hyprland/issues/10488>`.\nThis setting defaults to the custom theme name specified in the\n:link:`XDG Sound theme specification <https://specifications.freedesktop.org/sound-theme-spec/latest/sound_lookup.html>,\nfalling back to the default freedesktop theme if it does not exist.\nTo change your sound theme desktop wide, create /.local/share/sounds/__custom/index.theme with the contents:\n\n    [Sound Theme]\n\n    Inherits=name-of-the-sound-theme-you-want-to-use\n\nReplace name-of-the-sound-theme-you-want-to-use with the actual theme name. Now all compliant applications\nshould use sounds from this theme."
+      "doc": "The XDG Sound Theme kitty will use to play the bell sound.\nOn Wayland, when the compositor supports it, it is asked to play the system default\nbell sound, and this setting has no effect. Note that Hyprland claims to support this\nprotocol, but does not actually play a sound.\nThis setting defaults to the custom theme name specified in the\nXDG Sound theme specification <https://specifications.freedesktop.org/sound-theme-spec/latest/sound_lookup.html>,\nfalling back to the default freedesktop theme if it does not exist.\nTo change your sound theme desktop wide, create :file:~/.local/share/sounds/__custom/index.theme` with the contents:\n\n    [Sound Theme]\n\n    Inherits=name-of-the-sound-theme-you-want-to-use\n\nReplace name-of-the-sound-theme-you-want-to-use with the actual theme name. Now all compliant applications\nshould use sounds from this theme."
     },
     {
       "name": "remember_window_size",
       "default": "yes",
       "group": "Window layout",
-      "doc": "If enabled, the OS Window <os_window> size will be remembered so that\nnew instances of kitty will have the same size as the previous instance.\nIf disabled, the OS Window <os_window> will initially have size\nconfigured by initial_window_width/height, in pixels. You can use a suffix of\n\"c\" on the width/height values to have them interpreted as number of cells\ninstead of pixels."
+      "doc": "If enabled, the OS Window size will be remembered so that\nnew instances of kitty will have the same size as the previous instance.\nIf disabled, the OS Window will initially have size\nconfigured by initial_window_width/height, in pixels. You can use a suffix of\n\"c\" on the width/height values to have them interpreted as number of cells\ninstead of pixels.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "initial_window_width",
@@ -599,7 +662,11 @@
       "name": "remember_window_position",
       "default": "no",
       "group": "Window layout",
-      "doc": "If enabled, the OS Window <os_window> position will be remembered so that\nnew instances of kitty will have the same position as the previous instance.\nIf disabled, the OS Window <os_window> will be placed by the window manager.\nNote that remembering of position only works if the underlying desktop environment/window\nmanager supports it. It never works on Wayland. See also kitty --position to\nspecify the position when launching kitty."
+      "doc": "If enabled, the OS Window position will be remembered so that\nnew instances of kitty will have the same position as the previous instance.\nIf disabled, the OS Window will be placed by the window manager.\nNote that remembering of position only works if the underlying desktop environment/window\nmanager supports it. It never works on Wayland. See also kitty --position to\nspecify the position when launching kitty.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "enabled_layouts",
@@ -611,7 +678,7 @@
       "name": "window_resize_step_cells",
       "default": "2",
       "group": "Window layout",
-      "doc": "The step size (in units of cell width/cell height) to use when resizing kitty\nwindows in a layout with the shortcut :sc:`start_resizing_window`. The cells\nvalue is used for horizontal resizing, and the lines value is used for vertical\nresizing."
+      "doc": "The step size (in units of cell width/cell height) to use when resizing kitty\nwindows in a layout with the shortcut start_resizing_window. The cells\nvalue is used for horizontal resizing, and the lines value is used for vertical\nresizing."
     },
     {
       "name": "window_resize_step_lines",
@@ -629,13 +696,21 @@
       "name": "draw_minimal_borders",
       "default": "yes",
       "group": "Window layout",
-      "doc": "Draw only the minimum borders needed. This means that only the borders that\nseparate the window from a neighbor are drawn. Note that setting a\nnon-zero window_margin_width overrides this and causes all borders to be\ndrawn."
+      "doc": "Draw only the minimum borders needed. This means that only the borders that\nseparate the window from a neighbor are drawn. Note that setting a\nnon-zero window_margin_width overrides this and causes all borders to be\ndrawn.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "draw_window_borders_for_single_window",
       "default": "no",
       "group": "Window layout",
-      "doc": "Draw borders around a window even when there is only a single window visible. When\nenabled and there is only a single window, full borders are drawn around it (as if\ndraw_minimal_borders is false). The border will show in the active color when\nthe window is focused and the OS window has focus, and in the inactive color when the\nOS window loses focus. This provides a clear visual indicator of whether the kitty\nwindow is focused. When there are multiple windows visible, this option has no effect\nand normal border drawing rules apply."
+      "doc": "Draw borders around a window even when there is only a single window visible. When\nenabled and there is only a single window, full borders are drawn around it (as if\ndraw_minimal_borders is false). The border will show in the active color when\nthe window is focused and the OS window has focus, and in the inactive color when the\nOS window loses focus. This provides a clear visual indicator of whether the kitty\nwindow is focused. When there are multiple windows visible, this option has no effect\nand normal border drawing rules apply.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "window_margin_width",
@@ -682,7 +757,10 @@
       "name": "active_border_color",
       "default": "#00ff00",
       "group": "Window layout",
-      "doc": "The color for the border of the active window. Set this to none to not\ndraw borders around the active window."
+      "doc": "The color for the border of the active window. Set this to none to not\ndraw borders around the active window.",
+      "choices": [
+        "none"
+      ]
     },
     {
       "name": "inactive_border_color",
@@ -716,7 +794,7 @@
       "name": "window_logo_path",
       "default": "none",
       "group": "Window layout",
-      "doc": "Path to a logo image. Must be in PNG/JPEG/WEBP/GIF/TIFF/BMP format. Relative paths are interpreted\nrelative to the kitty config directory. The logo is displayed in a corner of\nevery kitty window. The position is controlled by window_logo_position.\nIndividual windows can be configured to have different logos either using the\nlaunch action or the remote control <remote-control> facility."
+      "doc": "Path to a logo image. Must be in PNG/JPEG/WEBP/GIF/TIFF/BMP format. Relative paths are interpreted\nrelative to the kitty config directory. The logo is displayed in a corner of\nevery kitty window. The position is controlled by window_logo_position.\nIndividual windows can be configured to have different logos either using the\nlaunch action or the remote control facility."
     },
     {
       "name": "window_logo_position",
@@ -757,13 +835,17 @@
       "name": "resize_in_steps",
       "default": "no",
       "group": "Window layout",
-      "doc": "Resize the OS window in steps as large as the cells, instead of with the usual\npixel accuracy. Combined with initial_window_width and\ninitial_window_height in number of cells, this option can be used to keep\nthe margins as small as possible when resizing the OS window. Note that this\ndoes not currently work on Wayland."
+      "doc": "Resize the OS window in steps as large as the cells, instead of with the usual\npixel accuracy. Combined with initial_window_width and\ninitial_window_height in number of cells, this option can be used to keep\nthe margins as small as possible when resizing the OS window. Note that this\ndoes not currently work on Wayland.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "visual_window_select_characters",
       "default": "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ",
       "group": "Window layout",
-      "doc": "The list of characters for visual window selection. For example, for selecting a\nwindow to focus on with :sc:`focus_visible_window`. The value should be a series\nof unique numbers or alphabets, case insensitive, from the set 0-9A-Z\\-=[];',./\\\\`.\nSpecify your preference as a string of characters."
+      "doc": "The list of characters for visual window selection. For example, for selecting a\nwindow to focus on with focus_visible_window. The value should be a series\nof unique numbers or alphabets, case insensitive, from the set 0-9A-Z\\-=[];',./\\\\`.\nSpecify your preference as a string of characters."
     },
     {
       "name": "confirm_os_window_close",
@@ -793,7 +875,7 @@
       "name": "tab_bar_style",
       "default": "fade",
       "group": "Tab bar",
-      "doc": "The tab bar style, can be one of:\n\nfade\n    Each tab's edges fade into the background color. (See also tab_fade)\nslant\n    Tabs look like the tabs in a physical file.\nseparator\n    Tabs are separated by a configurable separator. (See also\n    tab_separator)\npowerline\n    Tabs are shown as a continuous line with \"fancy\" separators.\n    (See also tab_powerline_style)\ncustom\n    A user-supplied Python function called draw_tab is loaded from the file\n    tab_bar.py in the kitty config directory. For examples of how to\n    write such a function, see the functions named draw_tab_with_* in\n    kitty's source code: kitty/tab_bar.py. See also\n    :disc:`this discussion <4447>`\n    for examples from kitty users.\nhidden\n    The tab bar is hidden. If you use this, you might want to create\n    a mapping for the select_tab action which presents you with a list of\n    tabs and allows for easy switching to a tab.",
+      "doc": "The tab bar style, can be one of:\n\nfade\n    Each tab's edges fade into the background color. (See also tab_fade)\nslant\n    Tabs look like the tabs in a physical file.\nseparator\n    Tabs are separated by a configurable separator. (See also\n    tab_separator)\npowerline\n    Tabs are shown as a continuous line with \"fancy\" separators.\n    (See also tab_powerline_style)\ncustom\n    A user-supplied Python function called draw_tab is loaded from the file\n    tab_bar.py in the kitty config directory. For examples of how to\n    write such a function, see the functions named draw_tab_with_* in\n    kitty's source code: kitty/tab_bar.py. See also\n    this discussion\n    for examples from kitty users.\nhidden\n    The tab bar is hidden. If you use this, you might want to create\n    a mapping for the select_tab action which presents you with a list of\n    tabs and allows for easy switching to a tab.",
       "choices": [
         "fade",
         "hidden",
@@ -807,7 +889,7 @@
       "name": "tab_bar_filter",
       "default": "",
       "group": "Tab bar",
-      "doc": "A search expression <search_syntax>. Only tabs that match this expression\nwill be shown in the tab bar. The currently active tab is :italic:`always` shown,\nregardless of whether it matches or not. When using this option, the tab bar may\nbe displayed with less tabs than specified in tab_bar_min_tabs, as evaluating\nthe filter is expensive and is done only at display time. This is most useful when\nusing sessions <sessions>. An expression of session:~ or session:^$\nwill show only tabs that belong to the current session or no session. The various\ntab navigation actions such as goto_tab, next_tab, previous_tab, etc.\nare automatically restricted to work only on matching tabs."
+      "doc": "A search expression. Only tabs that match this expression\nwill be shown in the tab bar. The currently active tab is always shown,\nregardless of whether it matches or not. When using this option, the tab bar may\nbe displayed with less tabs than specified in tab_bar_min_tabs, as evaluating\nthe filter is expensive and is done only at display time. This is most useful when\nusing sessions. An expression of session:~ or session:^$\nwill show only tabs that belong to the current session or no session. The various\ntab navigation actions such as goto_tab, next_tab, previous_tab, etc.\nare automatically restricted to work only on matching tabs."
     },
     {
       "name": "tab_bar_align",
@@ -877,7 +959,7 @@
       "name": "tab_title_template",
       "default": "\"{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}{title}\"",
       "group": "Tab bar",
-      "doc": "A template to render the tab title. The default just renders the title with\noptional symbols for bell and activity. If you wish to include the tab-index as\nwell, use something like: {index}:{title}. Useful if you have shortcuts\nmapped for goto_tab N. If you prefer to see the index as a superscript,\nuse {sup.index}. All data available is:\n\ntitle\n    The current tab title.\nindex\n    The tab index usable with goto_tab N <goto_tab> shortcuts.\nlayout_name\n    The current layout name.\nsession_name\n    The name of the kitty session file from which this tab was created, if any.\nactive_session_name\n    The name of the kitty session file from which the active window in this tab was created, if any.\nnum_windows\n    The number of windows in the tab.\nnum_window_groups\n    The number of window groups (a window group is a window and all of its overlay windows) in the tab.\ntab.active_wd\n    The working directory of the currently active window in the tab\n    (expensive, requires syscall). Use tab.active_oldest_wd to get\n    the directory of the oldest foreground process rather than the newest.\ntab.active_exe\n    The name of the executable running in the foreground of the currently\n    active window in the tab (expensive, requires syscall). Use\n    tab.active_oldest_exe for the oldest foreground process.\nmax_title_length\n    The maximum title length available.\nkeyboard_mode\n    The name of the current keyboard mode <modal_mappings> or the empty string if no keyboard mode is active.\ntab.last_focused_progress_percent\n    If a command running in a window reports the progress for a task, show this progress as a percentage\n    from the most recently focused window in the tab. Empty string if no progress is reported.\ntab.progress_percent\n    If a command running in a window reports the progress for a task, show this progress as a percentage\n    from all windows in the tab, averaged. Empty string is no progress is reported.\ncustom\n    This will call a function named draw_title(data) from the file tab_bar.py placed in\n    the kitty config directory. The function will be passed a dictionary of data, the same data that\n    can be used in this template. It can then perform arbitrarily complex processing and return a string.\n    For example: tab_title_template \"{custom}\" will use the output of the function as the tab title.\n    Any print statements in the draw_title() will print to the STDOUT of the kitty process, useful\n    for debugging.\n\n\nNote that formatting is done by Python's string formatting machinery, so you can\nuse, for instance, {layout_name[:2].upper()} to show only the first two\nletters of the layout name, upper-cased. If you want to style the text, you can\nuse styling directives, for example:\n{fmt.fg.red}red{fmt.fg.tab}normal{fmt.bg._00FF00}greenbg{fmt.bg.tab}.\nSimilarly, for bold and italic:\n{fmt.bold}bold{fmt.nobold}normal{fmt.italic}italic{fmt.noitalic}.\nThe 256 eight terminal colors can be used as fmt.fg.color0 through fmt.fg.color255.\nNote that for backward compatibility, if {bell_symbol} or\n{activity_symbol} are not present in the template, they are prepended to\nit."
+      "doc": "A template to render the tab title. The default just renders the title with\noptional symbols for bell and activity. If you wish to include the tab-index as\nwell, use something like: {index}:{title}. Useful if you have shortcuts\nmapped for goto_tab N. If you prefer to see the index as a superscript,\nuse {sup.index}. All data available is:\n\ntitle\n    The current tab title.\nindex\n    The tab index usable with goto_tab N shortcuts.\nlayout_name\n    The current layout name.\nsession_name\n    The name of the kitty session file from which this tab was created, if any.\nactive_session_name\n    The name of the kitty session file from which the active window in this tab was created, if any.\nnum_windows\n    The number of windows in the tab.\nnum_window_groups\n    The number of window groups (a window group is a window and all of its overlay windows) in the tab.\ntab.active_wd\n    The working directory of the currently active window in the tab\n    (expensive, requires syscall). Use tab.active_oldest_wd to get\n    the directory of the oldest foreground process rather than the newest.\ntab.active_exe\n    The name of the executable running in the foreground of the currently\n    active window in the tab (expensive, requires syscall). Use\n    tab.active_oldest_exe for the oldest foreground process.\nmax_title_length\n    The maximum title length available.\nkeyboard_mode\n    The name of the current keyboard mode or the empty string if no keyboard mode is active.\ntab.last_focused_progress_percent\n    If a command running in a window reports the progress for a task, show this progress as a percentage\n    from the most recently focused window in the tab. Empty string if no progress is reported.\ntab.progress_percent\n    If a command running in a window reports the progress for a task, show this progress as a percentage\n    from all windows in the tab, averaged. Empty string is no progress is reported.\ncustom\n    This will call a function named draw_title(data) from the file tab_bar.py placed in\n    the kitty config directory. The function will be passed a dictionary of data, the same data that\n    can be used in this template. It can then perform arbitrarily complex processing and return a string.\n    For example: tab_title_template \"{custom}\" will use the output of the function as the tab title.\n    Any print statements in the draw_title() will print to the STDOUT of the kitty process, useful\n    for debugging.\n\n\nNote that formatting is done by Python's string formatting machinery, so you can\nuse, for instance, {layout_name[:2].upper()} to show only the first two\nletters of the layout name, upper-cased. If you want to style the text, you can\nuse styling directives, for example:\n{fmt.fg.red}red{fmt.fg.tab}normal{fmt.bg._00FF00}greenbg{fmt.bg.tab}.\nSimilarly, for bold and italic:\n{fmt.bold}bold{fmt.nobold}normal{fmt.italic}italic{fmt.noitalic}.\nThe 256 eight terminal colors can be used as fmt.fg.color0 through fmt.fg.color255.\nNote that for backward compatibility, if {bell_symbol} or\n{activity_symbol} are not present in the template, they are prepended to\nit."
     },
     {
       "name": "active_tab_title_template",
@@ -925,13 +1007,19 @@
       "name": "tab_bar_background",
       "default": "none",
       "group": "Tab bar",
-      "doc": "Background color for the tab bar. Defaults to using the terminal background\ncolor."
+      "doc": "Background color for the tab bar. Defaults to using the terminal background\ncolor.",
+      "choices": [
+        "none"
+      ]
     },
     {
       "name": "tab_bar_margin_color",
       "default": "none",
       "group": "Tab bar",
-      "doc": "Color for the tab bar margin area. Defaults to using the terminal background\ncolor for margins above and below the tab bar. For side margins the default\ncolor is chosen to match the background color of the neighboring tab."
+      "doc": "Color for the tab bar margin area. Defaults to using the terminal background\ncolor for margins above and below the tab bar. For side margins the default\ncolor is chosen to match the background color of the neighboring tab.",
+      "choices": [
+        "none"
+      ]
     },
     {
       "name": "foreground",
@@ -955,19 +1043,23 @@
       "name": "background_blur",
       "default": "0",
       "group": "Color scheme",
-      "doc": "Set to a positive value to enable background blur (blurring of the visuals\nbehind a transparent window) on platforms that support it. Only takes effect\nwhen background_opacity is less than one. On macOS, this will also\ncontrol the :italic:`blur radius` (amount of blurring). Setting it to too high\na value will cause severe performance issues and/or rendering artifacts.\nUsually, values up to 64 work well. Note that this might cause performance issues,\ndepending on how the platform implements it, so use with care. Currently supported\non macOS and KDE."
+      "doc": "Set to a positive value to enable background blur (blurring of the visuals\nbehind a transparent window) on platforms that support it. Only takes effect\nwhen background_opacity is less than one. On macOS, this will also\ncontrol the blur radius (amount of blurring). Setting it to too high\na value will cause severe performance issues and/or rendering artifacts.\nUsually, values up to 64 work well. Note that this might cause performance issues,\ndepending on how the platform implements it, so use with care. Currently supported\non macOS and KDE."
     },
     {
       "name": "transparent_background_colors",
       "default": "",
       "group": "Color scheme",
-      "doc": "A space separated list of upto 7 colors, with opacity. When the background color of a cell matches one of these colors,\nit is rendered semi-transparent using the specified opacity.\n\nUseful in more complex UIs like editors where you could want more than a single background color\nto be rendered as transparent, for instance, for a cursor highlight line background or a highlighted block.\nTerminal applications can set this color using The kitty color control <color_control>\nescape code.\n\nThe syntax for specifying colors is: color@opacity, where the @opacity\npart is optional. When unspecified, the value of background_opacity is used. For example::\n\n    transparent_background_colors red@0.5 #00ff00@0.3\n\nNote that you must also set background_opacity to something less than 1 for this setting to work properly."
+      "doc": "A space separated list of upto 7 colors, with opacity. When the background color of a cell matches one of these colors,\nit is rendered semi-transparent using the specified opacity.\n\nUseful in more complex UIs like editors where you could want more than a single background color\nto be rendered as transparent, for instance, for a cursor highlight line background or a highlighted block.\nTerminal applications can set this color using The kitty color control\nescape code.\n\nThe syntax for specifying colors is: color@opacity, where the @opacity\npart is optional. When unspecified, the value of background_opacity is used. For example:\n\n    transparent_background_colors red@0.5 #00ff00@0.3\n\nNote that you must also set background_opacity to something less than 1 for this setting to work properly."
     },
     {
       "name": "dynamic_background_opacity",
       "default": "no",
       "group": "Color scheme",
-      "doc": "Allow changing of the background_opacity dynamically, using either\nkeyboard shortcuts (:sc:`increase_background_opacity` and\n:sc:`decrease_background_opacity`) or the remote control facility. Changing\nthis option by reloading the config is not supported."
+      "doc": "Allow changing of the background_opacity dynamically, using either\nkeyboard shortcuts (increase_background_opacity and\ndecrease_background_opacity) or the remote control facility. Changing\nthis option by reloading the config is not supported.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "background_image",
@@ -993,7 +1085,11 @@
       "name": "background_image_linear",
       "default": "no",
       "group": "Color scheme",
-      "doc": "When background image is scaled, whether linear interpolation should be used. Note that when using auto_color_scheme this option is overridden by the color scheme file and must be set inside it to take effect."
+      "doc": "When background image is scaled, whether linear interpolation should be used. Note that when using auto_color_scheme this option is overridden by the color scheme file and must be set inside it to take effect.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "background_tint",
@@ -1017,13 +1113,19 @@
       "name": "selection_foreground",
       "default": "#000000",
       "group": "Color scheme",
-      "doc": "The foreground and background colors for text selected with the mouse. Setting\nboth of these to none will cause a \"reverse video\" effect for\nselections, where the selection will be the cell text color and the text will\nbecome the cell background color. Setting only selection_foreground to\nnone will cause the foreground color to be used unchanged. Note that\nthese colors can be overridden by the program running in the terminal."
+      "doc": "The foreground and background colors for text selected with the mouse. Setting\nboth of these to none will cause a \"reverse video\" effect for\nselections, where the selection will be the cell text color and the text will\nbecome the cell background color. Setting only selection_foreground to\nnone will cause the foreground color to be used unchanged. Note that\nthese colors can be overridden by the program running in the terminal.",
+      "choices": [
+        "none"
+      ]
     },
     {
       "name": "selection_background",
       "default": "#fffacd",
       "group": "Color scheme",
-      "doc": ""
+      "doc": "",
+      "choices": [
+        "none"
+      ]
     },
     {
       "name": "color0",
@@ -2607,13 +2709,17 @@
       "name": "editor",
       "default": ".",
       "group": "Advanced",
-      "doc": "The terminal based text editor (such as :program:`vim` or :program:`nano`) to\nuse when editing the kitty config file or similar tasks.\n\nThe default value of . means to use the environment variables\nVISUAL and EDITOR in that order. If these variables aren't\nset, kitty will run your shell ($SHELL -l -i -c env) to see if\nyour shell startup rc files set VISUAL or EDITOR. If that\ndoesn't work, kitty will cycle through various known editors (:program:`vim`,\n:program:`emacs`, etc.) and take the first one that exists on your system."
+      "doc": "The terminal based text editor (such as vim or nano) to\nuse when editing the kitty config file or similar tasks.\n\nThe default value of . means to use the environment variables\nVISUAL and EDITOR in that order. If these variables aren't\nset, kitty will run your shell ($SHELL -l -i -c env) to see if\nyour shell startup rc files set VISUAL or EDITOR. If that\ndoesn't work, kitty will cycle through various known editors (vim,\nemacs, etc.) and take the first one that exists on your system."
     },
     {
       "name": "close_on_child_death",
       "default": "no",
       "group": "Advanced",
-      "doc": "Close the window when the child process (usually the shell) exits. With the default value\nno, the terminal will remain open when the child exits as long as there\nare still other processes outputting to the terminal (for example disowned or\nbackgrounded processes). When enabled with yes, the window will close as\nsoon as the child process exits. Note that setting it to yes means that\nany background processes still using the terminal can fail silently because\ntheir stdout/stderr/stdin no longer work."
+      "doc": "Close the window when the child process (usually the shell) exits. With the default value\nno, the terminal will remain open when the child exits as long as there\nare still other processes outputting to the terminal (for example disowned or\nbackgrounded processes). When enabled with yes, the window will close as\nsoon as the child process exits. Note that setting it to yes means that\nany background processes still using the terminal can fail silently because\ntheir stdout/stderr/stdin no longer work.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "allow_remote_control",
@@ -2666,25 +2772,29 @@
       "name": "file_transfer_confirmation_bypass",
       "default": "",
       "group": "Advanced",
-      "doc": "The password that can be supplied to the file transfer kitten\n</kittens/transfer> to skip the transfer confirmation prompt. This should only\nbe used when initiating transfers from trusted computers, over trusted networks\nor encrypted transports, as it allows any programs running on the remote machine\nto read/write to the local filesystem, without permission."
+      "doc": "The password that can be supplied to the file transfer kitten to skip the transfer confirmation prompt. This should only\nbe used when initiating transfers from trusted computers, over trusted networks\nor encrypted transports, as it allows any programs running on the remote machine\nto read/write to the local filesystem, without permission."
     },
     {
       "name": "allow_hyperlinks",
       "default": "yes",
       "group": "Advanced",
-      "doc": "Process hyperlink <hyperlinks> escape sequences (OSC 8). If disabled OSC\n8 escape sequences are ignored. Otherwise they become clickable links, that you\ncan click with the mouse or by using the hints kitten </kittens/hints>.\nThe special value of ask means that kitty will ask before opening the\nlink when clicked."
+      "doc": "Process hyperlink escape sequences (OSC 8). If disabled OSC\n8 escape sequences are ignored. Otherwise they become clickable links, that you\ncan click with the mouse or by using the hints kitten.\nThe special value of ask means that kitty will ask before opening the\nlink when clicked.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "shell_integration",
       "default": "enabled",
       "group": "Advanced",
-      "doc": "Enable shell integration on supported shells. This enables features such as\njumping to previous prompts, browsing the output of the previous command in a\npager, etc. on supported shells. Set to disabled to turn off shell\nintegration, completely. It is also possible to disable individual features, set\nto a space separated list of these values: no-rc, no-cursor,\nno-title, no-cwd, no-prompt-mark, no-complete, no-sudo.\nSee Shell integration <shell_integration> for details."
+      "doc": "Enable shell integration on supported shells. This enables features such as\njumping to previous prompts, browsing the output of the previous command in a\npager, etc. on supported shells. Set to disabled to turn off shell\nintegration, completely. It is also possible to disable individual features, set\nto a space separated list of these values: no-rc, no-cursor,\nno-title, no-cwd, no-prompt-mark, no-complete, no-sudo.\nSee Shell integration for details."
     },
     {
       "name": "allow_cloning",
       "default": "ask",
       "group": "Advanced",
-      "doc": "Control whether programs running in the terminal can request new windows to be\ncreated. The canonical example is clone-in-kitty <clone_shell>. By\ndefault, kitty will ask for permission for each clone request. Allowing cloning\nunconditionally gives programs running in the terminal (including over SSH)\npermission to execute arbitrary code, as the user who is running the terminal,\non the computer that the terminal is running on.",
+      "doc": "Control whether programs running in the terminal can request new windows to be\ncreated. The canonical example is clone-in-kitty. By\ndefault, kitty will ask for permission for each clone request. Allowing cloning\nunconditionally gives programs running in the terminal (including over SSH)\npermission to execute arbitrary code, as the user who is running the terminal,\non the computer that the terminal is running on.",
       "choices": [
         "yes",
         "y",
@@ -2699,13 +2809,13 @@
       "name": "clone_source_strategies",
       "default": "venv,conda,env_var,path",
       "group": "Advanced",
-      "doc": "Control what shell code is sourced when running :command:`clone-in-kitty`\nin the newly cloned window. The supported strategies are:\n\nvenv\n    Source the file $VIRTUAL_ENV/bin/activate. This is used by the\n    Python stdlib venv module and allows cloning venvs automatically.\nconda\n    Run conda activate $CONDA_DEFAULT_ENV. This supports the virtual\n    environments created by :program:`conda`.\nenv_var\n    Execute the contents of the environment variable\n    KITTY_CLONE_SOURCE_CODE with eval.\npath\n    Source the file pointed to by the environment variable\n    KITTY_CLONE_SOURCE_PATH.\n\nThis option must be a comma separated list of the above values. Only the\nfirst valid match, in the order specified, is sourced."
+      "doc": "Control what shell code is sourced when running clone-in-kitty\nin the newly cloned window. The supported strategies are:\n\nvenv\n    Source the file $VIRTUAL_ENV/bin/activate. This is used by the\n    Python stdlib venv module and allows cloning venvs automatically.\nconda\n    Run conda activate $CONDA_DEFAULT_ENV. This supports the virtual\n    environments created by conda.\nenv_var\n    Execute the contents of the environment variable\n    KITTY_CLONE_SOURCE_CODE with eval.\npath\n    Source the file pointed to by the environment variable\n    KITTY_CLONE_SOURCE_PATH.\n\nThis option must be a comma separated list of the above values. Only the\nfirst valid match, in the order specified, is sourced."
     },
     {
       "name": "notify_on_cmd_finish",
       "default": "never",
       "group": "Advanced",
-      "doc": "Show a desktop notification when a long-running command finishes\n(needs shell_integration).\nThe possible values are:\n\nnever\n    Never send a notification.\n\nunfocused\n    Only send a notification when the window does not have keyboard focus.\n\ninvisible\n    Only send a notification when the window both is unfocused and not visible\n    to the user, for example, because it is in an inactive tab or its OS window\n    is not currently visible (on platforms that support OS window visibility querying\n    this considers an OS Window visible iff it is active).\n\nalways\n    Always send a notification, regardless of window state.\n\nThere are two optional arguments:\n\nFirst, the minimum duration for what is considered a\nlong running command. The default is 5 seconds. Specify a second argument\nto set the duration. For example: invisible 15.\nDo not set the value too small, otherwise a command that launches a new OS Window\nand exits will spam a notification.\n\nSecond, the action to perform. The default is notify. The possible values are:\n\nnotify\n    Send a desktop notification. The subsequent arguments are optional and specify when\n    the notification is automatically cleared. The set of possible events when the notification is\n    cleared are: focus and next. focus means that when the notification\n    policy is unfocused or invisible the notification is automatically cleared\n    when the window regains focus. The value of next means that the previous notification\n    is cleared when the next notification is shown. The default when no arguments are specified\n    is: focus next.\n\nbell\n    Ring the terminal bell.\n\nnotify-bell\n    Send a desktop notification and ring the terminal bell.\n    The arguments are the same as for `notify`.\n\ncommand\n    Run a custom command. All subsequent arguments are the cmdline to run.\n\nSome more examples::\n\n    # Send a notification when a command takes more than 5 seconds in an unfocused window\n    notify_on_cmd_finish unfocused\n    # Send a notification when a command takes more than 10 seconds in a invisible window\n    notify_on_cmd_finish invisible 10.0\n    # Ring a bell when a command takes more than 10 seconds in a invisible window\n    notify_on_cmd_finish invisible 10.0 bell\n    # Run 'notify-send' when a command takes more than 10 seconds in a invisible window\n    # Here %c is replaced by the current command line and %s by the job exit code\n    notify_on_cmd_finish invisible 10.0 command notify-send \"job finished with status: %s\" %c\n    # Do not clear previous notification when next command finishes or window regains focus\n    notify_on_cmd_finish invisible 5.0 notify"
+      "doc": "Show a desktop notification when a long-running command finishes\n(needs shell_integration).\nThe possible values are:\n\nnever\n    Never send a notification.\n\nunfocused\n    Only send a notification when the window does not have keyboard focus.\n\ninvisible\n    Only send a notification when the window both is unfocused and not visible\n    to the user, for example, because it is in an inactive tab or its OS window\n    is not currently visible (on platforms that support OS window visibility querying\n    this considers an OS Window visible iff it is active).\n\nalways\n    Always send a notification, regardless of window state.\n\nThere are two optional arguments:\n\nFirst, the minimum duration for what is considered a\nlong running command. The default is 5 seconds. Specify a second argument\nto set the duration. For example: invisible 15.\nDo not set the value too small, otherwise a command that launches a new OS Window\nand exits will spam a notification.\n\nSecond, the action to perform. The default is notify. The possible values are:\n\nnotify\n    Send a desktop notification. The subsequent arguments are optional and specify when\n    the notification is automatically cleared. The set of possible events when the notification is\n    cleared are: focus and next. focus means that when the notification\n    policy is unfocused or invisible the notification is automatically cleared\n    when the window regains focus. The value of next means that the previous notification\n    is cleared when the next notification is shown. The default when no arguments are specified\n    is: focus next.\n\nbell\n    Ring the terminal bell.\n\nnotify-bell\n    Send a desktop notification and ring the terminal bell.\n    The arguments are the same as for `notify`.\n\ncommand\n    Run a custom command. All subsequent arguments are the cmdline to run.\n\nSome more examples:\n\n    # Send a notification when a command takes more than 5 seconds in an unfocused window\n    notify_on_cmd_finish unfocused\n    # Send a notification when a command takes more than 10 seconds in a invisible window\n    notify_on_cmd_finish invisible 10.0\n    # Ring a bell when a command takes more than 10 seconds in a invisible window\n    notify_on_cmd_finish invisible 10.0 bell\n    # Run 'notify-send' when a command takes more than 10 seconds in a invisible window\n    # Here %c is replaced by the current command line and %s by the job exit code\n    notify_on_cmd_finish invisible 10.0 command notify-send \"job finished with status: %s\" %c\n    # Do not clear previous notification when next command finishes or window regains focus\n    notify_on_cmd_finish invisible 5.0 notify"
     },
     {
       "name": "term",
@@ -2728,7 +2838,11 @@
       "name": "forward_stdio",
       "default": "no",
       "group": "Advanced",
-      "doc": "Forward STDOUT and STDERR of the kitty process to child processes.\nThis is useful for debugging as it\nallows child processes to print to kitty's STDOUT directly. For example,\necho hello world >&$KITTY_STDIO_FORWARDED in a shell will print\nto the parent kitty's STDOUT. Sets the KITTY_STDIO_FORWARDED=fdnum\nenvironment variable so child processes know about the forwarding. Note that\non macOS this prevents the shell from being run via the login utility so getlogin()\nwill not work in programs run in this session."
+      "doc": "Forward STDOUT and STDERR of the kitty process to child processes.\nThis is useful for debugging as it\nallows child processes to print to kitty's STDOUT directly. For example,\necho hello world >&$KITTY_STDIO_FORWARDED in a shell will print\nto the parent kitty's STDOUT. Sets the KITTY_STDIO_FORWARDED=fdnum\nenvironment variable so child processes know about the forwarding. Note that\non macOS this prevents the shell from being run via the login utility so getlogin()\nwill not work in programs run in this session.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "wayland_titlebar_color",
@@ -2746,25 +2860,41 @@
       "name": "macos_option_as_alt",
       "default": "no",
       "group": "OS specific tweaks",
-      "doc": "Use the Option key as an Alt key on macOS. With this set to\nno, kitty will use the macOS native Option+Key to enter Unicode\ncharacter behavior. This will break any Alt+Key keyboard shortcuts in\nyour terminal programs, but you can use the macOS Unicode input technique. You\ncan use the values: left, right or both to use only the\nleft, right or both Option keys as Alt, instead. Note that kitty\nitself always treats Option the same as Alt. This means you cannot\nuse this option to configure different kitty shortcuts for Option+Key\nvs. Alt+Key. Also, any kitty shortcuts using Option/Alt+Key will\ntake priority, so that any such key presses will not be passed to terminal\nprograms running inside kitty. Changing this option by reloading the config is\nnot supported."
+      "doc": "Use the Option key as an Alt key on macOS. With this set to\nno, kitty will use the macOS native Option+Key to enter Unicode\ncharacter behavior. This will break any Alt+Key keyboard shortcuts in\nyour terminal programs, but you can use the macOS Unicode input technique. You\ncan use the values: left, right or both to use only the\nleft, right or both Option keys as Alt, instead. Note that kitty\nitself always treats Option the same as Alt. This means you cannot\nuse this option to configure different kitty shortcuts for Option+Key\nvs. Alt+Key. Also, any kitty shortcuts using Option/Alt+Key will\ntake priority, so that any such key presses will not be passed to terminal\nprograms running inside kitty. Changing this option by reloading the config is\nnot supported.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "macos_hide_from_tasks",
       "default": "no",
       "group": "OS specific tweaks",
-      "doc": "Hide the kitty window from running tasks on macOS (\u2318+Tab and the Dock).\nChanging this option by reloading the config is not supported."
+      "doc": "Hide the kitty window from running tasks on macOS (\u2318+Tab and the Dock).\nChanging this option by reloading the config is not supported.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "macos_quit_when_last_window_closed",
       "default": "no",
       "group": "OS specific tweaks",
-      "doc": "Have kitty quit when all the top-level windows are closed on macOS. By default,\nkitty will stay running, even with no open windows, as is the expected behavior\non macOS."
+      "doc": "Have kitty quit when all the top-level windows are closed on macOS. By default,\nkitty will stay running, even with no open windows, as is the expected behavior\non macOS.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "macos_window_resizable",
       "default": "yes",
       "group": "OS specific tweaks",
-      "doc": "Disable this if you want kitty top-level OS windows to not be resizable on\nmacOS."
+      "doc": "Disable this if you want kitty top-level OS windows to not be resizable on\nmacOS.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "macos_thicken_font",
@@ -2776,7 +2906,11 @@
       "name": "macos_traditional_fullscreen",
       "default": "no",
       "group": "OS specific tweaks",
-      "doc": "Use the macOS traditional full-screen transition, that is faster, but less\npretty."
+      "doc": "Use the macOS traditional full-screen transition, that is faster, but less\npretty.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "macos_show_window_title_in",
@@ -2800,7 +2934,11 @@
       "name": "macos_custom_beam_cursor",
       "default": "no",
       "group": "OS specific tweaks",
-      "doc": "Use a custom mouse cursor for macOS that is easier to see on both light\nand dark backgrounds. Nowadays, the default macOS cursor already comes with a\nwhite border. WARNING: this might make your mouse cursor invisible on\ndual GPU machines. Changing this option by reloading the config is not supported."
+      "doc": "Use a custom mouse cursor for macOS that is easier to see on both light\nand dark backgrounds. Nowadays, the default macOS cursor already comes with a\nwhite border. WARNING: this might make your mouse cursor invisible on\ndual GPU machines. Changing this option by reloading the config is not supported.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "macos_colorspace",
@@ -2828,7 +2966,11 @@
       "name": "wayland_enable_ime",
       "default": "yes",
       "group": "OS specific tweaks",
-      "doc": "Enable Input Method Extension on Wayland. This is typically used for\ninputting text in East Asian languages. However, its implementation in\nWayland is often buggy and introduces latency into the input loop,\nso disable this if you know you dont need it. Changing this option\nby reloading the config is not supported, it will not have any effect."
+      "doc": "Enable Input Method Extension on Wayland. This is typically used for\ninputting text in East Asian languages. However, its implementation in\nWayland is often buggy and introduces latency into the input loop,\nso disable this if you know you dont need it. Changing this option\nby reloading the config is not supported, it will not have any effect.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     },
     {
       "name": "kitty_mod",
@@ -2840,50 +2982,54 @@
       "name": "clear_all_shortcuts",
       "default": "no",
       "group": "Keyboard shortcuts",
-      "doc": "Remove all shortcut definitions up to this point. Useful, for instance, to\nremove the default shortcuts."
+      "doc": "Remove all shortcut definitions up to this point. Useful, for instance, to\nremove the default shortcuts.",
+      "choices": [
+        "yes",
+        "no"
+      ]
     }
   ],
   "multi_options": [
     {
       "name": "symbol_map",
       "group": "Fonts",
-      "doc": "Map the specified Unicode codepoints to a particular font. Useful if you need\nspecial rendering for some symbols, such as for Powerline. Avoids the need for\npatched fonts. Each Unicode code point is specified in the form U+<code\npoint in hexadecimal>. You can specify multiple code points, separated by\ncommas and ranges separated by hyphens. This option can be specified multiple\ntimes. The syntax is::\n\n    symbol_map codepoints Font Family Name",
+      "doc": "Map the specified Unicode codepoints to a particular font. Useful if you need\nspecial rendering for some symbols, such as for Powerline. Avoids the need for\npatched fonts. Each Unicode code point is specified in the form U+<code\npoint in hexadecimal>. You can specify multiple code points, separated by\ncommas and ranges separated by hyphens. This option can be specified multiple\ntimes. The syntax is:\n\n    symbol_map codepoints Font Family Name",
       "default": "U+E0A0-U+E0A3,U+E0C0-U+E0C7 PowerlineSymbols"
     },
     {
       "name": "narrow_symbols",
       "group": "Fonts",
-      "doc": "Usually, for Private Use Unicode characters and some symbol/dingbat characters,\nif the character is followed by one or more spaces, kitty will use those extra\ncells to render the character larger, if the character in the font has a wide\naspect ratio. Using this option you can force kitty to restrict the specified\ncode points to render in the specified number of cells (defaulting to one cell).\nThis option can be specified multiple times. The syntax is::\n\n    narrow_symbols codepoints [optionally the number of cells]",
+      "doc": "Usually, for Private Use Unicode characters and some symbol/dingbat characters,\nif the character is followed by one or more spaces, kitty will use those extra\ncells to render the character larger, if the character in the font has a wide\naspect ratio. Using this option you can force kitty to restrict the specified\ncode points to render in the specified number of cells (defaulting to one cell).\nThis option can be specified multiple times. The syntax is:\n\n    narrow_symbols codepoints [optionally the number of cells]",
       "default": "U+E0A0-U+E0A3,U+E0C0-U+E0C7 1"
     },
     {
       "name": "font_features",
       "group": "Fonts",
-      "doc": "Choose exactly which OpenType features to enable or disable. Note that for the\nmain fonts, features can be specified when selecting the font using the choose-fonts kitten.\nThis setting is useful for fallback fonts.\n\nSome fonts might have features worthwhile in a terminal. For example, Fira Code\nincludes a discretionary feature, zero, which in that font changes the\nappearance of the zero (0), to make it more easily distinguishable from \u00d8. Fira\nCode also includes other discretionary features known as Stylistic Sets which\nhave the tags ss01 through ss20.\n\nFor the exact syntax to use for individual features, see the\n:link:`HarfBuzz documentation\n<https://harfbuzz.github.io/harfbuzz-hb-common.html#hb-feature-from-string>`.\n\nNote that this code is indexed by PostScript name, and not the font family. This\nallows you to define very precise feature settings; e.g. you can disable a\nfeature in the italic font but not in the regular font.\n\nOn Linux, font features are first read from the FontConfig database and then\nthis option is applied, so they can be configured in a single, central place.\n\nTo get the PostScript name for a font, use the fc-scan file.ttf command on Linux\nor the Font Book tool on macOS <https://apple.stackexchange.com/questions/79875/how-can-i-get-the-postscript-name-of-a-ttf-font-installed-in-os-x>_.\n\nEnable alternate zero and oldstyle numerals::\n\n    font_features FiraCode-Retina +zero +onum\n\nEnable only alternate zero in the bold font::\n\n    font_features FiraCode-Bold +zero\n\nDisable the normal ligatures, but keep the calt feature which (in this\nfont) breaks up monotony::\n\n    font_features TT2020StyleB-Regular -liga +calt\n\nIn conjunction with force_ltr, you may want to disable Arabic shaping\nentirely, and only look at their isolated forms if they show up in a document.\nYou can do this with e.g.::\n\n    font_features UnifontMedium +isol -medi -fina -init",
+      "doc": "Choose exactly which OpenType features to enable or disable. Note that for the\nmain fonts, features can be specified when selecting the font using the choose-fonts kitten.\nThis setting is useful for fallback fonts.\n\nSome fonts might have features worthwhile in a terminal. For example, Fira Code\nincludes a discretionary feature, zero, which in that font changes the\nappearance of the zero (0), to make it more easily distinguishable from \u00d8. Fira\nCode also includes other discretionary features known as Stylistic Sets which\nhave the tags ss01 through ss20.\n\nFor the exact syntax to use for individual features, see the\nHarfBuzz documentation.\n\nNote that this code is indexed by PostScript name, and not the font family. This\nallows you to define very precise feature settings; e.g. you can disable a\nfeature in the italic font but not in the regular font.\n\nOn Linux, font features are first read from the FontConfig database and then\nthis option is applied, so they can be configured in a single, central place.\n\nTo get the PostScript name for a font, use the fc-scan file.ttf command on Linux\nor the Font Book tool on macOS <https://apple.stackexchange.com/questions/79875/how-can-i-get-the-postscript-name-of-a-ttf-font-installed-in-os-x>_.\n\nEnable alternate zero and oldstyle numerals:\n\n    font_features FiraCode-Retina +zero +onum\n\nEnable only alternate zero in the bold font:\n\n    font_features FiraCode-Bold +zero\n\nDisable the normal ligatures, but keep the calt feature which (in this\nfont) breaks up monotony:\n\n    font_features TT2020StyleB-Regular -liga +calt\n\nIn conjunction with force_ltr, you may want to disable Arabic shaping\nentirely, and only look at their isolated forms if they show up in a document.\nYou can do this with e.g.::\n\n    font_features UnifontMedium +isol -medi -fina -init",
       "default": "none"
     },
     {
       "name": "modify_font",
       "group": "Fonts",
-      "doc": "Modify font characteristics such as the position or thickness of the underline\nand strikethrough. The modifications can have the suffix px for pixels\nor % for percentage of original value. No suffix means use pts.\nFor example::\n\n    modify_font underline_position -2\n    modify_font underline_thickness 150%\n    modify_font strikethrough_position 2px\n\nAdditionally, you can modify the size of the cell in which each font glyph is\nrendered and the baseline at which the glyph is placed in the cell.\nFor example::\n\n    modify_font cell_width 80%\n    modify_font cell_height -2px\n    modify_font baseline 3\n\nNote that modifying the baseline will automatically adjust the underline and\nstrikethrough positions by the same amount. Increasing the baseline raises\nglyphs inside the cell and decreasing it lowers them. Decreasing the cell size\nmight cause rendering artifacts, so use with care.",
+      "doc": "Modify font characteristics such as the position or thickness of the underline\nand strikethrough. The modifications can have the suffix px for pixels\nor % for percentage of original value. No suffix means use pts.\nFor example:\n\n    modify_font underline_position -2\n    modify_font underline_thickness 150%\n    modify_font strikethrough_position 2px\n\nAdditionally, you can modify the size of the cell in which each font glyph is\nrendered and the baseline at which the glyph is placed in the cell.\nFor example:\n\n    modify_font cell_width 80%\n    modify_font cell_height -2px\n    modify_font baseline 3\n\nNote that modifying the baseline will automatically adjust the underline and\nstrikethrough positions by the same amount. Increasing the baseline raises\nglyphs inside the cell and decreasing it lowers them. Decreasing the cell size\nmight cause rendering artifacts, so use with care.",
       "default": ""
     },
     {
       "name": "remote_control_password",
       "group": "Advanced",
-      "doc": "Allow other programs to control kitty using passwords. This option can be\nspecified multiple times to add multiple passwords. If no passwords are present\nkitty will ask the user for permission if a program tries to use remote control\nwith a password. A password can also *optionally* be associated with a set of\nallowed remote control actions. For example::\n\n    remote_control_password \"my passphrase\" get-colors set-colors focus-window focus-tab\n\nOnly the specified actions will be allowed when using this password.\nGlob patterns can be used too, for example::\n\n    remote_control_password \"my passphrase\" set-tab-* resize-*\n\nTo get a list of available actions, run::\n\n    kitten @ --help\n\nA set of actions to be allowed when no password is sent can be specified by\nusing an empty password. For example::\n\n    remote_control_password \"\" *-colors\n\nFinally, the path to a python module can be specified that provides a function\nis_cmd_allowed that is used to check every remote control command.\nFor example::\n\n    remote_control_password \"my passphrase\" my_rc_command_checker.py\n\nRelative paths are resolved from the kitty configuration directory.\nSee rc_custom_auth for details.",
+      "doc": "Allow other programs to control kitty using passwords. This option can be\nspecified multiple times to add multiple passwords. If no passwords are present\nkitty will ask the user for permission if a program tries to use remote control\nwith a password. A password can also *optionally* be associated with a set of\nallowed remote control actions. For example:\n\n    remote_control_password \"my passphrase\" get-colors set-colors focus-window focus-tab\n\nOnly the specified actions will be allowed when using this password.\nGlob patterns can be used too, for example:\n\n    remote_control_password \"my passphrase\" set-tab-* resize-*\n\nTo get a list of available actions, run:\n\n    kitten @ --help\n\nA set of actions to be allowed when no password is sent can be specified by\nusing an empty password. For example:\n\n    remote_control_password \"\" *-colors\n\nFinally, the path to a python module can be specified that provides a function\nis_cmd_allowed that is used to check every remote control command.\nFor example:\n\n    remote_control_password \"my passphrase\" my_rc_command_checker.py\n\nRelative paths are resolved from the kitty configuration directory.\nSee rc_custom_auth for details.",
       "default": ""
     },
     {
       "name": "env",
       "group": "Advanced",
-      "doc": "Specify the environment variables to be set in all child processes. Using the\nname with an equal sign (e.g. env VAR=) will set it to the empty string.\nSpecifying only the name (e.g. env VAR) will remove the variable from\nthe child process' environment. Note that environment variables are expanded\nrecursively, for example::\n\n    env VAR1=a\n    env VAR2=${HOME}/${VAR1}/b\n\nThe value of VAR2 will be <path to home directory>/a/b.\n\nUse the special\nvalue read_from_shell to have kitty read the specified variables from\nyour login shell <shell> configuration.\nUseful if your shell startup files setup a bunch of environment variables that you want available to kitty and\nin kitty session files. Each variable name is treated as a glob pattern to match. For example:\nenv read_from_shell=PATH LANG LC_* XDG_* EDITOR VISUAL. Note that these variables are only\nread after the configuration is fully processed, thus they are not available for recursive expansion and\nthey will override any variables set by other env directives.",
+      "doc": "Specify the environment variables to be set in all child processes. Using the\nname with an equal sign (e.g. env VAR=) will set it to the empty string.\nSpecifying only the name (e.g. env VAR) will remove the variable from\nthe child process' environment. Note that environment variables are expanded\nrecursively, for example:\n\n    env VAR1=a\n    env VAR2=${HOME}/${VAR1}/b\n\nThe value of VAR2 will be/a/b.\n\nUse the special\nvalue read_from_shell to have kitty read the specified variables from\nyour login shell configuration.\nUseful if your shell startup files setup a bunch of environment variables that you want available to kitty and\nin kitty session files. Each variable name is treated as a glob pattern to match. For example:\nenv read_from_shell=PATH LANG LC_* XDG_* EDITOR VISUAL. Note that these variables are only\nread after the configuration is fully processed, thus they are not available for recursive expansion and\nthey will override any variables set by other env directives.",
       "default": ""
     },
     {
       "name": "filter_notification",
       "group": "Advanced",
-      "doc": "Specify rules to filter out notifications sent by applications running in kitty.\nCan be specified multiple times to create multiple filter rules. A rule specification\nis of the form field:regexp. A filter rule\ncan match on any of the fields: title, body, app, type.\nThe special value of all filters out all notifications. Rules can be combined\nusing Boolean operators. Some examples::\n\n    filter_notification title:hello or body:\"abc.*def\"\n    # filter out notification from vim except for ones about updates, (?i)\n    # makes matching case insensitive.\n    filter_notification app:\"[ng]?vim\" and not body:\"(?i)update\"\n    # filter out all notifications\n    filter_notification all\n\nThe field app is the name of the application sending the notification and type\nis the type of the notification. Not all applications will send these fields, so you can also\nmatch on the title and body of the notification text. More sophisticated programmatic filtering\nand custom actions on notifications can be done by creating a notifications.py file in the\nkitty config directory (/.config/kitty). An annotated sample is\n:link:`available <https://github.com/kovidgoyal/kitty/blob/master/docs/notifications.py>`.",
+      "doc": "Specify rules to filter out notifications sent by applications running in kitty.\nCan be specified multiple times to create multiple filter rules. A rule specification\nis of the form field:regexp. A filter rule\ncan match on any of the fields: title, body, app, type.\nThe special value of all filters out all notifications. Rules can be combined\nusing Boolean operators. Some examples:\n\n    filter_notification title:hello or body:\"abc.*def\"\n    # filter out notification from vim except for ones about updates, (?i)\n    # makes matching case insensitive.\n    filter_notification app:\"[ng]?vim\" and not body:\"(?i)update\"\n    # filter out all notifications\n    filter_notification all\n\nThe field app is the name of the application sending the notification and type\nis the type of the notification. Not all applications will send these fields, so you can also\nmatch on the title and body of the notification text. More sophisticated programmatic filtering\nand custom actions on notifications can be done by creating a notifications.py file in the\nkitty config directory (/.config/kitty). An annotated sample is\navailable.",
       "default": ""
     },
     {
@@ -2895,29 +3041,34 @@
     {
       "name": "exe_search_path",
       "group": "Advanced",
-      "doc": "Control where kitty finds the programs to run. The default search order is:\nFirst search the system wide PATH, then /.local/bin and\n/bin. If still not found, the PATH defined in the login shell\nafter sourcing all its startup files is tried. Finally, if present, the\nPATH specified by the env option is tried.\n\nThis option allows you to prepend, append, or remove paths from this search\norder. It can be specified multiple times for multiple paths. A simple path will\nbe prepended to the search order. A path that starts with the + sign\nwill be append to the search order, after /bin above. A path that\nstarts with the - sign will be removed from the entire search order.\nFor example::\n\n    exe_search_path /some/prepended/path\n    exe_search_path +/some/appended/path\n    exe_search_path -/some/excluded/path",
+      "doc": "Control where kitty finds the programs to run. The default search order is:\nFirst search the system wide PATH, then /.local/bin and\n/bin. If still not found, the PATH defined in the login shell\nafter sourcing all its startup files is tried. Finally, if present, the\nPATH specified by the env option is tried.\n\nThis option allows you to prepend, append, or remove paths from this search\norder. It can be specified multiple times for multiple paths. A simple path will\nbe prepended to the search order. A path that starts with the + sign\nwill be append to the search order, after /bin above. A path that\nstarts with the - sign will be removed from the entire search order.\nFor example:\n\n    exe_search_path /some/prepended/path\n    exe_search_path +/some/appended/path\n    exe_search_path -/some/excluded/path",
       "default": ""
     },
     {
       "name": "menu_map",
       "group": "Advanced",
-      "doc": "Specify entries for various menus in kitty. Currently only the global menubar on macOS\nis supported. For example::\n\n   menu_map global \"Actions::Launch something special\" launch --hold --type=os-window sh -c \"echo hello world\"\n\nThis will create a menu entry named \"Launch something special\" in an \"Actions\" menu in the macOS global menubar.\nSub-menus can be created by adding more levels separated by the :: characters.",
+      "doc": "Specify entries for various menus in kitty. Currently only the global menubar on macOS\nis supported. For example:\n\n   menu_map global \"Actions:Launch something special\" launch --hold --type=os-window sh -c \"echo hello world\"\n\nThis will create a menu entry named \"Launch something special\" in an \"Actions\" menu in the macOS global menubar.\nSub-menus can be created by adding more levels separated by the :: characters.",
       "default": ""
     },
     {
       "name": "action_alias",
       "group": "Keyboard shortcuts",
-      "doc": "Define action aliases to avoid repeating the same options in multiple mappings.\nAliases can be defined for any action and will be expanded recursively. For\nexample, the above alias allows you to create mappings to launch a new tab in\nthe current working directory without duplication::\n\n    map f1 launch_tab vim\n    map f2 launch_tab emacs\n\nSimilarly, to alias kitten invocation::\n\n    action_alias hints kitten hints --hints-offset=0",
+      "doc": "Define action aliases to avoid repeating the same options in multiple mappings.\nAliases can be defined for any action and will be expanded recursively. For\nexample, the above alias allows you to create mappings to launch a new tab in\nthe current working directory without duplication:\n\n    map f1 launch_tab vim\n    map f2 launch_tab emacs\n\nSimilarly, to alias kitten invocation:\n\n    action_alias hints kitten hints --hints-offset=0",
       "default": "launch_tab launch --type=tab --cwd=current"
     },
     {
       "name": "kitten_alias",
       "group": "Keyboard shortcuts",
-      "doc": "Like action_alias above, but specifically for kittens. Generally, prefer\nto use action_alias. This option is a legacy version, present for\nbackwards compatibility. It causes all invocations of the aliased kitten to be\nsubstituted. So the example above will cause all invocations of the hints kitten\nto have the --hints-offset=0 <kitty +kitten hints --hints-offset>\noption applied.",
+      "doc": "Like action_alias above, but specifically for kittens. Generally, prefer\nto use action_alias. This option is a legacy version, present for\nbackwards compatibility. It causes all invocations of the aliased kitten to be\nsubstituted. So the example above will cause all invocations of the hints kitten\nto have the --hints-offset=0\noption applied.",
       "default": "hints hints --hints-offset=0"
     }
   ],
   "actions": [
+    {
+      "name": "change_font_size",
+      "short": "Change the font size for the current or all OS Windows",
+      "doc": ""
+    },
     {
       "name": "clear_last_command",
       "short": "Clear the last command",
@@ -2934,39 +3085,114 @@
       "doc": ""
     },
     {
+      "name": "clear_selection",
+      "short": "Clear the current selection",
+      "doc": ""
+    },
+    {
+      "name": "clear_terminal",
+      "short": "Clear the terminal",
+      "doc": "For example:\n\n    # Reset the terminal\n    map f1 clear_terminal reset active\n    # Clear the terminal screen by erasing all contents\n    map f1 clear_terminal clear active\n    # Clear the terminal scrollback by erasing it\n    map f1 clear_terminal scrollback active\n    # Scroll the contents of the screen into the scrollback\n    map f1 clear_terminal scroll active\n    # Clear everything on screen up to the line with the cursor or the start of the current prompt (needs shell integration)\n    # Useful for clearing the screen up to the shell prompt and moving the shell prompt to the top of the screen.\n    map f1 clear_terminal to_cursor active\n    # Same as above except cleared lines are moved into scrollback\n    map f1 clear_terminal to_cursor_scroll active\n    # Erase the last command and its output (needs shell integration to work)\n    map f1 clear_terminal last_command active"
+    },
+    {
       "name": "clear_terminal_and_scrollback",
       "short": "Clear to start",
       "doc": ""
     },
     {
       "name": "close_os_window",
-      "short": "Close OS window",
+      "short": "Close the currently active OS Window",
+      "doc": ""
+    },
+    {
+      "name": "close_other_os_windows",
+      "short": "Close all other OS Windows other than the OS Window containing the currently active window",
+      "doc": ""
+    },
+    {
+      "name": "close_other_tabs_in_os_window",
+      "short": "Close all the tabs in the current OS window other than the currently active tab",
+      "doc": ""
+    },
+    {
+      "name": "close_other_windows_in_tab",
+      "short": "Close all windows in the tab other than the currently active window",
+      "doc": ""
+    },
+    {
+      "name": "close_session",
+      "short": "Close a session, that is, close all windows that belong to the session.",
+      "doc": "Examples:\n    # Ask for the session to close\n    map f1 close_session\n    # Close the currently active session\n    map f1 close_session .\n    # Close session by name\n    map f1 close_session \"my session\"\n    # Close session by path to session file\n    map f1 close_session \"/path/to/session/file.kitty-session\""
+    },
+    {
+      "name": "close_shared_ssh_connections",
+      "short": "Close all shared SSH connections",
       "doc": ""
     },
     {
       "name": "close_tab",
-      "short": "Close tab",
+      "short": "Close the current tab",
       "doc": ""
     },
     {
       "name": "close_window",
-      "short": "Close window",
+      "short": "Close the currently active window",
+      "doc": ""
+    },
+    {
+      "name": "close_window_with_confirmation",
+      "short": "Close window with confirmation",
+      "doc": "Asks for confirmation before closing the window. If you don't want the\nconfirmation when the window is sitting at a shell prompt\n(requires shell_integration), use:\n\n    map f1 close_window_with_confirmation ignore-shell"
+    },
+    {
+      "name": "combine",
+      "short": "Combine multiple actions and map to a single keypress",
+      "doc": "The syntax is:\n\n    map key combine action1 action2 action3 ...\n\nFor example:\n\n    map kitty_mod+e combine : new_window : next_layout\n    map kitty_mod+e combine | new_tab | goto_tab -1"
+    },
+    {
+      "name": "copy_and_clear_or_interrupt",
+      "short": "Copy the selected text from the active window to the clipboard and clear selection, if no selection, send SIGINT (aka ctrl+c)",
+      "doc": ""
+    },
+    {
+      "name": "copy_ansi_to_clipboard",
+      "short": "Copy the selected text from the active window to the clipboard with ANSI formatting codes",
+      "doc": ""
+    },
+    {
+      "name": "copy_last_command_output",
+      "short": "Copy the last non-empty output from a shell command to the clipboard",
+      "doc": "Requires shell_integration to work"
+    },
+    {
+      "name": "copy_or_interrupt",
+      "short": "Copy the selected text from the active window to the clipboard, if no selection, send SIGINT (aka ctrl+c)",
       "doc": ""
     },
     {
       "name": "copy_or_noop",
-      "short": "Copy to clipboard or pass through",
+      "short": "Copy the selected text from the active window to the clipboard, if no selection, pass the key through to the application running in the terminal.",
+      "doc": ""
+    },
+    {
+      "name": "copy_to_buffer",
+      "short": "Copy the selection from the active window to the specified buffer",
       "doc": ""
     },
     {
       "name": "copy_to_clipboard",
-      "short": "Copy to clipboard",
-      "doc": "There is also a copy_or_interrupt action that can be optionally mapped\nto Ctrl+C. It will copy only if there is a selection and send an\ninterrupt otherwise. Similarly, copy_and_clear_or_interrupt will copy\nand clear the selection or send an interrupt if there is no selection.\nThe copy_or_noop action will copy if there is a selection and pass\nthe key through to the application running in the terminal if there is no selection."
+      "short": "Copy the selected text from the active window to the clipboard",
+      "doc": ""
+    },
+    {
+      "name": "create_marker",
+      "short": "Create a new marker",
+      "doc": ""
     },
     {
       "name": "debug_config",
-      "short": "Debug kitty configuration",
-      "doc": "Show details about exactly what configuration kitty is running with and its host\nenvironment. Useful for debugging issues."
+      "short": "Show the effective configuration kitty is running with",
+      "doc": ""
     },
     {
       "name": "decrease_background_opacity",
@@ -2979,33 +3205,58 @@
       "doc": ""
     },
     {
+      "name": "detach_tab",
+      "short": "Detach a tab, moving it to another OS Window",
+      "doc": "Detach the specified tabs and either move them into a new OS window or add them to the OS window containing the tab specified by kitten @ detach-tab --target-tab"
+    },
+    {
+      "name": "detach_window",
+      "short": "Detach a window, moving it to another tab or OS Window",
+      "doc": "Detach the specified windows and either move them into a new tab, a new OS window or add them to the specified tab. Use the special value new for kitten @ detach-window --target-tab to move to a new tab. If no target tab is specified the windows are moved to a new OS window."
+    },
+    {
+      "name": "disable_ligatures_in",
+      "short": "Turn on/off ligatures in the specified window",
+      "doc": "Control ligature rendering for the specified windows/tabs (defaults to active window). The STRATEGY can be one of: never, always, cursor."
+    },
+    {
+      "name": "discard_event",
+      "short": "Discard this event completely ignoring it",
+      "doc": ""
+    },
+    {
+      "name": "dump_lines_with_attrs",
+      "short": "Show a dump of the current lines in the scrollback + screen with their line attributes",
+      "doc": ""
+    },
+    {
       "name": "edit_config_file",
-      "short": "Edit config file",
+      "short": "Edit the kitty.conf config file in your favorite text editor",
       "doc": ""
     },
     {
       "name": "eighth_window",
-      "short": "Eighth window",
+      "short": "Focus the eighth window",
       "doc": ""
     },
     {
       "name": "fifth_window",
-      "short": "Fifth window",
+      "short": "Focus the fifth window",
       "doc": ""
     },
     {
       "name": "first_window",
-      "short": "First window",
+      "short": "Focus the first window",
       "doc": ""
     },
     {
       "name": "focus_visible_window",
-      "short": "Visually select and focus window",
-      "doc": "Display overlay numbers and alphabets on the window, and switch the focus to the\nwindow when you press the key. When there are only two windows, the focus will\nbe switched directly without displaying the overlay. You can change the overlay\ncharacters and their order with option visual_window_select_characters."
+      "short": "Focus a visible window by pressing the number of the window. Window numbers are displayed",
+      "doc": "over the windows for easy selection in this mode. See visual_window_select_characters."
     },
     {
       "name": "fourth_window",
-      "short": "Fourth window",
+      "short": "Focus the fourth window",
       "doc": ""
     },
     {
@@ -3017,6 +3268,26 @@
       "name": "goto_file_line",
       "short": "Open the selected file at the selected line",
       "doc": "Select something that looks like filename:linenum and open it in\nyour default editor at the specified line number."
+    },
+    {
+      "name": "goto_layout",
+      "short": "Switch to the named layout",
+      "doc": "In case there are multiple layouts with the same name and different options,\nspecify the full layout definition or a unique prefix of the full definition.\n\nFor example:\n\n    map f1 goto_layout tall\n    map f2 goto_layout fat:bias=20"
+    },
+    {
+      "name": "goto_session",
+      "short": "Switch to the specified session, creating it if not already present",
+      "doc": ""
+    },
+    {
+      "name": "goto_tab",
+      "short": "Go to the specified tab, by number, starting with 1",
+      "doc": "Zero and negative numbers go to previously active tabs.\nUse the select_tab action to interactively select a tab\nto go to."
+    },
+    {
+      "name": "grab_keyboard",
+      "short": "Grab the keyboard. This means global shortcuts defined in the OS will be passed to kitty instead. Useful if",
+      "doc": "you want to create an OS modal window. How well this\nworks depends on the OS/window manager/desktop environment. On Wayland it works only if the compositor implements\nthe inhibit-keyboard-shortcuts protocol.\nOn macOS Apple doesn't allow applications to grab the keyboard without special permissions, so it doesn't work."
     },
     {
       "name": "hide_macos_app",
@@ -3040,23 +3311,23 @@
     },
     {
       "name": "input_unicode_character",
-      "short": "Unicode input",
+      "short": "Input an arbitrary unicode character",
       "doc": ""
     },
     {
       "name": "insert_chosen_directory",
       "short": "Insert chosen directory",
-      "doc": "Select a directory using the choose-files </kittens/choose-files> kitten and insert\nit into the terminal."
+      "doc": "Select a directory using the choose-files kitten and insert\nit into the terminal."
     },
     {
       "name": "insert_chosen_file",
       "short": "Insert chosen file",
-      "doc": "Select a file using the choose-files </kittens/choose-files> kitten and insert\nit into the terminal."
+      "doc": "Select a file using the choose-files kitten and insert\nit into the terminal."
     },
     {
       "name": "insert_selected_hash",
       "short": "Insert selected hash",
-      "doc": "Select something that looks like a hash and insert it into the terminal. Useful\nwith :program:`git`, which uses SHA1 hashes to identify commits."
+      "doc": "Select something that looks like a hash and insert it into the terminal. Useful\nwith git, which uses SHA1 hashes to identify commits."
     },
     {
       "name": "insert_selected_line",
@@ -3066,7 +3337,7 @@
     {
       "name": "insert_selected_path",
       "short": "Insert selected path",
-      "doc": "Select a path/filename and insert it into the terminal. Useful, for instance to\nrun :program:`git` commands on a filename output from a previous :program:`git`\ncommand."
+      "doc": "Select a path/filename and insert it into the terminal. Useful, for instance to\nrun git commands on a filename output from a previous git\ncommand."
     },
     {
       "name": "insert_selected_word",
@@ -3074,18 +3345,43 @@
       "doc": "Select words and insert into terminal."
     },
     {
+      "name": "kitten",
+      "short": "Run the specified kitten",
+      "doc": ""
+    },
+    {
       "name": "kitty_shell",
-      "short": "Open the kitty command shell",
-      "doc": "Open the kitty shell in a new window / tab / overlay /\nos_window to control kitty using commands."
+      "short": "Run the kitty shell to control kitty with commands",
+      "doc": ""
+    },
+    {
+      "name": "last_used_layout",
+      "short": "Go to the previously used layout",
+      "doc": ""
+    },
+    {
+      "name": "launch",
+      "short": "Launch the specified program in a new window/tab/etc.",
+      "doc": "Flags:\n  --source-window\n    A match expression to select the window from which data such as title, colors, env vars, screen contents, etc.\n  --window-title, --title\n    The title to set for the new window.\n  --tab-title\n    The title for the new tab if launching in a new tab.\n  --type=window|tab|os-window|os-panel|overlay|overlay-main|background|clipboard|primary\n    Where to launch the child process: (default: window)\n  --keep-focus, --dont-take-focus\n    Keep the focus on the currently active window instead of switching to the newly opened window.\n  --cwd\n    The working directory for the newly launched child.\n  --add-to-session\n    Add the newly created window/tab to the specified session.\n  --env (repeatable)\n    Environment variables to set in the child process.\n  --var (repeatable)\n    User variables to set in the created window.\n  --hold\n    Keep the window open even after the command being executed exits, at a shell prompt.\n  --copy-colors\n    Set the colors of the newly created window to be the same as the colors in the source window.\n  --copy-cmdline\n    Ignore any specified command line and instead use the command line from the source window.\n  --copy-env\n    Copy the environment variables from the source window into the newly launched child process.\n  --location=first|after|before|neighbor|last|vsplit|hsplit|split|default\n    Where to place the newly created window when it is added to a tab which already has existing windows in it. (default: default)\n  --next-to\n    A match expression to select the window next to which the new window is created.\n  --bias\n    The bias used to alter the size of the window. (default: 0)\n  --allow-remote-control\n    Programs running in this window can control kitty (even if remote control is not enabled in kitty.conf). Note that any program with the right level of permissions can still write to the pipes of any other program on the same computer and therefore can control kitty. It can, however, be useful to block programs running on other computers (for example, over SSH) or as other users. See --remote-control-password for ways to restrict actions allowed by remote control.\n  --remote-control-password (repeatable)\n    Restrict the actions remote control is allowed to take.\n  --stdin-source=none|@selection|@screen|@screen_scrollback|@alternate|@alternate_scrollback|@first_cmd_output_on_screen|@last_cmd_output|@last_visited_cmd_output\n    Pass the screen contents as STDIN to the child process. (default: none)\n  --stdin-add-formatting\n    When using --stdin-source add formatting escape codes, without this only plain text will be sent.\n  --stdin-add-line-wrap-markers\n    When using --stdin-source add a carriage return at every line wrap location (where long lines are wrapped at screen edges).\n  --marker\n    Create a marker that highlights text in the newly created window.\n  --os-window-class\n    Set the WM_CLASS property on X11 and the application id property on Wayland for the newly created OS window when using --type=os-window.\n  --os-window-name\n    Set the WM_NAME property on X11 for the newly created OS Window when using --type=os-window.\n  --os-window-title\n    Set the title for the newly created OS window.\n  --os-window-state=normal|fullscreen|maximized|minimized\n    The initial state for the newly created OS Window. (default: normal)\n  --logo\n    Path to a PNG image to use as the logo for the newly created window.\n  --logo-position\n    The position for the window logo. Only takes effect if --logo is specified. See window_logo_position.\n  --logo-alpha\n    The amount the window logo should be faded into the background. (default: -1)\n  --color (repeatable)\n    Change colors in the newly launched window.\n  --spacing (repeatable)\n    Set the margin and padding for the newly created window.\n  --watcher, -w (repeatable)\n    Path to a Python file.\n  --os-panel (repeatable)\n    Options to control the creation of desktop panels.\n  --hold-after-ssh\n    When using --cwd=current or similar from a window that is running the ssh kitten, the new window will run a local shell after disconnecting from the remote host, when this option is specified."
+    },
+    {
+      "name": "layout_action",
+      "short": "Perform a layout specific action",
+      "doc": ""
+    },
+    {
+      "name": "load_config_file",
+      "short": "Reload the config file",
+      "doc": "If mapped without arguments reloads the default config file, otherwise loads\nthe specified config files, in order. Loading a config file *replaces* all\nconfig options. For example:\n\n    map f5 load_config_file /path/to/some/kitty.conf"
     },
     {
       "name": "macos_cycle_through_os_windows",
-      "short": "macOS Cycle through OS Windows",
+      "short": "Cycle through OS windows on macOS",
       "doc": ""
     },
     {
       "name": "macos_cycle_through_os_windows_backwards",
-      "short": "macOS Cycle through OS Windows backwards",
+      "short": "Cycle through OS windows backwards on macOS",
       "doc": ""
     },
     {
@@ -3094,64 +3390,134 @@
       "doc": ""
     },
     {
+      "name": "mouse_click_url",
+      "short": "Click the URL under the mouse",
+      "doc": ""
+    },
+    {
+      "name": "mouse_click_url_or_select",
+      "short": "Click the URL under the mouse only if the screen has no selection",
+      "doc": ""
+    },
+    {
+      "name": "mouse_handle_click",
+      "short": "Handle a mouse click",
+      "doc": "Try to perform the specified actions one after the other till one of them is successful.\nSupported actions are:\n\n    selection - check for a selection and if one exists abort processing\n    link - if a link exists under the mouse, click it\n    prompt - if the mouse click happens at a shell prompt move the cursor to the mouse location\n\nFor examples, see conf-kitty-mouse.mousemap"
+    },
+    {
+      "name": "mouse_select_command_output",
+      "short": "Select clicked command output",
+      "doc": "Requires shell_integration to work"
+    },
+    {
+      "name": "mouse_selection",
+      "short": "Manipulate the selection based on the current mouse position",
+      "doc": "For examples, see conf-kitty-mouse.mousemap"
+    },
+    {
+      "name": "mouse_show_command_output",
+      "short": "Show clicked command output in a pager like less",
+      "doc": "Requires shell_integration to work"
+    },
+    {
       "name": "move_tab_backward",
-      "short": "Move tab backward",
+      "short": "Move the active tab backward",
       "doc": ""
     },
     {
       "name": "move_tab_forward",
-      "short": "Move tab forward",
+      "short": "Move the active tab forward",
       "doc": ""
     },
     {
+      "name": "move_window",
+      "short": "Move the window in the specified direction",
+      "doc": "For example:\n\n    map ctrl+left move_window left\n    map ctrl+down move_window bottom"
+    },
+    {
       "name": "move_window_backward",
-      "short": "Move window backward",
+      "short": "Move active window backward (swap it with the previous window)",
       "doc": ""
     },
     {
       "name": "move_window_forward",
-      "short": "Move window forward",
+      "short": "Move active window forward (swap it with the next window)",
       "doc": ""
     },
     {
       "name": "move_window_to_top",
-      "short": "Move window to top",
+      "short": "Move active window to the top (make it the first window)",
       "doc": ""
+    },
+    {
+      "name": "neighboring_window",
+      "short": "Focus the neighboring window in the current tab",
+      "doc": "For example:\n\n    map ctrl+left neighboring_window left\n    map ctrl+down neighboring_window bottom"
     },
     {
       "name": "new_os_window",
-      "short": "New OS window",
-      "doc": "Works like new_window above, except that it opens a top-level OS\nwindow <os_window>. In particular you can use new_os_window_with_cwd to\nopen a window with the current working directory."
-    },
-    {
-      "name": "new_tab",
-      "short": "New tab",
+      "short": "New OS Window",
       "doc": ""
     },
     {
+      "name": "new_os_window_with_cwd",
+      "short": "New OS Window with the same working directory as the currently active window.",
+      "doc": "The new OS Window is added to the currently active session, if any."
+    },
+    {
+      "name": "new_tab",
+      "short": "Create a new tab",
+      "doc": ""
+    },
+    {
+      "name": "new_tab_with_cwd",
+      "short": "Create a new tab with working directory for the window in it set to the same as the active window.",
+      "doc": "The tab is added to the currently active session, if any."
+    },
+    {
       "name": "new_window",
-      "short": "New window",
-      "doc": "You can open a new kitty window <window> running an arbitrary program,\nfor example::\n\n    map kitty_mod+y launch mutt\n\nYou can open a new window with the current working directory set to the working\ndirectory of the current window using::\n\n    map ctrl+alt+enter launch --cwd=current\n\nYou can open a new window that is allowed to control kitty via\nthe kitty remote control facility with launch --allow-remote-control.\nAny programs running in that window will be allowed to control kitty.\nFor example::\n\n    map ctrl+enter launch --allow-remote-control some_program\n\nYou can open a new window next to the currently active window or as the first\nwindow, with::\n\n    map ctrl+n launch --location=neighbor\n    map ctrl+f launch --location=first\n\nFor more details, see launch."
+      "short": "Create a new window",
+      "doc": ""
+    },
+    {
+      "name": "new_window_with_cwd",
+      "short": "Create a new window with working directory same as that of the active window.",
+      "doc": "The new window will belong to the active session if any."
     },
     {
       "name": "next_layout",
-      "short": "Next layout",
+      "short": "Go to the next enabled layout. Can optionally supply an integer to jump by the specified number.",
       "doc": ""
     },
     {
       "name": "next_tab",
-      "short": "Next tab",
+      "short": "Make the next tab active",
       "doc": ""
     },
     {
       "name": "next_window",
-      "short": "Next window",
+      "short": "Focus the next window in the current tab",
       "doc": ""
     },
     {
       "name": "ninth_window",
-      "short": "Ninth window",
+      "short": "Focus the ninth window",
       "doc": ""
+    },
+    {
+      "name": "no_op",
+      "short": "Unbind a shortcut",
+      "doc": "Mapping a shortcut to no_op causes kitty to not intercept the key stroke anymore, instead passing it to the program running inside it."
+    },
+    {
+      "name": "nth_os_window",
+      "short": "Focus the nth OS window if positive or the previously active OS windows if negative. When the number is larger",
+      "doc": "than the number of OS windows focus the last OS window. A value of zero will refocus the currently focused OS window,\nthis is useful if focus is not on any kitty OS window at all, however, it will only work if the window manager\nallows applications to grab focus. For example:\n\n    # focus the previously active kitty OS window\n    map ctrl+p nth_os_window -1\n    # focus the current kitty OS window (grab focus)\n    map ctrl+0 nth_os_window 0\n    # focus the first kitty OS window\n    map ctrl+1 nth_os_window 1\n    # focus the last kitty OS window\n    map ctrl+1 nth_os_window 999"
+    },
+    {
+      "name": "nth_window",
+      "short": "Focus the nth window if positive or the previously active windows if negative. When the number is larger",
+      "doc": "than the number of windows focus the last window. For example:\n\n    # focus the previously active window\n    map ctrl+p nth_window -1\n    # focus the first window\n    map ctrl+1 nth_window 0"
     },
     {
       "name": "open_kitty_website",
@@ -3161,7 +3527,7 @@
     {
       "name": "open_selected_hyperlink",
       "short": "Open the selected hyperlink",
-      "doc": "Select a hyperlink <hyperlinks> (i.e. a URL that has been marked as such\nby the terminal program, for example, by ls --hyperlink=auto)."
+      "doc": "Select a hyperlink (i.e. a URL that has been marked as such\nby the terminal program, for example, by ls --hyperlink=auto)."
     },
     {
       "name": "open_selected_path",
@@ -3170,43 +3536,93 @@
     },
     {
       "name": "open_url",
-      "short": "Open URL",
-      "doc": "Open a currently visible URL using the keyboard. The program used to open the\nURL is specified in open_url_with."
+      "short": "Open the specified URL",
+      "doc": ""
+    },
+    {
+      "name": "open_url_with_hints",
+      "short": "Click a URL using the keyboard",
+      "doc": ""
     },
     {
       "name": "pass_selection_to_program",
-      "short": "Pass selection to program",
-      "doc": "You can also pass the contents of the current selection to any program with\npass_selection_to_program. By default, the system's open program is used,\nbut you can specify your own, the selection will be passed as a command line\nargument to the program. For example::\n\n    map kitty_mod+o pass_selection_to_program firefox\n\nYou can pass the current selection to a terminal program running in a new kitty\nwindow, by using the @selection placeholder::\n\n    map kitty_mod+y new_window less @selection"
+      "short": "Pass the selected text from the active window to the specified program",
+      "doc": ""
+    },
+    {
+      "name": "paste",
+      "short": "Paste the specified text into the current window. ANSI C escapes are decoded.",
+      "doc": ""
+    },
+    {
+      "name": "paste_from_buffer",
+      "short": "Paste from the specified buffer to the active window",
+      "doc": ""
     },
     {
       "name": "paste_from_clipboard",
-      "short": "Paste from clipboard",
+      "short": "Paste from the clipboard to the active window",
       "doc": ""
     },
     {
       "name": "paste_from_selection",
-      "short": "Paste from selection",
+      "short": "Paste from the primary selection, if present, otherwise the clipboard to the active window",
+      "doc": ""
+    },
+    {
+      "name": "paste_selection",
+      "short": "Paste the current primary selection",
+      "doc": ""
+    },
+    {
+      "name": "paste_selection_or_clipboard",
+      "short": "Paste the current primary selection or the clipboard if no selection is present",
+      "doc": ""
+    },
+    {
+      "name": "pop_keyboard_mode",
+      "short": "End the current keyboard mode switching to the previous mode.",
       "doc": ""
     },
     {
       "name": "previous_tab",
-      "short": "Previous tab",
+      "short": "Make the previous tab active",
       "doc": ""
     },
     {
       "name": "previous_window",
-      "short": "Previous window",
+      "short": "Focus the previous window in the current tab",
+      "doc": ""
+    },
+    {
+      "name": "push_keyboard_mode",
+      "short": "Switch to the specified keyboard mode, pushing it onto the stack of keyboard modes.",
       "doc": ""
     },
     {
       "name": "quit",
-      "short": "Quit kitty",
+      "short": "Quit, closing all windows",
       "doc": ""
     },
     {
       "name": "reload_config_file",
       "short": "Reload kitty.conf",
-      "doc": "Reload kitty.conf, applying any changes since the last time it was\nloaded. Note that a handful of options cannot be dynamically changed and\nrequire a full restart of kitty. Particularly, when changing shortcuts for\nactions located on the macOS global menu bar, a full restart is needed. You can\nalso map a keybinding to load a different config file, for example::\n\n    map f5 load_config /path/to/alternative/kitty.conf\n\nNote that all options from the original kitty.conf are discarded, in\nother words the new configuration *replace* the old ones."
+      "doc": "Reload kitty.conf, applying any changes since the last time it was\nloaded. Note that a handful of options cannot be dynamically changed and\nrequire a full restart of kitty. Particularly, when changing shortcuts for\nactions located on the macOS global menu bar, a full restart is needed. You can\nalso map a keybinding to load a different config file, for example:\n\n    map f5 load_config /path/to/alternative/kitty.conf\n\nNote that all options from the original kitty.conf are discarded, in\nother words the new configuration *replace* the old ones."
+    },
+    {
+      "name": "remote_control",
+      "short": "Run a remote control command without needing to allow remote control",
+      "doc": "For example:\n\n    map f1 remote_control set-spacing margin=30\n\nSee rc_mapping for details."
+    },
+    {
+      "name": "remote_control_script",
+      "short": "Run a remote control script without needing to allow remote control",
+      "doc": "For example:\n\n    map f1 remote_control_script /path/to/script arg1 arg2 ...\n\nSee rc_mapping for details."
+    },
+    {
+      "name": "remove_marker",
+      "short": "Remove a previously created marker",
+      "doc": ""
     },
     {
       "name": "reset_background_opacity",
@@ -3221,36 +3637,66 @@
     {
       "name": "reset_terminal",
       "short": "Reset the terminal",
-      "doc": "You can create shortcuts to clear/reset the terminal. For example::\n\n    # Reset the terminal\n    map f1 clear_terminal reset active\n    # Clear the terminal screen by erasing all contents\n    map f1 clear_terminal clear active\n    # Clear the terminal scrollback by erasing it\n    map f1 clear_terminal scrollback active\n    # Scroll the contents of the screen into the scrollback\n    map f1 clear_terminal scroll active\n    # Clear everything on screen up to the line with the cursor or the start of the current prompt (needs shell integration)\n    map f1 clear_terminal to_cursor active\n    # Same as above except cleared lines are moved into scrollback\n    map f1 clear_terminal to_cursor_scroll active\n    # Erase the last command and its output (needs shell integration to work)\n    map f1 clear_terminal last_command active\n\nIf you want to operate on all kitty windows instead of just the current one, use\n:italic:`all` instead of :italic:`active`.\n\nSome useful functions that can be defined in the shell rc files to perform various kinds of\nclearing of the current window:\n\n\n\n    clear-only-screen() {\n        printf \"\\e[H\\e[2J\"\n    }\n\n    clear-screen-and-scrollback() {\n        printf \"\\e[H\\e[3J\"\n    }\n\n    clear-screen-saving-contents-in-scrollback() {\n        printf \"\\e[H\\e[22J\"\n    }\n\nFor instance, using these escape codes, it is possible to remap Ctrl+L\nto both scroll the current screen contents into the scrollback buffer and clear\nthe screen, instead of just clearing the screen. For ZSH, in /.zshrc, add:\n\n\n\n    ctrl_l() {\n        builtin print -rn -- $'\\r\\e[0J\\e[H\\e[22J' >\"$TTY\"\n        builtin zle .reset-prompt\n        builtin zle -R\n    }\n    zle -N ctrl_l\n    bindkey '^l' ctrl_l\n\nAlternatively, you can just add map ctrl+l clear_terminal to_cursor_scroll active to kitty.conf which\nworks with no changes to the shell rc files, but only clears up to the prompt, it does not clear any text at the prompt itself."
+      "doc": "You can create shortcuts to clear/reset the terminal. For example:\n\n    # Reset the terminal\n    map f1 clear_terminal reset active\n    # Clear the terminal screen by erasing all contents\n    map f1 clear_terminal clear active\n    # Clear the terminal scrollback by erasing it\n    map f1 clear_terminal scrollback active\n    # Scroll the contents of the screen into the scrollback\n    map f1 clear_terminal scroll active\n    # Clear everything on screen up to the line with the cursor or the start of the current prompt (needs shell integration)\n    map f1 clear_terminal to_cursor active\n    # Same as above except cleared lines are moved into scrollback\n    map f1 clear_terminal to_cursor_scroll active\n    # Erase the last command and its output (needs shell integration to work)\n    map f1 clear_terminal last_command active\n\nIf you want to operate on all kitty windows instead of just the current one, use\nall instead of active.\n\nSome useful functions that can be defined in the shell rc files to perform various kinds of\nclearing of the current window:\n\n\n\n    clear-only-screen() {\n        printf \"\\e[H\\e[2J\"\n    }\n\n    clear-screen-and-scrollback() {\n        printf \"\\e[H\\e[3J\"\n    }\n\n    clear-screen-saving-contents-in-scrollback() {\n        printf \"\\e[H\\e[22J\"\n    }\n\nFor instance, using these escape codes, it is possible to remap Ctrl+L\nto both scroll the current screen contents into the scrollback buffer and clear\nthe screen, instead of just clearing the screen. For ZSH, in /.zshrc, add:\n\n\n\n    ctrl_l() {\n        builtin print -rn -- $'\\r\\e[0J\\e[H\\e[22J' >\"$TTY\"\n        builtin zle .reset-prompt\n        builtin zle -R\n    }\n    zle -N ctrl_l\n    bindkey '^l' ctrl_l\n\nAlternatively, you can just add map ctrl+l clear_terminal to_cursor_scroll active to kitty.conf which\nworks with no changes to the shell rc files, but only clears up to the prompt, it does not clear any text at the prompt itself."
+    },
+    {
+      "name": "reset_window_sizes",
+      "short": "Reset window sizes undoing any dynamic resizing of windows",
+      "doc": ""
+    },
+    {
+      "name": "resize_window",
+      "short": "Resize the active window by the specified amount",
+      "doc": "Resize the specified windows in the current layout. Note that not all layouts can resize all windows in all directions."
+    },
+    {
+      "name": "save_as_session",
+      "short": "Save the current kitty state as a session file",
+      "doc": ""
     },
     {
       "name": "scroll_end",
-      "short": "Scroll to bottom",
+      "short": "Scroll to the bottom of the scrollback buffer when in main screen",
       "doc": ""
     },
     {
       "name": "scroll_home",
-      "short": "Scroll to top",
+      "short": "Scroll to the top of the scrollback buffer when in main screen",
       "doc": ""
     },
     {
       "name": "scroll_line_down",
-      "short": "Scroll line down",
+      "short": "Scroll down by one line when in main screen. To scroll by different amounts, you can map the remote_control scroll-window action.",
       "doc": ""
     },
     {
       "name": "scroll_line_up",
-      "short": "Scroll line up",
+      "short": "Scroll up by one line when in main screen. To scroll by different amounts, you can map the remote_control scroll-window action.",
       "doc": ""
     },
     {
       "name": "scroll_page_down",
-      "short": "Scroll page down",
+      "short": "Scroll down by one page when in main screen. To scroll by different amounts, you can map the remote_control scroll-window action.",
       "doc": ""
     },
     {
       "name": "scroll_page_up",
-      "short": "Scroll page up",
+      "short": "Scroll up by one page when in main screen. To scroll by different amounts, you can map the remote_control scroll-window action.",
+      "doc": ""
+    },
+    {
+      "name": "scroll_prompt_to_bottom",
+      "short": "Scroll prompt to the bottom of the screen, filling in extra lines from the scrollback buffer, when in main screen",
+      "doc": ""
+    },
+    {
+      "name": "scroll_prompt_to_top",
+      "short": "Scroll prompt to the top of the screen, filling screen with empty lines, when in main screen. To avoid putting the lines above the prompt into the scrollback use scroll_prompt_to_top y",
+      "doc": ""
+    },
+    {
+      "name": "scroll_to_mark",
+      "short": "Scroll to the next or previous mark of the specified type",
       "doc": ""
     },
     {
@@ -3261,77 +3707,152 @@
     {
       "name": "scroll_to_previous_prompt",
       "short": "Scroll to previous shell prompt",
-      "doc": "Use a parameter of 0 for scroll_to_prompt to scroll to the last\njumped to or the last clicked position. Requires shell integration\n<shell_integration> to work."
+      "doc": "Use a parameter of 0 for scroll_to_prompt to scroll to the last\njumped to or the last clicked position. Requires shell integration to work."
+    },
+    {
+      "name": "scroll_to_prompt",
+      "short": "Scroll to the previous/next shell command prompt",
+      "doc": "Allows easy jumping from one command to the next. Requires working\nshell_integration. Takes two optional numbers as arguments:\n\nThe first is the number of prompts to jump; negative values jump up and\npositive values jump down. A value of zero will jump to the last prompt\nvisited by this action. Defaults to -1\n\nThe second is the number of lines to show above the prompt that was\njumped to. This is somewhat like `less`'s `--jump-target` option or\nvim's `scrolloff` setting. Defaults to 0.\n\nFor example:\n\n    map ctrl+p scroll_to_prompt -1 3  # jump to previous, showing 3 lines prior\n    map ctrl+n scroll_to_prompt 1     # jump to next\n    map ctrl+o scroll_to_prompt 0     # jump to last visited"
     },
     {
       "name": "search_scrollback",
-      "short": "Search the scrollback within a pager",
-      "doc": "Search for currently selected text in the scrollback using the configured scrollback_pager.\nAssumes that pressing the / key triggers search mode in the pager. If you want to create\na manual mapping with a special pager for this, you can use something like:\n\n    map f1 combine : launch --stdin-source=@screen_scrollback --stdin-add-formatting --type=overlay mypager : send_key /\n\nFor more sophisticated control, such as using the current selection, use remote_control_script."
+      "short": "Search scrollback in a pager like less. If there is selected text, it is automatically searched for.",
+      "doc": "Note that this assumes that pressing the / key triggers search mode in the page configured as the\nscrollback pager."
     },
     {
       "name": "second_window",
-      "short": "Second window",
+      "short": "Focus the second window",
       "doc": ""
+    },
+    {
+      "name": "select_tab",
+      "short": "Interactively select a tab to switch to",
+      "doc": ""
+    },
+    {
+      "name": "send_key",
+      "short": "Send the specified keys to the active window.",
+      "doc": "Note that the key will be sent only if the current keyboard mode of the program running in the terminal supports it.\nBoth key press and key release are sent. First presses for all specified keys and then releases in reverse order.\nTo send a pattern of press and release for multiple keys use the combine action. For example:\n\n    map f1 send_key ctrl+x alt+y\n    map f1 combine : send_key ctrl+x : send_key alt+y"
     },
     {
       "name": "send_text",
-      "short": "Send arbitrary text on key presses",
-      "doc": "You can tell kitty to send arbitrary (UTF-8) encoded text to the client program\nwhen pressing specified shortcut keys. For example::\n\n    map ctrl+alt+a send_text all Special text\n\nThis will send \"Special text\" when you press the Ctrl+Alt+A key\ncombination. The text to be sent decodes :link:`ANSI C escapes <https://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html>`\nso you can use escapes like \\\\e to send control codes or \\\\u21fb to send\nUnicode characters (or you can just input the Unicode characters directly as\nUTF-8 text). You can use kitten show-key to get the key escape\ncodes you want to emulate.\n\nThe first argument to send_text is the keyboard modes in which to\nactivate the shortcut. The possible values are normal,\napplication, kitty or a comma separated combination of them.\nThe modes normal and application refer to the DECCKM\ncursor key mode for terminals, and kitty refers to the kitty extended\nkeyboard protocol. The special value all means all of them.\n\nSome more examples::\n\n    # Output a word and move the cursor to the start of the line (like typing and pressing Home)\n    map ctrl+alt+a send_text normal Word\\e[H\n    map ctrl+alt+a send_text application Word\\eOH\n    # Run a command at a shell prompt (like typing the command and pressing Enter)\n    map ctrl+alt+a send_text normal,application some command with arguments\\r"
+      "short": "Send the specified text to the active window",
+      "doc": "You can tell kitty to send arbitrary (UTF-8) encoded text to the client program\nwhen pressing specified shortcut keys. For example:\n\n    map ctrl+alt+a send_text all Special text\n\nThis will send \"Special text\" when you press the Ctrl+Alt+A key\ncombination. The text to be sent decodes ANSI C escapes\nso you can use escapes like \\\\e to send control codes or \\\\u21fb to send\nUnicode characters (or you can just input the Unicode characters directly as\nUTF-8 text). You can use kitten show-key to get the key escape\ncodes you want to emulate.\n\nThe first argument to send_text is the keyboard modes in which to\nactivate the shortcut. The possible values are normal,\napplication, kitty or a comma separated combination of them.\nThe modes normal and application refer to the DECCKM\ncursor key mode for terminals, and kitty refers to the kitty extended\nkeyboard protocol. The special value all means all of them.\n\nSome more examples:\n\n    # Output a word and move the cursor to the start of the line (like typing and pressing Home)\n    map ctrl+alt+a send_text normal Word\\e[H\n    map ctrl+alt+a send_text application Word\\eOH\n    # Run a command at a shell prompt (like typing the command and pressing Enter)\n    map ctrl+alt+a send_text normal,application some command with arguments\\r"
+    },
+    {
+      "name": "set_background_opacity",
+      "short": "Set the background opacity for the active OS Window",
+      "doc": "For example:\n\n    map f1 set_background_opacity +0.1\n    map f2 set_background_opacity -0.1\n    map f3 set_background_opacity 0.5"
+    },
+    {
+      "name": "set_colors",
+      "short": "Change colors in the specified windows",
+      "doc": "For details, see at-set-colors. For example:\n\n    map f5 set_colors --configured /path/to/some/config/file/colors.conf"
     },
     {
       "name": "set_tab_title",
-      "short": "Set tab title",
-      "doc": ""
+      "short": "Change the title of the active tab interactively, by typing in the new title.",
+      "doc": "If you specify an argument to this action then that is used as the title instead of asking for it.\nUse the empty string (\"\") to reset the title to default. Use a space (\" \") to indicate that the\nprompt should not be pre-filled. For example:\n\n    # interactive usage\n    map f1 set_tab_title\n    # set a specific title\n    map f2 set_tab_title some title\n    # reset to default\n    map f3 set_tab_title \"\"\n    # interactive usage without prefilled prompt\n    map f3 set_tab_title \" \""
+    },
+    {
+      "name": "set_window_title",
+      "short": "Change the title of the active window interactively, by typing in the new title.",
+      "doc": "If you specify an argument to this action then that is used as the title instead of asking for it.\nUse the empty string (\"\") to reset the title to default. Use a space (\" \") to indicate that the\nprompt should not be pre-filled. For example:\n\n    # interactive usage\n    map f1 set_window_title\n    # set a specific title\n    map f2 set_window_title some title\n    # reset to default\n    map f3 set_window_title \"\"\n    # interactive usage without prefilled prompt\n    map f3 set_window_title \" \""
     },
     {
       "name": "seventh_window",
-      "short": "Seventh window",
+      "short": "Focus the seventh window",
       "doc": ""
     },
     {
+      "name": "show_error",
+      "short": "Show an error message with the specified title and text",
+      "doc": ""
+    },
+    {
+      "name": "show_first_command_output_on_screen",
+      "short": "Show output from the first shell command on screen in a pager like less",
+      "doc": "Requires shell_integration to work"
+    },
+    {
       "name": "show_kitty_doc",
-      "short": "Show documentation",
+      "short": "Display the specified kitty documentation, preferring a local copy, if found.",
+      "doc": "For example:\n\n    # show the config docs\n    map f1 show_kitty_doc conf\n    # show the ssh kitten docs\n    map f1 show_kitty_doc kittens/ssh"
+    },
+    {
+      "name": "show_kitty_env_vars",
+      "short": "Show the environment variables that the kitty process sees",
       "doc": ""
     },
     {
       "name": "show_last_command_output",
-      "short": "Browse output of the last shell command in pager",
-      "doc": "You can also define additional shortcuts to get the command output.\nFor example, to get the first command output on screen::\n\n    map f1 show_first_command_output_on_screen\n\nTo get the command output that was last accessed by a keyboard action or mouse\naction::\n\n    map f1 show_last_visited_command_output\n\nYou can pipe the output of the last command run in the shell using the\nlaunch action. For example, the following opens the output in less in an\noverlay window::\n\n    map f1 launch --stdin-source=@last_cmd_output --stdin-add-formatting --type=overlay less +G -R\n\nTo get the output of the first command on the screen, use @first_cmd_output_on_screen.\nTo get the output of the last jumped to command, use @last_visited_cmd_output.\n\nRequires shell integration <shell_integration> to work."
+      "short": "Show output from the last shell command in a pager like less",
+      "doc": "Requires shell_integration to work"
+    },
+    {
+      "name": "show_last_non_empty_command_output",
+      "short": "Show the last non-empty output from a shell command in a pager like less",
+      "doc": "Requires shell_integration to work"
+    },
+    {
+      "name": "show_last_visited_command_output",
+      "short": "Show the first command output below the last scrolled position via scroll_to_prompt",
+      "doc": "or the last mouse clicked command output in a pager like less\n\nRequires shell_integration to work"
     },
     {
       "name": "show_scrollback",
-      "short": "Browse scrollback buffer in pager",
-      "doc": "You can pipe the contents of the current screen and history buffer as\nSTDIN to an arbitrary program using launch --stdin-source.\nFor example, the following opens the scrollback buffer in less in an\noverlay window::\n\n    map f1 launch --stdin-source=@screen_scrollback --stdin-add-formatting --type=overlay less +G -R\n\nFor more details on piping screen and buffer contents to external programs,\nsee launch."
+      "short": "Show scrollback in a pager like less",
+      "doc": ""
+    },
+    {
+      "name": "signal_child",
+      "short": "Send the specified SIGNAL to the foreground process in the active window",
+      "doc": "For example:\n\n    map f1 signal_child SIGTERM"
+    },
+    {
+      "name": "simulate_color_scheme_preference_change",
+      "short": "Simulate a change in OS color scheme preference",
+      "doc": ""
     },
     {
       "name": "sixth_window",
-      "short": "Sixth window",
+      "short": "Focus the sixth window",
+      "doc": ""
+    },
+    {
+      "name": "sleep",
+      "short": "Sleep for the specified time period. Suffix can be s for seconds, m, for minutes, h for hours and d for days. The time can be fractional.",
       "doc": ""
     },
     {
       "name": "start_resizing_window",
-      "short": "Start resizing window",
-      "doc": ""
+      "short": "Resize the active window interactively",
+      "doc": "Resize the specified windows in the current layout. Note that not all layouts can resize all windows in all directions."
     },
     {
       "name": "swap_with_window",
-      "short": "Visually swap window with another",
-      "doc": "Works like focus_visible_window above, but swaps the window."
+      "short": "Swap the current window with another window in the current tab, selected visually",
+      "doc": ""
     },
     {
       "name": "tenth_window",
-      "short": "Tenth window",
+      "short": "Focus the tenth window",
       "doc": ""
     },
     {
       "name": "third_window",
-      "short": "Third window",
+      "short": "Focus the third window",
       "doc": ""
     },
     {
       "name": "toggle_fullscreen",
-      "short": "Toggle fullscreen",
+      "short": "Toggle the fullscreen status of the active OS Window",
       "doc": ""
+    },
+    {
+      "name": "toggle_layout",
+      "short": "Toggle the named layout",
+      "doc": "Switches to the named layout if another layout is current, otherwise\nswitches to the last used layout. Useful to \"zoom\" a window temporarily\nby switching to the stack layout. See also scrollback_fill_enlarged_window\nif you would like content from the scrollback buffer to scroll down into the\nzoomed window. For example:\n\n    map f1 toggle_layout stack"
     },
     {
       "name": "toggle_macos_secure_keyboard_entry",
@@ -3339,19 +3860,112 @@
       "doc": ""
     },
     {
+      "name": "toggle_marker",
+      "short": "Toggle the current marker on/off",
+      "doc": ""
+    },
+    {
       "name": "toggle_maximized",
-      "short": "Toggle maximized",
+      "short": "Toggle the maximized status of the active OS Window",
+      "doc": ""
+    },
+    {
+      "name": "toggle_tab",
+      "short": "Toggle to the tab matching the specified expression",
+      "doc": "Switches to the matching tab if another tab is current, otherwise\nswitches to the last used tab. Useful to easily switch to and back from a\ntab using a single shortcut. Note that toggling works only between\ntabs in the same OS window. See search_syntax for details\non the match expression. For example:\n\n    map f1 toggle_tab title:mytab"
+    },
+    {
+      "name": "ungrab_keyboard",
+      "short": "Ungrab the keyboard if it was previously grabbed",
       "doc": ""
     }
   ],
   "directives": [
     {
       "name": "map",
-      "doc": "Keys are identified simply by their lowercase Unicode characters. For example:\na for the A key, [ for the left square bracket key, etc.\nFor functional keys, such as Enter or Escape, the names are present\nat Functional key definitions <functional>. For modifier keys, the names\nare ctrl (control, \u2303), shift (\u21e7), alt\n(opt, option, \u2325), super (cmd, command,\n\u2318).\n\nSimple shortcut mapping is done with the map directive. For full details\non advanced mapping including modal and per application maps, see mapping.\nSome quick examples to illustrate common tasks::\n\n    # unmap a keyboard shortcut, passing it to the program running in kitty\n    map kitty_mod+space\n    # completely ignore a keyboard event\n    map ctrl+alt+f1 discard_event\n    # combine multiple actions\n    map kitty_mod+e combine : new_window : next_layout\n    # multi-key shortcuts\n    map ctrl+x>ctrl+y>z action\n\nThe full list of actions that can be mapped to key presses is available\nhere </actions>."
+      "doc": "Keys are identified simply by their lowercase Unicode characters. For example:\na for the A key, [ for the left square bracket key, etc.\nFor functional keys, such as Enter or Escape, the names are present\nat Functional key definitions. For modifier keys, the names\nare ctrl (control, \u2303), shift (\u21e7), alt\n(opt, option, \u2325), super (cmd, command,\n\u2318).\n\nSimple shortcut mapping is done with the map directive. For full details\non advanced mapping including modal and per application maps, see mapping.\nSome quick examples to illustrate common tasks:\n\n    # unmap a keyboard shortcut, passing it to the program running in kitty\n    map kitty_mod+space\n    # completely ignore a keyboard event\n    map ctrl+alt+f1 discard_event\n    # combine multiple actions\n    map kitty_mod+e combine : new_window : next_layout\n    # multi-key shortcuts\n    map ctrl+x>ctrl+y>z action\n\nThe full list of actions that can be mapped to key presses is available\nhere."
     },
     {
       "name": "mouse_map",
-      "doc": "Mouse buttons can be mapped to perform arbitrary actions. The syntax is:\n\n\n\n    mouse_map button-name event-type modes action\n\nWhere button-name is one of left, middle, right,\nb1 ... b8 with added keyboard modifiers. For example:\nctrl+shift+left refers to holding the Ctrl+Shift keys while\nclicking with the left mouse button. The value b1 ... b8 can be\nused to refer to up to eight buttons on a mouse.\n\nevent-type is one of press, release,\ndoublepress, triplepress, click, doubleclick.\nmodes indicates whether the action is performed when the mouse is\ngrabbed by the program running in the terminal, or not. The values are\ngrabbed or ungrabbed or a comma separated combination of them.\ngrabbed refers to when the program running in the terminal has requested\nmouse events. Note that the click and double click events have a delay of\nclick_interval to disambiguate from double and triple presses.\n\nYou can run kitty with the kitty --debug-input command line option\nto see mouse events. See the builtin actions below to get a sense of what is\npossible.\n\nIf you want to unmap a button, map it to nothing. For example, to disable\nopening of URLs with a plain click::\n\n    mouse_map left click ungrabbed\n\nSee all the mappable actions including mouse actions here </actions>.\n\nNote:\n    Once a selection is started, releasing the button that started it will\n    automatically end it and no release event will be dispatched."
+      "doc": "Mouse buttons can be mapped to perform arbitrary actions. The syntax is:\n\n\n\n    mouse_map button-name event-type modes action\n\nWhere button-name is one of left, middle, right,\nb1 ... b8 with added keyboard modifiers. For example:\nctrl+shift+left refers to holding the Ctrl+Shift keys while\nclicking with the left mouse button. The value b1 ... b8 can be\nused to refer to up to eight buttons on a mouse.\n\nevent-type is one of press, release,\ndoublepress, triplepress, click, doubleclick.\nmodes indicates whether the action is performed when the mouse is\ngrabbed by the program running in the terminal, or not. The values are\ngrabbed or ungrabbed or a comma separated combination of them.\ngrabbed refers to when the program running in the terminal has requested\nmouse events. Note that the click and double click events have a delay of\nclick_interval to disambiguate from double and triple presses.\n\nYou can run kitty with the kitty --debug-input command line option\nto see mouse events. See the builtin actions below to get a sense of what is\npossible.\n\nIf you want to unmap a button, map it to nothing. For example, to disable\nopening of URLs with a plain click:\n\n    mouse_map left click ungrabbed\n\nSee all the mappable actions including mouse actions here.\n\nNote:\n    Once a selection is started, releasing the button that started it will\n    automatically end it and no release event will be dispatched."
+    },
+    {
+      "name": "include"
+    },
+    {
+      "name": "globinclude"
+    },
+    {
+      "name": "envinclude"
+    },
+    {
+      "name": "geninclude"
     }
+  ],
+  "map_flags": [
+    {
+      "name": "--when-focus-on"
+    },
+    {
+      "name": "--new-mode"
+    },
+    {
+      "name": "--mode"
+    },
+    {
+      "name": "--on-unknown",
+      "choices": [
+        "beep",
+        "end",
+        "ignore",
+        "passthrough"
+      ],
+      "default": "beep"
+    },
+    {
+      "name": "--on-action",
+      "choices": [
+        "keep",
+        "end"
+      ],
+      "default": "keep"
+    }
+  ],
+  "key_names": [
+    "ctrl",
+    "alt",
+    "shift",
+    "super",
+    "cmd",
+    "opt",
+    "kitty_mod",
+    "left",
+    "right",
+    "up",
+    "down",
+    "home",
+    "end",
+    "page_up",
+    "page_down",
+    "insert",
+    "delete",
+    "backspace",
+    "enter",
+    "return",
+    "escape",
+    "tab",
+    "space",
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "f5",
+    "f6",
+    "f7",
+    "f8",
+    "f9",
+    "f10",
+    "f11",
+    "f12"
   ]
 }

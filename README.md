@@ -6,7 +6,7 @@ Data is extracted from kitty's own Python internals, so it stays accurate across
 [blink.cmp](https://github.com/Saghen/blink.cmp) completion source:
 - ~438 option names with descriptions, defaults, and group headings
 - Enum values after options that accept specific choices (e.g. `cursor_shape` → `block`, `beam`, `underline`)
-- ~85 action names after `map`/`mouse_map` key bindings
+- ~160 action names after `map`/`mouse_map` key bindings (including `launch`, `combine`, `kitten`, etc.)
 - Key modifier/name completion in the key combo position (`ctrl`, `alt`, `shift`, `super`, `f1`–`f12`, etc.)
 
 ## Install
@@ -50,7 +50,7 @@ Requires `kitty` to be installed (uses `kitty +runpy` to access kitty's option d
 
 `generate.py` runs inside kitty's Python environment via `kitty +runpy` and extracts option metadata from `kitty.options.definition.definition`:
 - `iter_all_options()` for options and multi-options (name, default, choices, docs, group)
-- `shortcut_map` for action names and descriptions
+- `kitty.actions.get_all_actions()` and `shortcut_map` for action names and descriptions
 - Group tree walking for `map`/`mouse_map` directive descriptions
 
 RST markup is stripped to plain text for clean documentation popups. Enum-like values are extracted from doc text when explicit `choices` aren't available.
